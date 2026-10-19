@@ -1,0 +1,100 @@
+/* Família Naves extensions to Teô Design System v2.7.1. */
+body { line-height: var(--leading-body); }
+body::before, body::after, .hero::before, .hero::after,
+.map-area::before, .map-area::after, .nav-card::before, .nav-card::after,
+.person-card::before, .person-card::after { display: none; }
+body > h1, h1, .hero-title { max-width: none; margin-inline: auto; font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5.96rem); font-weight: 600; line-height: 1.04; letter-spacing: -0.025em; }
+h1 em, .hero-title em { color: var(--color-text-primary); font-style: normal; }
+p { margin-inline: auto; }
+.hero { background: var(--color-bg-canvas); }
+.wrap { max-width: 780px; padding-top: 6rem; }
+.eyebrow, .hero-eyebrow, .hero-eye, .tl-head, .tl-gen, .tt-gen,
+.gen-number, .gen-place, .gen-era, .stat-l, .sbar-l, .children-title,
+.lt-label, .union-date, .footer-credit { opacity: 1; letter-spacing: 0.04em; }
+.eyebrow, .hero-eyebrow, .hero-eye, .gen-number, .tl-gen, .tt-gen, .tl-head { color: var(--color-text-secondary); }
+.subtitle, .hero-sub, .hero-subtitle, .desc-block { color: var(--color-text-secondary); font-size: 1.125rem; font-style: normal; }
+.rule, .hero-rule { background: var(--color-border-subtle); }
+.theme-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 700; background: var(--color-bg-surface); border-color: var(--color-border-control); }
+.back-btn { top: 1rem; left: 1rem; min-height: var(--target-min); background: var(--color-bg-surface); color: var(--color-text-primary); border-color: var(--color-border-control); letter-spacing: normal; font-size: var(--text-sm); }
+.nav-card { border-radius: var(--radius-lg); background: var(--app-tile); border-color: var(--color-border-control); text-align: center; }
+.nav-card:first-child { border-color: var(--app-tile-highlight); }
+.nav-card:hover { background: var(--color-bg-raised); border-color: var(--color-border-control); box-shadow: none; }
+.card-label { font: var(--type-item-headline); color: var(--color-text-primary); }
+.card-icon { border-radius: var(--radius-md); color: var(--color-text-secondary); background: var(--color-bg-raised); }
+.card-desc { color: var(--color-text-secondary); font-size: var(--text-sm); }
+.stat-n, .sbar-n, .hero-stat-n { font-family: var(--font-body); font-variant-numeric: tabular-nums; color: var(--color-text-primary); }
+.stats, .stats-bar { flex-wrap: wrap; }
+.stat, .sbar { padding: var(--space-4); flex: 1 1 90px; min-width: 0; }
+.person-card { border-radius: var(--radius-lg); background: var(--color-bg-surface); }
+.person-card:hover { background: var(--color-bg-raised); box-shadow: none; }
+.pc-name { color: var(--color-text-primary); font: var(--type-section-title); }
+.pc-info, .pc-note, .child-tag { font-size: 1rem; }
+.child-tag { background: var(--color-bg-surface); border-radius: var(--radius-sm); }
+.children-title, .lt-label, .union-date { color: var(--color-text-muted); }
+.fade-up { opacity: 1; transform: none; }
+.scroll-hint { animation: none; opacity: 1; }
+.sn-item { min-width: var(--target-min); min-height: var(--target-min); justify-content: end; opacity: 1; border-radius: var(--radius-sm); }
+.sn-label { background: var(--color-bg-canvas); padding: var(--space-1); }
+.sn-item:focus-visible .sn-label { opacity: 1; }
+.sn-item.active .sn-pip { box-shadow: none; }
+.side-nav { gap: 0; }
+.tl-item { display: block; width: 100%; font: inherit; text-align: left; color: var(--color-text-primary); border: 1px solid transparent; border-bottom-color: var(--color-border-subtle); background: transparent; border-radius: 0; }
+.tl-item:hover { background: var(--color-bg-raised); border-left-color: transparent; }
+.tl-item.active { background: var(--color-bg-selected); border: 1px solid var(--color-action-primary-border); }
+.tl-item.active .tl-city::after { content: ' · Etapa atual'; color: var(--color-link); font-size: var(--text-sm); }
+.tl-year { font-size: 1.125rem; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.tl-desc { font-size: 1rem; }
+.tl-names { color: var(--color-text-muted); }
+.tl-badge { color: var(--color-text-secondary); border-color: var(--color-border-control); border-radius: var(--radius-sm); }
+.tl-item:focus-visible { outline-offset: -4px; }
+.tooltip { background: var(--color-bg-surface); border-radius: var(--radius-md); border-color: var(--color-border-control); box-shadow: var(--shadow-overlay); }
+.tt-gen { color: var(--color-text-secondary); }
+.map-legend { padding: var(--space-3); background: var(--color-bg-surface); border-radius: var(--radius-md); }
+.leg { letter-spacing: normal; }
+.pulse-ring { display: none; }
+.city-dot.inactive { opacity: 1; }
+.city-dot circle { filter: none; fill-opacity: 1; }
+.city-dot.inactive circle:last-child { fill: var(--color-bg-surface); stroke: var(--color-border-control); stroke-width: 2; }
+.city-dot:focus-visible { outline: none; }
+.city-dot:focus-visible circle:last-child { stroke: var(--color-focus-ring); stroke-width: 4; }
+.route-seg { stroke: var(--chart-primary); opacity: 1; filter: none; }
+.route-dashed { stroke: var(--chart-neutral); }
+#mapSvg text { font-family: var(--font-body); fill: var(--color-text-secondary); fill-opacity: 1; letter-spacing: 0; }
+footer p, footer [style], .footer-credit { color: var(--color-text-muted) !important; opacity: 1; letter-spacing: normal !important; }
+footer a, .gh-link { min-height: var(--target-min); align-items: center; }
+@media (max-width: 850px) {
+  .timeline { position: static; max-height: none; border-right: 0; }
+  .map-area { min-height: 400px; }
+  #mapSvg { min-height: 400px; }
+}
+@media (max-width: 480px) {
+  .wrap { padding-inline: var(--space-4); }
+  .hero { padding: 6rem 1rem 3rem; }
+  .hero-title { overflow-wrap: anywhere; }
+  .gen-section { padding-inline: var(--space-4); }
+  .person-card { min-width: 0; padding: var(--space-4); }
+  .children-grid { gap: var(--space-2); }
+  .child-tag { overflow-wrap: anywhere; }
+  .stats { width: 100%; }
+  .map-legend { right: var(--space-2); bottom: var(--space-2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .fade-up, .wrap { transform: none; }
+}
+.tl-item > span { display: block; }
+.tl-item > .tl-badge { display: inline-block; }
+/* Historical records read at body size, including project-specific notes. */
+.gen-section [style*="font-size"], footer [style*="font-size"] { font-size: 0.875rem !important; }
+.gen-section [style*="color:var(--color-border-subtle)"] { color: var(--color-text-muted) !important; }
+
+.pc-note, .pc-info .ico { color: var(--color-text-muted); }
+.desc-block { border-left: 0; padding-left: 0; }
+.stat-num { color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+.hero-stats { flex-wrap: wrap; max-width: 100%; }
+.scroll-cue { opacity: 1; animation: none; }
+.lineage-thread { border-left: 0; border-bottom: 1px solid var(--color-border-subtle); background: transparent; }
+/* Route state fades in; no path-length-dependent draw animation. */
+.route-seg { stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0; transition: opacity var(--duration-standard) var(--ease-standard); }
+.route-seg.visible { opacity: 1; }

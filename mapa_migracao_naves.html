@@ -5,36 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Família Naves — Mapa de Migração</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Marcellus+SC&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/teo/tokens.css">
+<link rel="stylesheet" href="/assets/teo/components.css">
+<script src="/assets/theme.js"></script>
 <style>
-:root {
-  --bg: #06070A;
-  --bg2: #0A0C10;
-  --gold: #C9921A;
-  --gold-lt: #E8B84B;
-  --gold-dk: #7A5510;
-  --cream: #F2E6CC;
-  --muted: #8A7055;
-  --dim: #252018;
-  --dim2: #14120E;
-  --sp: #4A7BC4;
-  --mg: #3A9E6A;
-  --go: #C9921A;
-  --rj: #9B4444;
-}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; }
 body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
   overflow-x: hidden;
 }
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-image: none;
   pointer-events: none; z-index: 9999;
 }
 
@@ -50,42 +36,42 @@ body::after {
   bottom: 0; left: 50%;
   transform: translateX(-50%);
   width: 1px; height: 2.5rem;
-  background: linear-gradient(to bottom, var(--gold), transparent);
+  background: var(--color-bg-canvas);
 }
 .hero-eye {
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.6rem; letter-spacing: 0.5em;
-  color: var(--gold); opacity: 0.7;
+  font-family: var(--font-body);
+  font-size: 0.875rem; letter-spacing: 0.04em;
+  color: var(--color-link); opacity: 0.7;
   margin-bottom: 1.5rem;
 }
 .hero-title {
   font-size: clamp(2.5rem, 7vw, 5.5rem);
-  font-weight: 300; line-height: 0.9;
+  font-weight: 400; line-height: 0.9;
   margin-bottom: 0.5rem;
 }
-.hero-title em { font-style: italic; color: var(--gold); }
+.hero-title em { font-style: normal; color: var(--color-link); }
 .hero-rule {
   width: 80px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  background: var(--color-bg-canvas);
   margin: 1.5rem auto;
 }
 .hero-sub {
-  font-size: 1.1rem; font-style: italic;
-  color: var(--muted); font-weight: 300;
+  font-size: 1.1rem; font-style: normal;
+  color: var(--color-text-muted); font-weight: 400;
   max-width: 480px; margin: 0 auto; line-height: 1.6;
 }
 
 /* STATS BAR */
 .stats-bar {
   display: flex; justify-content: center;
-  border-top: 1px solid var(--dim);
-  border-bottom: 1px solid var(--dim);
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
   margin-top: 3rem;
 }
-.sbar { padding: 1.1rem 2.5rem; text-align: center; border-right: 1px solid var(--dim); flex: 1; max-width: 180px; }
+.sbar { padding: 1.1rem 2.5rem; text-align: center; border-right: 1px solid var(--color-border-subtle); flex: 1; max-width: 180px; }
 .sbar:last-child { border-right: none; }
-.sbar-n { font-size: 1.8rem; font-weight: 600; color: var(--gold); line-height: 1; display: block; }
-.sbar-l { font-size: 0.6rem; font-style: italic; color: var(--muted); letter-spacing: 0.05em; display: block; margin-top: 0.2rem; }
+.sbar-n { font-size: 1.8rem; font-weight: 600; color: var(--color-link); line-height: 1; display: block; }
+.sbar-l { font-size: 0.875rem; font-style: normal; color: var(--color-text-muted); letter-spacing: 0.05em; display: block; margin-top: 0.2rem; }
 
 /* MAIN LAYOUT */
 .layout {
@@ -101,18 +87,18 @@ body::after {
 
 /* TIMELINE */
 .timeline {
-  background: var(--dim2);
-  border-right: 1px solid rgba(201,146,26,0.1);
+  background: var(--color-bg-surface);
+  border-right: 1px solid var(--color-bg-raised);
   overflow-y: auto;
   max-height: calc(100vh - 240px);
   position: sticky; top: 0;
 }
 .tl-head {
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.58rem; letter-spacing: 0.4em;
-  color: var(--gold); opacity: 0.65;
+  font-family: var(--font-body);
+  font-size: 0.875rem; letter-spacing: 0.04em;
+  color: var(--color-link); opacity: 0.65;
   padding: 1.75rem 1.75rem 1.25rem;
-  border-bottom: 1px solid var(--dim);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 .tl-item {
   padding: 1.4rem 1.75rem;
@@ -121,26 +107,26 @@ body::after {
   transition: all 0.3s;
   position: relative;
 }
-.tl-item:hover { background: rgba(201,146,26,0.03); border-left-color: rgba(201,146,26,0.3); }
-.tl-item.active { background: rgba(201,146,26,0.05); border-left-color: var(--gold); }
-.tl-gen { font-size: 0.55rem; letter-spacing: 0.35em; color: var(--gold); opacity: 0.6; margin-bottom: 0.2rem; }
-.tl-year { font-size: 1.35rem; font-weight: 600; color: var(--cream); line-height: 1; margin-bottom: 0.25rem; }
-.tl-city { font-size: 0.95rem; font-style: italic; margin-bottom: 0.3rem; }
+.tl-item:hover { background: var(--color-bg-raised); border-left-color: var(--color-bg-raised); }
+.tl-item.active { background: var(--color-bg-raised); border-left-color: var(--color-link); }
+.tl-gen { font-size: 0.875rem; letter-spacing: 0.04em; color: var(--color-link); opacity: 0.6; margin-bottom: 0.2rem; }
+.tl-year { font-size: 1.35rem; font-weight: 600; color: var(--color-text-primary); line-height: 1; margin-bottom: 0.25rem; }
+.tl-city { font-size: 0.95rem; font-style: normal; margin-bottom: 0.3rem; }
 .tl-badge {
   display: inline-block;
   padding: 0.12rem 0.45rem;
-  font-size: 0.58rem; letter-spacing: 0.2em;
+  font-size: 0.875rem; letter-spacing: 0.04em;
   border: 1px solid; margin-bottom: 0.55rem;
   border-radius: 0;
 }
-.tl-desc { font-size: 0.77rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
-.tl-names { font-size: 0.7rem; font-style: italic; color: var(--dim); margin-top: 0.5rem; line-height: 1.5; transition: color 0.3s; }
-.tl-item.active .tl-names, .tl-item:hover .tl-names { color: var(--muted); }
+.tl-desc { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.65; font-weight: 400; }
+.tl-names { font-size: 0.875rem; font-style: normal; color: var(--color-border-subtle); margin-top: 0.5rem; line-height: 1.5; transition: color 0.3s; }
+.tl-item.active .tl-names, .tl-item:hover .tl-names { color: var(--color-text-muted); }
 
 /* MAP AREA */
 .map-area {
   position: relative;
-  background: var(--bg2);
+  background: var(--color-bg-surface);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
@@ -148,15 +134,14 @@ body::after {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 50% 50% at 55% 50%, rgba(201,146,26,0.025) 0%, transparent 65%);
+    var(--color-bg-canvas);
   pointer-events: none;
 }
 .map-area::after {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(201,146,26,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,146,26,0.025) 1px, transparent 1px);
+    var(--color-bg-canvas);
   background-size: 44px 44px;
   pointer-events: none;
 }
@@ -180,18 +165,18 @@ body::after {
 
 /* Route */
 .route-seg {
-  stroke: var(--gold);
+  stroke: var(--color-link);
   stroke-width: 1.5;
   fill: none;
   opacity: 0.75;
   stroke-dasharray: 600;
   stroke-dashoffset: 600;
   transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1);
-  filter: drop-shadow(0 0 3px rgba(201,146,26,0.45));
+  filter: none;
 }
 .route-seg.visible { stroke-dashoffset: 0; }
 .route-dashed {
-  stroke: rgba(201,146,26,0.3);
+  stroke: var(--color-bg-raised);
   stroke-width: 1;
   fill: none;
   stroke-dasharray: 7 5;
@@ -200,57 +185,59 @@ body::after {
 /* Tooltip */
 .tooltip {
   position: absolute;
-  background: rgba(6,7,10,0.96);
-  border: 1px solid var(--gold-dk);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-control);
   padding: 0.85rem 1.1rem;
   pointer-events: none; z-index: 200;
   max-width: 210px;
   opacity: 0; transition: opacity 0.2s;
-  backdrop-filter: blur(10px);
+
 }
 .tooltip.show { opacity: 1; }
-.tt-city { font-size: 1rem; font-style: italic; color: var(--gold-lt); margin-bottom: 0.2rem; }
-.tt-gen { font-size: 0.58rem; letter-spacing: 0.25em; color: var(--gold); opacity: 0.65; margin-bottom: 0.35rem; }
-.tt-names { font-size: 0.72rem; color: var(--muted); line-height: 1.55; font-style: italic; }
+.tt-city { font-size: 1rem; font-style: normal; color: var(--color-link); margin-bottom: 0.2rem; }
+.tt-gen { font-size: 0.875rem; letter-spacing: 0.04em; color: var(--color-link); opacity: 0.65; margin-bottom: 0.35rem; }
+.tt-names { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.55; font-style: normal; }
 
 /* Legend */
 .map-legend {
   position: absolute; bottom: 1.5rem; right: 1.5rem;
   z-index: 10; display: flex; flex-direction: column; gap: 0.35rem;
 }
-.leg { display: flex; align-items: center; gap: 0.5rem; font-size: 0.62rem; letter-spacing: 0.1em; color: var(--muted); }
+.leg { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; letter-spacing: 0.04em; color: var(--color-text-muted); }
 .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
 /* BACK BUTTON */
 .back-btn {
   position: fixed; top: 1.25rem; left: 1.25rem; z-index: 600;
   display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.6rem; letter-spacing: 0.25em;
-  color: var(--muted); text-decoration: none;
-  border: 1px solid var(--dim);
+  font-family: var(--font-body);
+  font-size: 0.875rem; letter-spacing: 0.04em;
+  color: var(--color-text-muted); text-decoration: none;
+  border: 1px solid var(--color-border-subtle);
   padding: 0.5rem 0.9rem 0.5rem 0.7rem;
-  background: rgba(6,7,10,0.85);
-  backdrop-filter: blur(8px);
+  background: var(--color-bg-surface);
+
   transition: color 0.25s, border-color 0.25s;
 }
-.back-btn:hover { color: var(--gold); border-color: var(--gold-dk); }
+.back-btn:hover { color: var(--color-link); border-color: var(--color-border-control); }
 .back-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 /* FOOTER */
 footer {
   text-align: center;
   padding: 4rem 2rem;
-  border-top: 1px solid var(--dim);
+  border-top: 1px solid var(--color-border-subtle);
 }
-footer p { font-size: 0.78rem; font-style: italic; color: var(--muted); line-height: 2.2; }
+footer p { font-size: 0.875rem; font-style: normal; color: var(--color-text-muted); line-height: 2.2; }
 </style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
+<button class="theme-toggle tp-button tp-button--ghost" type="button" data-theme-toggle aria-pressed="false">Tema claro</button>
 
 <header class="hero">
   <p class="hero-eye">Portugal · SP · MG · GO · 1624 — 1990</p>
-  <h1 class="hero-title">Rotas da<em>Família Naves</em></h1>
+  <h1 class="hero-title">Rotas da <em>Família Naves</em></h1>
   <div class="hero-rule"></div>
   <p class="hero-sub">Quatrocentos anos de migração — do Atlântico ao coração do cerrado</p>
 </header>
@@ -262,7 +249,7 @@ footer p { font-size: 0.78rem; font-style: italic; color: var(--muted); line-hei
   <div class="sbar"><span class="sbar-n">8</span><span class="sbar-l">cidades</span></div>
 </div>
 
-<a href="/" class="back-btn" title="Início">
+<a href="/" class="back-btn tp-button tp-button--ghost" title="Início">
   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
     <path d="M10 13L5 8l5-5"/>
   </svg>
@@ -275,64 +262,55 @@ footer p { font-size: 0.78rem; font-style: italic; color: var(--muted); line-hei
   </aside>
   <section class="map-area" id="mapArea">
     <div class="map-legend">
-      <div class="leg"><div class="leg-dot" style="background:#4A7BC4"></div>São Paulo, SP</div>
-      <div class="leg"><div class="leg-dot" style="background:#3A9E6A"></div>Minas Gerais, MG</div>
-      <div class="leg"><div class="leg-dot" style="background:#C9921A"></div>Goiás, GO</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--chart-secondary)"></div>São Paulo, SP</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--chart-neutral)"></div>Minas Gerais, MG</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--chart-primary)"></div>Goiás, GO</div>
     </div>
     <div class="tooltip" id="tooltip"></div>
 
-    <svg id="mapSvg" viewBox="0 0 700 580" preserveAspectRatio="xMidYMid meet">
+    <svg aria-label="Rotas de migração da família Naves; detalhes e seleção de etapas na linha do tempo" id="mapSvg" viewBox="0 0 700 580" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="glow2"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <radialGradient id="spG" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#4A7BC4" stop-opacity="0.14"/>
-          <stop offset="100%" stop-color="#4A7BC4" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="mgG" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#3A9E6A" stop-opacity="0.11"/>
-          <stop offset="100%" stop-color="#3A9E6A" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="goG" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#C9921A" stop-opacity="0.11"/>
-          <stop offset="100%" stop-color="#C9921A" stop-opacity="0"/>
-        </radialGradient>
+
+
+
+
+
         <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L7,3 z" fill="rgba(201,146,26,0.45)"/>
+          <path d="M0,0 L0,6 L7,3 z" fill="var(--color-bg-raised)"/>
         </marker>
       </defs>
 
       <!-- STATE SHAPES (simplified) -->
       <!-- São Paulo -->
       <path d="M278,358 L335,308 L415,318 L462,345 L472,384 L454,424 L412,444 L360,454 L314,436 L278,402 Z"
-        fill="url(#spG)" stroke="#4A7BC4" stroke-width="0.7" stroke-opacity="0.28"/>
-      <text x="372" y="392" fill="#4A7BC4" fill-opacity="0.4" font-size="11"
-        font-family="Marcellus SC,serif" letter-spacing="3" text-anchor="middle">SP</text>
+        fill="var(--color-bg-raised)" stroke="var(--chart-secondary)" stroke-width="0.7" stroke-opacity="0.28"/>
+      <text x="372" y="392" fill="var(--chart-secondary)" fill-opacity="0.4" font-size="11"
+        font-family="Onest, sans-serif" letter-spacing="3" text-anchor="middle">SP</text>
 
       <!-- Minas Gerais -->
       <path d="M376,204 L458,188 L538,205 L575,245 L584,292 L562,332 L525,362 L477,372 L440,360 L418,332 L418,312 L397,290 L377,260 L368,232 Z"
-        fill="url(#mgG)" stroke="#3A9E6A" stroke-width="0.7" stroke-opacity="0.28"/>
-      <text x="488" y="288" fill="#3A9E6A" fill-opacity="0.4" font-size="11"
-        font-family="Marcellus SC,serif" letter-spacing="3" text-anchor="middle">MG</text>
+        fill="var(--color-bg-raised)" stroke="var(--chart-neutral)" stroke-width="0.7" stroke-opacity="0.28"/>
+      <text x="520" y="240" fill="var(--chart-neutral)" fill-opacity="0.4" font-size="11"
+        font-family="Onest, sans-serif" letter-spacing="3" text-anchor="middle">MG</text>
 
       <!-- Rio de Janeiro (small) -->
       <path d="M524,312 L574,297 L598,322 L578,348 L542,357 L524,336 Z"
-        fill="rgba(155,68,68,0.07)" stroke="#9B4444" stroke-width="0.7" stroke-opacity="0.25"/>
-      <text x="560" y="330" fill="#9B4444" fill-opacity="0.4" font-size="8"
-        font-family="Marcellus SC,serif" letter-spacing="1" text-anchor="middle">RJ</text>
+        fill="var(--color-bg-raised)" stroke="var(--chart-neutral)" stroke-width="0.7" stroke-opacity="0.25"/>
+      <text x="560" y="330" fill="var(--chart-neutral)" fill-opacity="0.4" font-size="8"
+        font-family="Onest, sans-serif" letter-spacing="1" text-anchor="middle">RJ</text>
 
       <!-- Goiás -->
       <path d="M275,104 L358,88 L428,103 L458,142 L466,188 L376,204 L368,232 L347,252 L307,262 L277,242 L262,200 L257,150 Z"
-        fill="url(#goG)" stroke="#C9921A" stroke-width="0.7" stroke-opacity="0.28"/>
-      <text x="360" y="168" fill="#C9921A" fill-opacity="0.4" font-size="11"
-        font-family="Marcellus SC,serif" letter-spacing="3" text-anchor="middle">GO</text>
+        fill="var(--color-bg-raised)" stroke="var(--chart-primary)" stroke-width="0.7" stroke-opacity="0.28"/>
+      <text x="360" y="168" fill="var(--chart-primary)" fill-opacity="0.4" font-size="11"
+        font-family="Onest, sans-serif" letter-spacing="3" text-anchor="middle">GO</text>
 
       <!-- PORTUGAL arrow (dashed, from off-map) -->
       <line x1="55" y1="288" x2="348" y2="418" class="route-dashed" marker-end="url(#arr)"/>
-      <text x="42" y="282" fill="var(--gold)" fill-opacity="0.55" font-size="10"
-        font-family="Cormorant Garamond,serif" font-style="italic">Portugal</text>
-      <text x="42" y="293" fill="var(--muted)" fill-opacity="0.55" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1">1624</text>
+      <text x="42" y="282" fill="var(--color-link)" fill-opacity="0.55" font-size="10"
+        font-family="Onest, sans-serif" font-style="normal">Portugal</text>
+      <text x="42" y="293" fill="var(--color-text-muted)" fill-opacity="0.55" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1">1624</text>
 
       <!-- ROUTE SEGMENTS (drawn progressively) -->
       <!-- Seg 0: SP → Santana de Parnaíba (short, within SP) -->
@@ -355,158 +333,156 @@ footer p { font-size: 0.78rem; font-style: italic; color: var(--muted); line-hei
       <!-- CITY DOTS -->
       <!-- 0: São Paulo -->
       <g class="city-dot" id="dot-0" data-idx="0">
-        <circle cx="348" cy="418" r="18" fill="url(#spG)"/>
-        <circle class="pulse-ring" cx="348" cy="418" r="9" fill="none" stroke="#4A7BC4" stroke-width="1.2" opacity="0"/>
-        <circle cx="348" cy="418" r="7" fill="#4A7BC4" fill-opacity="0.9" filter="url(#glow)"/>
+        <circle cx="348" cy="418" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="348" cy="418" r="9" fill="none" stroke="var(--chart-secondary)" stroke-width="1.2" opacity="0"/>
+        <circle cx="348" cy="418" r="7" fill="var(--chart-secondary)" fill-opacity="0.9"/>
         <circle cx="348" cy="418" r="3.2" fill="white" fill-opacity="0.85"/>
       </g>
-      <text x="361" y="421" fill="#4A7BC4" fill-opacity="0.95" font-size="10"
-        font-family="Cormorant Garamond,serif" font-style="italic">São Paulo</text>
-      <text x="361" y="431" fill="#4A7BC4" fill-opacity="0.45" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1">1653</text>
+      <text x="361" y="421" fill="var(--chart-secondary)" fill-opacity="0.95" font-size="10"
+        font-family="Onest, sans-serif" font-style="normal">São Paulo</text>
+      <text x="361" y="431" fill="var(--chart-secondary)" fill-opacity="0.45" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1">1653</text>
 
       <!-- 1: Santana de Parnaíba -->
       <g class="city-dot inactive" id="dot-1" data-idx="1">
-        <circle cx="338" cy="398" r="15" fill="rgba(74,123,196,0.09)"/>
-        <circle class="pulse-ring" cx="338" cy="398" r="7" fill="none" stroke="#4A7BC4" stroke-width="1" opacity="0"/>
-        <circle cx="338" cy="398" r="5.5" fill="#4A7BC4" fill-opacity="0.85" filter="url(#glow)"/>
+        <circle cx="338" cy="398" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="338" cy="398" r="7" fill="none" stroke="var(--chart-secondary)" stroke-width="1" opacity="0"/>
+        <circle cx="338" cy="398" r="5.5" fill="var(--chart-secondary)" fill-opacity="0.85"/>
         <circle cx="338" cy="398" r="2.5" fill="white" fill-opacity="0.8"/>
       </g>
-      <text x="295" y="394" fill="#4A7BC4" fill-opacity="0.85" font-size="9"
-        font-family="Cormorant Garamond,serif" font-style="italic" text-anchor="end">Santana de Parnaíba</text>
-      <text x="295" y="404" fill="#4A7BC4" fill-opacity="0.4" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1" text-anchor="end">1714</text>
+      <text x="295" y="394" fill="var(--chart-secondary)" fill-opacity="0.85" font-size="9"
+        font-family="Onest, sans-serif" font-style="normal" text-anchor="end">Santana de Parnaíba</text>
+      <text x="295" y="404" fill="var(--chart-secondary)" fill-opacity="0.4" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1" text-anchor="end">1714</text>
 
       <!-- 2: São João Del Rey / Lavras entry -->
       <g class="city-dot inactive" id="dot-2" data-idx="2">
-        <circle cx="443" cy="325" r="16" fill="rgba(58,158,106,0.1)"/>
-        <circle class="pulse-ring" cx="443" cy="325" r="8" fill="none" stroke="#3A9E6A" stroke-width="1" opacity="0"/>
-        <circle cx="443" cy="325" r="6.5" fill="#3A9E6A" fill-opacity="0.9" filter="url(#glow)"/>
+        <circle cx="443" cy="325" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="443" cy="325" r="8" fill="none" stroke="var(--chart-neutral)" stroke-width="1" opacity="0"/>
+        <circle cx="443" cy="325" r="6.5" fill="var(--chart-neutral)" fill-opacity="0.9"/>
         <circle cx="443" cy="325" r="3" fill="white" fill-opacity="0.85"/>
       </g>
-      <text x="456" y="320" fill="#3A9E6A" fill-opacity="0.9" font-size="10"
-        font-family="Cormorant Garamond,serif" font-style="italic">São João Del Rey</text>
-      <text x="456" y="330" fill="#3A9E6A" fill-opacity="0.45" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1">1715 — 1780</text>
+      <text x="456" y="338" fill="var(--chart-neutral)" fill-opacity="0.9" font-size="10"
+        font-family="Onest, sans-serif" font-style="normal">São João Del Rey</text>
+      <text x="456" y="349" fill="var(--chart-neutral)" fill-opacity="0.45" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1">1715 — 1780</text>
 
       <!-- 3: Lavras -->
       <g class="city-dot inactive" id="dot-3" data-idx="3">
-        <circle cx="436" cy="308" r="14" fill="rgba(58,158,106,0.1)"/>
-        <circle class="pulse-ring" cx="436" cy="308" r="7" fill="none" stroke="#3A9E6A" stroke-width="1" opacity="0"/>
-        <circle cx="436" cy="308" r="5.5" fill="#3A9E6A" fill-opacity="0.85"/>
+        <circle cx="436" cy="308" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="436" cy="308" r="7" fill="none" stroke="var(--chart-neutral)" stroke-width="1" opacity="0"/>
+        <circle cx="436" cy="308" r="5.5" fill="var(--chart-neutral)" fill-opacity="0.85"/>
         <circle cx="436" cy="308" r="2.5" fill="white" fill-opacity="0.8"/>
       </g>
-      <text x="449" y="304" fill="#3A9E6A" fill-opacity="0.82" font-size="9.5"
-        font-family="Cormorant Garamond,serif" font-style="italic">Lavras</text>
-      <text x="449" y="313" fill="#3A9E6A" fill-opacity="0.4" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1">1760 — 1870</text>
+      <text x="449" y="304" fill="var(--chart-neutral)" fill-opacity="0.82" font-size="9.5"
+        font-family="Onest, sans-serif" font-style="normal">Lavras</text>
+      <text x="449" y="313" fill="var(--chart-neutral)" fill-opacity="0.4" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1">1760 — 1870</text>
 
       <!-- 4: Bom Sucesso -->
       <g class="city-dot inactive" id="dot-4" data-idx="4">
-        <circle cx="452" cy="278" r="14" fill="rgba(58,158,106,0.1)"/>
-        <circle class="pulse-ring" cx="452" cy="278" r="7" fill="none" stroke="#3A9E6A" stroke-width="1" opacity="0"/>
-        <circle cx="452" cy="278" r="5.5" fill="#3A9E6A" fill-opacity="0.85"/>
+        <circle cx="452" cy="278" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="452" cy="278" r="7" fill="none" stroke="var(--chart-neutral)" stroke-width="1" opacity="0"/>
+        <circle cx="452" cy="278" r="5.5" fill="var(--chart-neutral)" fill-opacity="0.85"/>
         <circle cx="452" cy="278" r="2.5" fill="white" fill-opacity="0.8"/>
       </g>
-      <text x="465" y="274" fill="#3A9E6A" fill-opacity="0.82" font-size="9.5"
-        font-family="Cormorant Garamond,serif" font-style="italic">Bom Sucesso</text>
-      <text x="465" y="283" fill="#3A9E6A" fill-opacity="0.4" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1">1786 — 1877</text>
+      <text x="465" y="274" fill="var(--chart-neutral)" fill-opacity="0.82" font-size="9.5"
+        font-family="Onest, sans-serif" font-style="normal">Bom Sucesso</text>
+      <text x="465" y="283" fill="var(--chart-neutral)" fill-opacity="0.4" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1">1786 — 1877</text>
 
       <!-- 5: Uberlândia -->
       <g class="city-dot inactive" id="dot-5" data-idx="5">
-        <circle cx="440" cy="242" r="17" fill="rgba(58,158,106,0.12)"/>
-        <circle class="pulse-ring" cx="440" cy="242" r="8.5" fill="none" stroke="#3A9E6A" stroke-width="1.2" opacity="0"/>
-        <circle cx="440" cy="242" r="7" fill="#3A9E6A" fill-opacity="0.9" filter="url(#glow)"/>
+        <circle cx="440" cy="242" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="440" cy="242" r="8.5" fill="none" stroke="var(--chart-neutral)" stroke-width="1.2" opacity="0"/>
+        <circle cx="440" cy="242" r="7" fill="var(--chart-neutral)" fill-opacity="0.9"/>
         <circle cx="440" cy="242" r="3.2" fill="white" fill-opacity="0.85"/>
       </g>
-      <text x="453" y="236" fill="#3A9E6A" fill-opacity="0.9" font-size="10"
-        font-family="Cormorant Garamond,serif" font-style="italic">Uberlândia</text>
-      <text x="453" y="246" fill="#3A9E6A" fill-opacity="0.45" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1">c. 1868</text>
+      <text x="453" y="236" fill="var(--chart-neutral)" fill-opacity="0.9" font-size="10"
+        font-family="Onest, sans-serif" font-style="normal">Uberlândia</text>
+      <text x="453" y="246" fill="var(--chart-neutral)" fill-opacity="0.45" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1">c. 1868</text>
 
       <!-- 6: Morrinhos -->
       <g class="city-dot inactive" id="dot-6" data-idx="6">
-        <circle cx="342" cy="192" r="17" fill="rgba(201,146,26,0.13)"/>
-        <circle class="pulse-ring" cx="342" cy="192" r="8.5" fill="none" stroke="#C9921A" stroke-width="1.2" opacity="0"/>
-        <circle cx="342" cy="192" r="7" fill="#C9921A" fill-opacity="0.9" filter="url(#glow)"/>
+        <circle cx="342" cy="192" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="342" cy="192" r="8.5" fill="none" stroke="var(--chart-primary)" stroke-width="1.2" opacity="0"/>
+        <circle cx="342" cy="192" r="7" fill="var(--chart-primary)" fill-opacity="0.9"/>
         <circle cx="342" cy="192" r="3.2" fill="white" fill-opacity="0.85"/>
       </g>
-      <text x="328" y="186" fill="#C9921A" fill-opacity="0.9" font-size="10"
-        font-family="Cormorant Garamond,serif" font-style="italic" text-anchor="end">Morrinhos</text>
-      <text x="328" y="196" fill="#C9921A" fill-opacity="0.45" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1" text-anchor="end">1883</text>
+      <text x="328" y="186" fill="var(--chart-primary)" fill-opacity="0.9" font-size="10"
+        font-family="Onest, sans-serif" font-style="normal" text-anchor="end">Morrinhos</text>
+      <text x="328" y="196" fill="var(--chart-primary)" fill-opacity="0.45" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1" text-anchor="end">1883</text>
 
       <!-- 7: Quirinópolis -->
       <g class="city-dot inactive" id="dot-7" data-idx="7">
-        <circle cx="288" cy="212" r="16" fill="rgba(201,146,26,0.12)"/>
-        <circle class="pulse-ring" cx="288" cy="212" r="8" fill="none" stroke="#C9921A" stroke-width="1.2" opacity="0"/>
-        <circle cx="288" cy="212" r="6.5" fill="#C9921A" fill-opacity="0.9" filter="url(#glow)"/>
+        <circle cx="288" cy="212" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="288" cy="212" r="8" fill="none" stroke="var(--chart-primary)" stroke-width="1.2" opacity="0"/>
+        <circle cx="288" cy="212" r="6.5" fill="var(--chart-primary)" fill-opacity="0.9"/>
         <circle cx="288" cy="212" r="3" fill="white" fill-opacity="0.85"/>
       </g>
-      <text x="274" y="208" fill="#C9921A" fill-opacity="0.9" font-size="10"
-        font-family="Cormorant Garamond,serif" font-style="italic" text-anchor="end">Quirinópolis</text>
-      <text x="274" y="218" fill="#C9921A" fill-opacity="0.45" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1" text-anchor="end">1926</text>
+      <text x="274" y="208" fill="var(--chart-primary)" fill-opacity="0.9" font-size="10"
+        font-family="Onest, sans-serif" font-style="normal" text-anchor="end">Quirinópolis</text>
+      <text x="274" y="218" fill="var(--chart-primary)" fill-opacity="0.45" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1" text-anchor="end">1926</text>
 
       <!-- 8: Goiânia FINAL -->
-      <g class="city-dot inactive" id="dot-8" data-idx="8" filter="url(#glow2)">
-        <circle cx="308" cy="165" r="24" fill="rgba(201,146,26,0.16)"/>
-        <circle class="pulse-ring" cx="308" cy="165" r="11" fill="none" stroke="#E8B84B" stroke-width="1.5" opacity="0"/>
-        <circle cx="308" cy="165" r="10" fill="#C9921A" fill-opacity="0.9"/>
-        <circle cx="308" cy="165" r="5.5" fill="#E8B84B" fill-opacity="0.95"/>
+      <g class="city-dot inactive" id="dot-8" data-idx="8">
+        <circle cx="308" cy="165" r="14" fill="transparent"/>
+        <circle class="pulse-ring" cx="308" cy="165" r="11" fill="none" stroke="var(--chart-primary)" stroke-width="1.5" opacity="0"/>
+        <circle cx="308" cy="165" r="10" fill="var(--chart-primary)" fill-opacity="0.9"/>
+        <circle cx="308" cy="165" r="5.5" fill="var(--chart-primary)" fill-opacity="0.95"/>
         <circle cx="308" cy="165" r="2.5" fill="white"/>
       </g>
-      <text x="297" y="148" fill="#E8B84B" fill-opacity="1" font-size="11.5"
-        font-family="Cormorant Garamond,serif" font-style="italic" text-anchor="middle">Goiânia</text>
-      <text x="297" y="135" fill="#E8B84B" fill-opacity="0.65" font-size="6.5"
-        font-family="Marcellus SC,serif" letter-spacing="2.5" text-anchor="middle">DESTINO FINAL</text>
-      <text x="297" y="143" fill="#C9921A" fill-opacity="0.55" font-size="7"
-        font-family="Marcellus SC,serif" letter-spacing="1" text-anchor="middle">1985</text>
+      <text x="297" y="150" fill="var(--chart-primary)" fill-opacity="1" font-size="11.5"
+        font-family="Onest, sans-serif" font-style="normal" text-anchor="middle">Goiânia</text>
+      <text x="297" y="122" fill="var(--chart-primary)" fill-opacity="0.65" font-size="6.5"
+        font-family="Onest, sans-serif" letter-spacing="2.5" text-anchor="middle">DESTINO FINAL</text>
+      <text x="297" y="134" fill="var(--chart-primary)" fill-opacity="0.55" font-size="7"
+        font-family="Onest, sans-serif" letter-spacing="1" text-anchor="middle">1985</text>
     </svg>
   </section>
 </div>
 
 <footer>
-  <div style="width:60px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:0 auto 2rem"></div>
-  <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem">Desenvolvido por <strong style="color:var(--cream);font-weight:400">Rodrigo Teodoro</strong></p>
+  <div style="width:60px;height:1px;background:var(--color-bg-canvas);margin:0 auto 2rem"></div>
+  <p style="font-size: 0.875rem;color:var(--color-text-muted);margin-bottom:0.5rem">Desenvolvido por <strong style="color:var(--color-text-primary);font-weight:400">Rodrigo Teodoro</strong></p>
   <a href="https://github.com/TeodoroRodrigo/familia-naves" target="_blank" rel="noopener"
-    style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--muted);text-decoration:none;border:1px solid var(--dim);padding:0.3rem 0.75rem;margin-bottom:1rem;transition:color .25s,border-color .25s"
-    onmouseover="this.style.color='#E8B84B';this.style.borderColor='#7A5510'"
-    onmouseout="this.style.color='';this.style.borderColor=''">
+    style="display:inline-flex;align-items:center;gap:0.4rem;font-size: 0.875rem;color:var(--color-text-muted);text-decoration:none;border:1px solid var(--color-border-subtle);padding:0.3rem 0.75rem;margin-bottom:1rem;transition:color .25s,border-color .25s">
     <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
     TeodoroRodrigo/familia-naves
   </a>
-  <p style="font-size:0.6rem;font-style:italic;color:var(--dim);letter-spacing:0.1em">Pesquisa: Nilson N. Naves · Editora Naves, 2025</p>
+  <p style="font-size: 0.875rem;font-style: normal;color:var(--color-border-subtle);letter-spacing: 0.04em">Pesquisa: Nilson N. Naves · Editora Naves, 2025</p>
 </footer>
 
 <script>
 const STOPS = [
-  { city:'São Paulo, SP', year:'1624 — 1653', gen:'1ª Geração', state:'SP', col:'#4A7BC4',
+  { city:'São Paulo, SP', year:'1624 — 1653', gen:'1ª Geração', state:'SP', col:'var(--chart-secondary)',
     desc:'João de Almeida Naves chega de Portugal e casa-se com Maria da Silva Leite em São Paulo (~1653). Início da linhagem brasileira dos Naves.',
     names:'João de Almeida Naves · Maria da Silva Leite', seg:null },
-  { city:'Santana de Parnaíba, SP', year:'1676 — 1714', gen:'2ª Geração', state:'SP', col:'#4A7BC4',
+  { city:'Santana de Parnaíba, SP', year:'1676 — 1714', gen:'2ª Geração', state:'SP', col:'var(--chart-secondary)',
     desc:'Florência da Silva Naves cresce e casa em 1714 com Domingos Lopes da Silva. Único filho: João (neto), que levará o nome do avô materno.',
     names:'Florência da Silva Naves · Domingos Lopes da Silva', seg:'seg0' },
-  { city:'São João Del Rey, MG', year:'1715 — 1780', gen:'3ª Geração', state:'MG', col:'#3A9E6A',
+  { city:'São João Del Rey, MG', year:'1715 — 1780', gen:'3ª Geração', state:'MG', col:'var(--chart-neutral)',
     desc:'João de Almeida Naves (neto) migra para Minas Gerais acompanhando a corrida do ouro. Casa-se com Luzia Moreira da Fonseca. A família se interioriza.',
     names:'João de Almeida Naves (neto) · Luzia Moreira da Fonseca', seg:'seg1' },
-  { city:'Lavras, MG', year:'1760 — 1831', gen:'4ª Geração', state:'MG', col:'#3A9E6A',
+  { city:'Lavras, MG', year:'1760 — 1831', gen:'4ª Geração', state:'MG', col:'var(--chart-neutral)',
     desc:'João Naves Damasceno e Anna Vittoria de São Thomé têm 12 filhos em Lavras. A família Naves se multiplica no sul de Minas Gerais.',
     names:'João Naves Damasceno · Anna Vittoria de São Thomé', seg:'seg2' },
-  { city:'Bom Sucesso, MG', year:'1805 — 1882', gen:'5ª e 6ª Gerações', state:'MG', col:'#3A9E6A',
+  { city:'Bom Sucesso, MG', year:'1805 — 1882', gen:'5ª e 6ª Gerações', state:'MG', col:'var(--chart-neutral)',
     desc:'Manoel Antônio Naves e Maria Rita Nascimento (irmãos) geram descendentes que se unem entre si: Francisco de Paula Naves casa com Umbelina Rosa Naves (primos).',
     names:'Manoel Antônio Naves · Francisco de Paula Naves · Umbelina Rosa Naves', seg:'seg3' },
-  { city:'Uberlândia, MG', year:'1868 — 1955', gen:'7ª Geração', state:'MG', col:'#3A9E6A',
+  { city:'Uberlândia, MG', year:'1868 — 1955', gen:'7ª Geração', state:'MG', col:'var(--chart-neutral)',
     desc:'Américo Brasiliense Naves e Maria Cândida de Mello constroem família em Uberlândia. Notável: faleceram no mesmo dia — 19.03.1955.',
     names:'Américo Brasiliense Naves · Maria Cândida de Mello', seg:'seg4' },
-  { city:'Morrinhos, GO', year:'1883 — 1938', gen:'8ª Geração', state:'GO', col:'#C9921A',
+  { city:'Morrinhos, GO', year:'1883 — 1938', gen:'8ª Geração', state:'GO', col:'var(--chart-primary)',
     desc:'Messias Brasiliense Naves cruza a fronteira para Goiás — a família entra no cerrado. Casa com Maria José Pereira em Morrinhos. Seis filhos.',
     names:'Messias Brasiliense Naves · Maria José Pereira', seg:'seg5' },
-  { city:'Quirinópolis, GO', year:'1926 — 2013', gen:'9ª e 10ª Gerações', state:'GO', col:'#C9921A',
+  { city:'Quirinópolis, GO', year:'1926 — 2013', gen:'9ª e 10ª Gerações', state:'GO', col:'var(--chart-primary)',
     desc:'Anésia Naves da Silva e Antônio Alves da Silva fixam raízes em Quirinópolis. Seu filho Gilmar Alves da Silva — o sujeito desta genealogia — nasce em 02.03.1958.',
     names:'Anésia Naves da Silva · Antônio Alves da Silva · Gilmar Alves da Silva', seg:'seg6' },
-  { city:'Goiânia, GO', year:'1985 — presente', gen:'11ª Geração', state:'GO', col:'#E8B84B',
+  { city:'Goiânia, GO', year:'1985 — presente', gen:'11ª Geração', state:'GO', col:'var(--chart-primary)',
     desc:'A 11ª geração chega à capital goiana. Fábio Henrique Fagundes Alves (1985), Brunno Teodoro Alves (1989) e Rodrigo Teodoro Alves (1990) encerram a genealogia documentada.',
     names:'Fábio Henrique Fagundes Alves · Brunno Teodoro Alves · Rodrigo Teodoro Alves', seg:'seg7' }
 ];
@@ -516,16 +492,18 @@ let activeIdx = 0;
 // Build timeline
 const tlList = document.getElementById('tlList');
 STOPS.forEach((s, i) => {
-  const div = document.createElement('div');
+  const div = document.createElement('button');
+  div.type = 'button';
+  div.setAttribute('aria-pressed', String(i === 0));
   div.className = 'tl-item' + (i === 0 ? ' active' : '');
   div.dataset.idx = i;
   div.innerHTML = `
-    <div class="tl-gen">${s.gen}</div>
-    <div class="tl-year">${s.year}</div>
-    <div class="tl-city">${s.city}</div>
-    <div class="tl-badge" style="color:${s.col};border-color:${s.col}40">${s.state}</div>
-    <div class="tl-desc">${s.desc}</div>
-    <div class="tl-names">${s.names}</div>`;
+    <span class="tl-gen">${s.gen}</span>
+    <span class="tl-year">${s.year}</span>
+    <span class="tl-city">${s.city}</span>
+    <span class="tl-badge">${s.state}</span>
+    <span class="tl-desc">${s.desc}</span>
+    <span class="tl-names">${s.names}</span>`;
   div.addEventListener('click', () => activate(i));
   tlList.appendChild(div);
 });
@@ -533,7 +511,10 @@ STOPS.forEach((s, i) => {
 function activate(idx) {
   activeIdx = idx;
   // Timeline
-  document.querySelectorAll('.tl-item').forEach((el,i) => el.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tl-item').forEach((el,i) => {
+    el.classList.toggle('active', i === idx);
+    el.setAttribute('aria-pressed', String(i === idx));
+  });
   // Dots
   document.querySelectorAll('.city-dot').forEach(dot => {
     const di = parseInt(dot.dataset.idx);
@@ -554,7 +535,16 @@ const tooltip = document.getElementById('tooltip');
 const mapArea = document.getElementById('mapArea');
 
 document.querySelectorAll('.city-dot').forEach(dot => {
-  dot.addEventListener('mouseenter', () => {
+  dot.setAttribute('role', 'button');
+  dot.setAttribute('tabindex', '0');
+  dot.setAttribute('aria-label', STOPS[Number(dot.dataset.idx)].city);
+  dot.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      activate(Number(dot.dataset.idx));
+    }
+  });
+  const showTooltip = () => {
     const i = parseInt(dot.dataset.idx);
     if (i >= STOPS.length) return;
     const s = STOPS[i];
@@ -562,8 +552,15 @@ document.querySelectorAll('.city-dot').forEach(dot => {
       <div class="tt-gen">${s.gen}</div>
       <div class="tt-city">${s.city}</div>
       <div class="tt-names">${s.names}</div>`;
+    const area = mapArea.getBoundingClientRect();
+    const marker = dot.getBoundingClientRect();
+    tooltip.style.left = Math.max(8, Math.min(marker.left - area.left + 20, area.width - 220)) + 'px';
+    tooltip.style.top = Math.max(8, marker.top - area.top - 80) + 'px';
     tooltip.classList.add('show');
-  });
+  };
+  dot.addEventListener('mouseenter', showTooltip);
+  dot.addEventListener('focus', showTooltip);
+  dot.addEventListener('blur', () => tooltip.classList.remove('show'));
   dot.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
   dot.addEventListener('mousemove', e => {
     const r = mapArea.getBoundingClientRect();
@@ -578,19 +575,6 @@ document.querySelectorAll('.city-dot').forEach(dot => {
   if (parseInt(dot.dataset.idx) > 0) dot.classList.add('inactive');
 });
 
-// Auto-play on first load
-let autoIdx = 0;
-const autoTimer = setInterval(() => {
-  autoIdx++;
-  if (autoIdx >= STOPS.length) { clearInterval(autoTimer); return; }
-  activate(autoIdx);
-  // Scroll timeline item into view
-  const items = document.querySelectorAll('.tl-item');
-  if (items[autoIdx]) items[autoIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}, 1800);
-
-// Stop auto-play on user interaction
-document.querySelector('.layout').addEventListener('click', () => clearInterval(autoTimer), { once: true });
 </script>
 </body>
 </html>
