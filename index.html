@@ -5,24 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Família Naves</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Marcellus+SC&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/teo/tokens.css">
+<link rel="stylesheet" href="/assets/teo/components.css">
+<script src="/assets/theme.js"></script>
 <style>
-:root {
-  --bg: #07060A;
-  --gold: #C9921A;
-  --gold-lt: #E8B84B;
-  --gold-dk: #7A5510;
-  --cream: #F2E6CC;
-  --muted: #967A55;
-  --dim: #2A2018;
-}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,7 +27,7 @@ body {
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  background-image: none;
   pointer-events: none; z-index: 9999;
 }
 
@@ -43,7 +35,7 @@ body::before {
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, #16100A 0%, var(--bg) 70%);
+  background: var(--color-bg-canvas);
   pointer-events: none; z-index: 0;
 }
 
@@ -62,41 +54,41 @@ body::after {
 }
 
 .eyebrow {
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.5em;
-  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-link);
   opacity: 0.65;
   margin-bottom: 2rem;
 }
 
 h1 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 0.88;
-  color: var(--cream);
+  color: var(--color-text-primary);
   letter-spacing: -0.01em;
   margin-bottom: 0.4rem;
 }
 
 h1 em {
-  font-style: italic;
-  color: var(--gold);
+  font-style: normal;
+  color: var(--color-link);
   display: block;
 }
 
 .rule {
   width: 90px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  background: var(--color-bg-canvas);
   margin: 1.75rem auto;
 }
 
 .subtitle {
   font-size: 1.1rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--color-text-muted);
   margin-bottom: 3rem;
   line-height: 1.6;
 }
@@ -106,16 +98,16 @@ h1 em {
   display: flex;
   justify-content: center;
   gap: 0;
-  border: 1px solid var(--dim);
+  border: 1px solid var(--color-border-subtle);
   margin-bottom: 3rem;
 }
 .stat {
   padding: 0.9rem 1.75rem;
-  border-right: 1px solid var(--dim);
+  border-right: 1px solid var(--color-border-subtle);
 }
 .stat:last-child { border-right: none; }
-.stat-n { font-size: 1.6rem; font-weight: 600; color: var(--gold-lt); line-height: 1; display: block; }
-.stat-l { font-size: 0.6rem; font-style: italic; color: var(--muted); letter-spacing: 0.05em; display: block; margin-top: 0.15rem; }
+.stat-n { font-size: 1.6rem; font-weight: 600; color: var(--color-link); line-height: 1; display: block; }
+.stat-l { font-size: 0.875rem; font-style: normal; color: var(--color-text-muted); letter-spacing: 0.05em; display: block; margin-top: 0.15rem; }
 
 /* nav cards */
 .nav-grid {
@@ -135,10 +127,10 @@ h1 em {
   justify-content: center;
   gap: 1rem;
   padding: 2.5rem 1.5rem;
-  border: 1px solid var(--dim);
+  border: 1px solid var(--color-border-subtle);
   text-decoration: none;
-  color: var(--cream);
-  background: rgba(201,146,26,0.025);
+  color: var(--color-text-primary);
+  background: var(--color-bg-raised);
   position: relative;
   transition: border-color 0.35s, background 0.35s, box-shadow 0.35s;
 }
@@ -148,52 +140,52 @@ h1 em {
   content: '';
   position: absolute; top: -1px; left: -1px;
   width: 12px; height: 12px;
-  border-top: 1.5px solid var(--gold-dk);
-  border-left: 1.5px solid var(--gold-dk);
+  border-top: 1.5px solid var(--color-border-control);
+  border-left: 1.5px solid var(--color-border-control);
   transition: border-color 0.35s;
 }
 .nav-card::after {
   content: '';
   position: absolute; bottom: -1px; right: -1px;
   width: 12px; height: 12px;
-  border-bottom: 1.5px solid var(--gold-dk);
-  border-right: 1.5px solid var(--gold-dk);
+  border-bottom: 1.5px solid var(--color-border-control);
+  border-right: 1.5px solid var(--color-border-control);
   transition: border-color 0.35s;
 }
 
 .nav-card:hover {
-  border-color: var(--gold-dk);
-  background: rgba(201,146,26,0.06);
-  box-shadow: 0 0 35px rgba(201,146,26,0.08);
+  border-color: var(--color-border-control);
+  background: var(--color-bg-raised);
+  box-shadow: none;
 }
 .nav-card:hover::before,
 .nav-card:hover::after {
-  border-color: var(--gold);
+  border-color: var(--color-link);
 }
 
 .card-icon {
   width: 44px; height: 44px;
-  border: 1px solid var(--dim);
+  border: 1px solid var(--color-border-subtle);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.3rem;
-  background: rgba(201,146,26,0.04);
+  background: var(--color-bg-raised);
   transition: border-color 0.35s;
 }
-.nav-card:hover .card-icon { border-color: var(--gold-dk); }
+.nav-card:hover .card-icon { border-color: var(--color-border-control); }
 
 .card-label {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 400;
-  color: var(--cream);
+  color: var(--color-text-primary);
   letter-spacing: 0.01em;
 }
 
 .card-desc {
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--muted);
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--color-text-muted);
   letter-spacing: 0.03em;
 }
 
@@ -201,51 +193,53 @@ footer {
   position: relative; z-index: 1;
   margin-top: 3.5rem;
   width: 100%; max-width: 680px;
-  border-top: 1px solid var(--dim);
+  border-top: 1px solid var(--color-border-subtle);
   padding-top: 1.5rem;
   text-align: center;
   animation: fadeUp 1s 0.4s ease both;
 }
 .footer-author {
   display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-  font-size: 0.82rem;
-  color: var(--muted);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   margin-bottom: 0.6rem;
 }
-.footer-author strong { color: var(--cream); font-weight: 400; }
+.footer-author strong { color: var(--color-text-primary); font-weight: 400; }
 .gh-link {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.72rem;
-  color: var(--muted);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   text-decoration: none;
-  border: 1px solid var(--dim);
+  border: 1px solid var(--color-border-subtle);
   padding: 0.3rem 0.75rem;
   transition: color 0.25s, border-color 0.25s;
   margin-bottom: 1rem;
 }
-.gh-link:hover { color: var(--gold); border-color: var(--gold-dk); }
+.gh-link:hover { color: var(--color-link); border-color: var(--color-border-control); }
 .gh-link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
 .footer-credit {
-  font-size: 0.6rem;
-  font-style: italic;
-  color: var(--dim);
-  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--color-border-subtle);
+  letter-spacing: 0.04em;
 }
 .desc-block {
   font-size: 0.88rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--color-text-muted);
   line-height: 1.75;
   max-width: 520px;
   margin: 0 auto 2.5rem;
-  border-left: 2px solid var(--gold-dk);
+  border-left: 2px solid var(--color-border-control);
   padding-left: 1.25rem;
   text-align: left;
 }
 </style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
+<button class="theme-toggle tp-button tp-button--ghost" type="button" data-theme-toggle aria-pressed="false">Tema claro</button>
   <div class="wrap">
     <p class="eyebrow">Brasil · Portugal · 1653 — presente</p>
     <h1>Família<em>Naves</em></h1>

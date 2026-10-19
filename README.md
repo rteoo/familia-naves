@@ -38,7 +38,9 @@ familia-naves/
 
 Hospedado no **Vercel** com deploy automático a cada push na branch `main`.
 
-Para rodar localmente, basta abrir qualquer `.html` diretamente no navegador — sem servidor necessário.
+Para rodar localmente com as mesmas rotas do Vercel, execute `python3 serve.py`
+na raiz do repositório e abra a porta 8000 no navegador. Requer apenas Python 3;
+sem instalação de pacotes ou build. Use `--port 8001` para escolher outra porta.
 
 ---
 
@@ -74,3 +76,10 @@ Para rodar localmente, basta abrir qualquer `.html` diretamente no navegador —
 **Pesquisa:** Nilson N. Naves  
 **Criação original:** Jales Naves  
 **Editora Naves, 2025**
+
+## Design system
+
+The site uses **Teô Design System v2.7.1**, vendored under `assets/teo/`.
+See [DESIGN.md](DESIGN.md) for the release source and project-specific extensions.
+All pages support dark and light themes through the “Tema claro / Tema escuro”
+button, with the choice retained across pages. No build or package installation is required.

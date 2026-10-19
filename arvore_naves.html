@@ -5,29 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Família Naves — Árvore Genealógica</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Marcellus+SC&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/teo/tokens.css">
+<link rel="stylesheet" href="/assets/teo/components.css">
+<script src="/assets/theme.js"></script>
 <style>
-:root {
-  --bg: #07060A;
-  --bg2: #0E0B10;
-  --gold: #C9921A;
-  --gold-lt: #E8B84B;
-  --gold-dk: #7A5510;
-  --gold-glow: rgba(201,146,26,0.15);
-  --cream: #F2E6CC;
-  --muted: #967A55;
-  --dim: #3A2E1E;
-  --rust: #6B2A18;
-  --line: rgba(201,146,26,0.25);
-}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
   overflow-x: hidden;
 }
 
@@ -35,7 +23,7 @@ body {
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  background-image: none;
   pointer-events: none; z-index: 9999; opacity: 1;
 }
 
@@ -47,7 +35,7 @@ body::after {
   text-align: center;
   padding: 5rem 2rem 8rem;
   position: relative;
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, #1A1008 0%, var(--bg) 70%);
+  background: var(--color-bg-canvas);
 }
 
 .hero::before {
@@ -55,8 +43,7 @@ body::after {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 40% 30% at 30% 60%, rgba(201,146,26,0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 70% 40%, rgba(201,146,26,0.03) 0%, transparent 60%);
+    var(--color-bg-canvas);
   pointer-events: none;
 }
 
@@ -66,45 +53,45 @@ body::after {
   bottom: 0; left: 50%;
   transform: translateX(-50%);
   width: 1px; height: 80px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
+  background: var(--color-bg-canvas);
 }
 
 .hero-eyebrow {
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.45em;
-  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-link);
   margin-bottom: 2.5rem;
   opacity: 0.7;
 }
 
 .hero-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-size: clamp(4rem, 12vw, 10rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 0.88;
-  color: var(--cream);
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
 }
 
 .hero-title em {
-  font-style: italic;
-  color: var(--gold);
+  font-style: normal;
+  color: var(--color-link);
   display: block;
 }
 
 .hero-rule {
   width: 120px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  background: var(--color-bg-canvas);
   margin: 2rem auto;
 }
 
 .hero-sub {
   font-size: clamp(1rem, 2vw, 1.35rem);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--muted);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--color-text-muted);
   max-width: 480px;
   line-height: 1.6;
   margin-bottom: 3.5rem;
@@ -112,27 +99,27 @@ body::after {
 
 .hero-stats {
   display: flex; gap: 0; align-items: stretch;
-  border: 1px solid var(--dim);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .stat {
   padding: 1.25rem 2rem;
   text-align: center;
-  border-right: 1px solid var(--dim);
+  border-right: 1px solid var(--color-border-subtle);
 }
 .stat:last-child { border-right: none; }
 
 .stat-num {
   font-size: 2.2rem;
   font-weight: 600;
-  color: var(--gold-lt);
+  color: var(--color-link);
   line-height: 1;
   display: block;
 }
 .stat-label {
-  font-size: 0.7rem;
-  font-style: italic;
-  color: var(--muted);
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--color-text-muted);
   letter-spacing: 0.05em;
   display: block;
   margin-top: 0.25rem;
@@ -144,9 +131,9 @@ body::after {
   left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
   opacity: 0.4; animation: bob 2s ease-in-out infinite;
-  font-size: 0.6rem; letter-spacing: 0.25em; color: var(--muted);
+  font-size: 0.875rem; letter-spacing: 0.04em; color: var(--color-text-muted);
 }
-.scroll-cue svg { width: 20px; height: 20px; stroke: var(--muted); fill: none; }
+.scroll-cue svg { width: 20px; height: 20px; stroke: var(--color-text-muted); fill: none; }
 @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
 
 /* ─────────────────── SIDE NAV ─────────────────── */
@@ -167,9 +154,9 @@ body::after {
 .sn-item:hover, .sn-item.active { opacity: 1; }
 
 .sn-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--cream);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.25s;
@@ -179,14 +166,14 @@ body::after {
 
 .sn-pip {
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--muted);
+  background: var(--color-text-muted);
   flex-shrink: 0;
   transition: all 0.3s;
 }
 .sn-item.active .sn-pip {
-  background: var(--gold);
+  background: var(--color-link);
   width: 7px; height: 7px;
-  box-shadow: 0 0 8px var(--gold);
+  box-shadow: none;
 }
 
 /* ─────────────────── GENERATION SECTION ─────────────────── */
@@ -206,7 +193,7 @@ body::after {
   position: absolute;
   top: -1px; bottom: -1px; left: 50%;
   width: 1px;
-  background: linear-gradient(to bottom, var(--gold-dk) 0%, var(--line) 40%, var(--line) 60%, var(--gold-dk) 100%);
+  background: var(--color-bg-canvas);
   pointer-events: none;
   z-index: 0;
 }
@@ -218,27 +205,27 @@ body::after {
 }
 
 .gen-number {
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.4em;
-  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-link);
   display: block;
   margin-bottom: 0.3rem;
 }
 
 .gen-era {
   font-size: 1.5rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--cream);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--color-text-primary);
   display: block;
   line-height: 1;
 }
 
 .gen-place {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--muted);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
   display: block;
   margin-top: 0.4rem;
 }
@@ -257,17 +244,17 @@ body::after {
 
 .person-card {
   padding: 1.75rem 2rem;
-  border: 1px solid var(--dim);
-  background: rgba(201,146,26,0.025);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-raised);
   position: relative;
   transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
   cursor: default;
 }
 
 .person-card:hover {
-  border-color: var(--gold-dk);
-  background: rgba(201,146,26,0.055);
-  box-shadow: 0 0 40px rgba(201,146,26,0.08);
+  border-color: var(--color-border-control);
+  background: var(--color-bg-raised);
+  box-shadow: none;
 }
 
 /* corner ornaments */
@@ -275,15 +262,15 @@ body::after {
   content: '';
   position: absolute; top: -1px; left: -1px;
   width: 14px; height: 14px;
-  border-top: 1.5px solid var(--gold);
-  border-left: 1.5px solid var(--gold);
+  border-top: 1.5px solid var(--color-link);
+  border-left: 1.5px solid var(--color-link);
 }
 .person-card::after {
   content: '';
   position: absolute; bottom: -1px; right: -1px;
   width: 14px; height: 14px;
-  border-bottom: 1.5px solid var(--gold);
-  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--color-link);
+  border-right: 1.5px solid var(--color-link);
 }
 
 .pc-left { text-align: right; }
@@ -292,31 +279,31 @@ body::after {
 .pc-name {
   font-size: clamp(1.05rem, 2.2vw, 1.55rem);
   font-weight: 400;
-  color: var(--cream);
+  color: var(--color-text-primary);
   line-height: 1.2;
   margin-bottom: 0.9rem;
   letter-spacing: 0.01em;
 }
 
 .pc-info {
-  font-size: 0.82rem;
-  color: var(--muted);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   line-height: 1.85;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .pc-info .ico {
-  color: var(--gold-dk);
+  color: var(--color-border-control);
   margin-right: 0.25rem;
 }
 
 .pc-note {
-  font-size: 0.72rem;
-  color: var(--dim);
-  font-style: italic;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-style: normal;
   margin-top: 0.75rem;
   line-height: 1.5;
-  border-top: 1px solid var(--dim);
+  border-top: 1px solid var(--color-border-subtle);
   padding-top: 0.6rem;
 }
 
@@ -329,19 +316,19 @@ body::after {
 
 .union-ring {
   width: 44px; height: 44px;
-  border: 1px solid var(--gold-dk);
+  border: 1px solid var(--color-border-control);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  color: var(--gold);
+  color: var(--color-link);
   font-size: 1.3rem;
-  background: rgba(201,146,26,0.04);
+  background: var(--color-bg-raised);
   flex-shrink: 0;
 }
 
 .union-date {
-  font-size: 0.65rem;
-  font-style: italic;
-  color: var(--muted);
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--color-text-muted);
   text-align: center;
   max-width: 90px;
   line-height: 1.5;
@@ -351,25 +338,25 @@ body::after {
 .lineage-thread {
   display: flex; align-items: center; gap: 1rem;
   padding: 0.65rem 1.25rem;
-  border-left: 2px solid var(--gold);
-  background: rgba(201,146,26,0.04);
+  border-left: 2px solid var(--color-link);
+  background: var(--color-bg-raised);
   margin-bottom: 2rem;
   max-width: 860px; width: 100%;
   position: relative; z-index: 1;
 }
 
 .lt-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  color: var(--gold-dk);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-border-control);
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 .lt-name {
   font-size: 1rem;
-  font-style: italic;
-  color: var(--gold);
+  font-style: normal;
+  color: var(--color-link);
 }
 
 /* ─── Children ─── */
@@ -379,9 +366,9 @@ body::after {
 }
 
 .children-title {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  color: var(--dim);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 0.9rem;
@@ -394,10 +381,10 @@ body::after {
 
 .child-tag {
   padding: 0.35rem 0.85rem;
-  border: 1px solid var(--dim);
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--muted);
+  border: 1px solid var(--color-border-subtle);
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--color-text-muted);
   transition: all 0.25s;
   cursor: default;
   position: relative;
@@ -405,15 +392,15 @@ body::after {
 }
 
 .child-tag:hover {
-  color: var(--cream);
-  border-color: var(--muted);
-  background: rgba(255,255,255,0.02);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
+  background: var(--color-bg-surface);
 }
 
 .child-tag.hl {
-  border-color: var(--gold-dk);
-  color: var(--gold-lt);
-  background: rgba(201,146,26,0.07);
+  border-color: var(--color-border-control);
+  color: var(--color-link);
+  background: var(--color-bg-raised);
 }
 
 .child-tag.hl::after { content: ' ›'; }
@@ -427,9 +414,9 @@ body::after {
 }
 .gen-divider::before, .gen-divider::after {
   content: ''; flex: 1; height: 1px;
-  background: var(--gold-dk);
+  background: var(--color-border-control);
 }
-.gen-divider span { color: var(--gold); font-size: 0.4rem; }
+.gen-divider span { color: var(--color-link); font-size: 0.875rem; }
 
 /* ─── Animations ─── */
 .fade-up {
@@ -446,27 +433,27 @@ body::after {
 .back-btn {
   position: fixed; top: 1.25rem; left: 1.25rem; z-index: 600;
   display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: 'Marcellus SC', serif;
-  font-size: 0.6rem; letter-spacing: 0.25em;
-  color: var(--muted); text-decoration: none;
-  border: 1px solid var(--dim);
+  font-family: var(--font-body);
+  font-size: 0.875rem; letter-spacing: 0.04em;
+  color: var(--color-text-muted); text-decoration: none;
+  border: 1px solid var(--color-border-subtle);
   padding: 0.5rem 0.9rem 0.5rem 0.7rem;
-  background: rgba(7,6,10,0.85);
-  backdrop-filter: blur(8px);
+  background: var(--color-bg-surface);
+
   transition: color 0.25s, border-color 0.25s;
 }
-.back-btn:hover { color: var(--gold); border-color: var(--gold-dk); }
+.back-btn:hover { color: var(--color-link); border-color: var(--color-border-control); }
 .back-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 /* ─── FOOTER ─── */
 footer {
   text-align: center; padding: 5rem 2rem 4rem;
-  border-top: 1px solid var(--dim);
+  border-top: 1px solid var(--color-border-subtle);
   position: relative; z-index: 1;
 }
 footer p {
-  font-size: 0.8rem; font-style: italic;
-  color: var(--muted); line-height: 2.2;
+  font-size: 0.875rem; font-style: normal;
+  color: var(--color-text-muted); line-height: 2.2;
 }
 
 /* ─── RESPONSIVE ─── */
@@ -482,13 +469,15 @@ footer p {
 }
 
 /* Last gen special styling */
-.gen-section.last-gen .gen-era { color: var(--gold); }
+.gen-section.last-gen .gen-era { color: var(--color-link); }
 .gen-section.last-gen .gen-section::before { display: none; }
 </style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
+<button class="theme-toggle tp-button tp-button--ghost" type="button" data-theme-toggle aria-pressed="false">Tema claro</button>
 
-<a href="/" class="back-btn" title="Início">
+<a href="/" class="back-btn tp-button tp-button--ghost" title="Início">
   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
     <path d="M10 13L5 8l5-5"/>
   </svg>
@@ -516,17 +505,15 @@ footer p {
 <div id="treeRoot"></div>
 
 <footer>
-  <div style="width:60px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:0 auto 2rem"></div>
-  <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem">Desenvolvido por <strong style="color:var(--cream);font-weight:400">Rodrigo Teodoro</strong></p>
+  <div style="width:60px;height:1px;background:var(--color-bg-canvas);margin:0 auto 2rem"></div>
+  <p style="font-size: 0.875rem;color:var(--color-text-muted);margin-bottom:0.5rem">Desenvolvido por <strong style="color:var(--color-text-primary);font-weight:400">Rodrigo Teodoro</strong></p>
   <a href="https://github.com/TeodoroRodrigo/familia-naves" target="_blank" rel="noopener"
-    style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--muted);text-decoration:none;border:1px solid var(--dim);padding:0.3rem 0.75rem;margin-bottom:1rem;transition:color .25s,border-color .25s"
-    onmouseover="this.style.color='#E8B84B';this.style.borderColor='#7A5510'"
-    onmouseout="this.style.color='';this.style.borderColor=''">
+    style="display:inline-flex;align-items:center;gap:0.4rem;font-size: 0.875rem;color:var(--color-text-muted);text-decoration:none;border:1px solid var(--color-border-subtle);padding:0.3rem 0.75rem;margin-bottom:1rem;transition:color .25s,border-color .25s">
     <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
     TeodoroRodrigo/familia-naves
   </a>
-  <p style="font-size:0.6rem;font-style:italic;color:var(--dim);letter-spacing:0.1em">Pesquisa: Nilson N. Naves · Editora Naves, 2025</p>
-  <p style="margin-top:1rem;font-size:0.6rem;letter-spacing:0.2em;color:var(--dim)">FAMÍLIA NAVES · BRASIL · 1653</p>
+  <p style="font-size: 0.875rem;font-style: normal;color:var(--color-border-subtle);letter-spacing: 0.04em">Pesquisa: Nilson N. Naves · Editora Naves, 2025</p>
+  <p style="margin-top:1rem;font-size: 0.875rem;letter-spacing: 0.04em;color:var(--color-border-subtle)">FAMÍLIA NAVES · BRASIL · 1653</p>
 </footer>
 
 <script>
@@ -686,7 +673,7 @@ const GEN_DATA = [
 function personHTML(p, side) {
   if (!p) return '';
   const cls = side === 'left' ? 'pc-left' : 'pc-right';
-  const death = p.d ? `<span class="ico">†</span>${p.d}` : '<span class="ico" style="opacity:.3">†</span><em style="opacity:.4">presente</em>';
+  const death = p.d ? `<span class="ico">†</span>${p.d}` : '<span class="ico" >†</span><em >presente</em>';
   return `<div class="person-card ${cls} fade-up">
     <div class="pc-name">${p.name}</div>
     <div class="pc-info">
@@ -711,25 +698,25 @@ function buildSection(g) {
     <div class="union-ring">✦</div>
     <div class="union-date">${g.union}</div>
   </div>` : `<div class="union-col">
-    <div class="union-ring" style="opacity:.3">✦</div>
+    <div class="union-ring" >✦</div>
   </div>`;
 
   const secondCouple = (g.p1b && g.p2b) ? `
-    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--dim);font-size:0.72rem;font-style:italic;color:var(--muted);text-align:center;position:relative;z-index:1;max-width:860px;width:100%">
-      Segunda união dessa geração: <strong style="color:var(--gold-lt)">${g.p1b.name}</strong> + <strong style="color:var(--gold-lt)">${g.p2b.name}</strong>
-      <span style="color:var(--dim)"> · ${g.p2b.note}</span>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--color-border-subtle);font-size: 0.875rem;font-style: normal;color:var(--color-text-muted);text-align:center;position:relative;z-index:1;max-width:860px;width:100%">
+      Segunda união dessa geração: <strong style="color:var(--color-link)">${g.p1b.name}</strong> + <strong style="color:var(--color-link)">${g.p2b.name}</strong>
+      <span style="color:var(--color-border-subtle)"> · ${g.p2b.note}</span>
     </div>` : '';
 
-  const lastNote = g.isLast ? `<div style="text-align:center;padding:2rem;border:1px solid var(--dim);background:rgba(201,146,26,0.04);max-width:500px;width:100%;position:relative;z-index:1;margin-top:1rem;">
-    <div style="font-size:0.6rem;letter-spacing:0.35em;color:var(--gold);margin-bottom:0.75rem">FIM DA LINHAGEM DOCUMENTADA</div>
-    <div style="font-size:1rem;font-style:italic;color:var(--muted);font-weight:300;line-height:1.7">11 gerações · 370 anos · de Portugal<br>ao coração do cerrado brasileiro</div>
+  const lastNote = g.isLast ? `<div style="text-align:center;padding:2rem;border:1px solid var(--color-border-subtle);background:var(--color-bg-raised);max-width:500px;width:100%;position:relative;z-index:1;margin-top:1rem;">
+    <div style="font-size: 0.875rem;letter-spacing: 0.04em;color:var(--color-link);margin-bottom:0.75rem">FIM DA LINHAGEM DOCUMENTADA</div>
+    <div style="font-size:1rem;font-style: normal;color:var(--color-text-muted);font-weight: 400;line-height:1.7">11 gerações · 370 anos · de Portugal<br>ao coração do cerrado brasileiro</div>
   </div>` : '';
 
   return `<section class="gen-section${g.isLast?' last-gen':''}" id="${g.id}">
     <div class="gen-badge fade-up">
       <span class="gen-number">${g.num}</span>
       <span class="gen-era">${g.era}</span>
-      <span class="gen-place">📍 ${g.place}</span>
+      <span class="gen-place">${g.place}</span>
     </div>
     <div class="couple-wrap">
       ${personHTML(g.p1,'left')}
@@ -750,7 +737,7 @@ function buildSection(g) {
 // Build nav
 const nav = document.getElementById('sideNav');
 GEN_DATA.forEach(g => {
-  nav.innerHTML += `<a class="sn-item" href="#${g.id}" data-target="${g.id}">
+  nav.innerHTML += `<a class="sn-item" href="#${g.id}" data-target="${g.id}" aria-label="Ir para ${g.num}">
     <span class="sn-label">${g.num.replace(' Geração','')}</span>
     <span class="sn-pip"></span>
   </a>`;
@@ -776,9 +763,9 @@ const navItems = document.querySelectorAll('.sn-item');
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting && e.intersectionRatio > 0.3) {
-      navItems.forEach(n => n.classList.remove('active'));
+      navItems.forEach(n => { n.classList.remove('active'); n.removeAttribute('aria-current'); });
       const target = document.querySelector(`.sn-item[data-target="${e.target.id}"]`);
-      if (target) target.classList.add('active');
+      if (target) { target.classList.add('active'); target.setAttribute('aria-current', 'location'); }
     }
   });
 }, { threshold: 0.3 });
