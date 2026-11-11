@@ -14,7 +14,7 @@ Site estático da Família Naves: seis ramos de Anésia com parentescos confirma
 - Zoom, visão geral, atalhos para família/origens, busca por nome e filtro de ramo; buscas ignoram acentos
 - Parentescos, cônjuges, relacionamentos anteriores e falecidos identificados
 - Fontes familiares separadas das alegações históricas
-- `/linhagem` mantém a pesquisa histórica com divergências explícitas
+- `/linhagem` usa a mesma árvore por núcleos familiares, na vista histórica (gerações 1–9); `/arvore_naves.html` preserva a leitura detalhada da compilação
 - Sem build, instalação de pacotes ou serviços externos em tempo de execução
 
 ### Mapa de Migração (`/mapa`)

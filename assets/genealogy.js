@@ -53,6 +53,7 @@
     const root=addModern({name:branch.name,note:branch.note,children:branch.children},10,branch.id,branch.id,anesia);connect(antonio,root);branchRoots.set(branch.id,root);
   });
   const explicitOtherParents = [
+    ['neuza/Carla Bianca','Itanel',['Gustavo','Rafaela'],'Cônjuge atual'],
     ['nilza/Viviane','Fabrício',['Gabriel'],'Relacionamento anterior'],
     ['nilza/Viviane','Alexandre',['Laura','Pedro'],'Cônjuge atual'],
     ['nilda/Waleska','Wagner',['Mariana'],'Cônjuge atual'],
@@ -71,75 +72,155 @@
   });
   // Nilda's former marriage is known; this does not establish João's paternity.
   const nilda=branchRoots.get('nilda');const joao=add('João',10,{branch:'nilda',note:'Ex-cônjuge de Nilda. Paternidade dos filhos não atribuída nesta atualização.',source:nilda.source,order:nilda.order+.1});connect(nilda,joao,'partner');
+
+  // One family unit per exact parent set. A couple has one descent junction.
+  const unitsByKey=new Map(), owned=new Map();
+  for(const edge of relationships.filter(edge=>edge.type==='parent')){
+    const child=people.get(edge.to);
+    const parents=relationships.filter(link=>link.type==='parent'&&link.to===child.id).map(link=>people.get(link.from));
+    const key=parents.map(parent=>parent.id).sort().join('|');
+    if(!unitsByKey.has(key)){
+      const owner=parents.find(parent=>parent.path)||parents[0];
+      const unit={id:'family-'+(unitsByKey.size+1),parents,children:[],owner};
+      unitsByKey.set(key,unit);
+      if(!owned.has(owner.id))owned.set(owner.id,[]);
+      owned.get(owner.id).push(unit);
+    }
+    const unit=unitsByKey.get(key);if(!unit.children.includes(child))unit.children.push(child);
+  }
   const input=document.getElementById('person-search'),filter=document.getElementById('branch-filter');
-  const viewport=document.getElementById('tree-viewport'),root=document.getElementById('family-tree');
-  const inspector=document.getElementById('person-inspector');
-  let zoom=.75,world,canvas,shown=[],selected,dimensions;
-  const boxW=182,boxH=112,gapX=30,gapY=94,padding=60;
+  const viewport=document.getElementById('tree-viewport'),root=document.getElementById('family-tree'),inspector=document.getElementById('person-inspector');
+  const historicalPage=location.pathname==='/linhagem';
+  if(!filter.querySelector('[value="ancestry"]')){const option=document.createElement('option');option.value='ancestry';option.textContent='Somente linhagem histórica';filter.append(option);}
+  if(historicalPage){
+    filter.value='ancestry';
+    document.title='Linhagem histórica — Família Naves';
+    document.querySelector('h1').textContent='A linhagem histórica.';
+    document.querySelector('.page-intro .eyeline').textContent='02 / LINHAGEM HISTÓRICA · COMPILAÇÃO FAMILIAR';
+    document.querySelector('.page-intro .dek').textContent='A linhagem e os parentes relacionados na compilação histórica, organizados por núcleos familiares. Selecione um casal ou uma pessoa para consultar as fontes e as divergências.';
+    document.querySelector('.branch-jumps').hidden=true;
+    document.querySelector('.page-intro .source-line').textContent='Dados da compilação da Editora Naves, com correções familiares identificadas. Datas e vínculos antigos não equivalem a certidões autenticadas.';
+    document.querySelectorAll('.masthead nav a').forEach(link=>{if(link.getAttribute('href')==='/linhagem')link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
+  }
+  let zoom=.45,world,canvas,shown=[],dimensions,appearances=new Map(),bounds=new Map(),active=[];
+  let framing=historicalPage?'overview':'person',focusTarget=anesia;
+  const boxW=182,boxH=112,gapX=28,gapY=116,padding=44;
   const element=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;};
   function inspect(person){
-    selected=person.id;world.querySelectorAll('.genealogy-person').forEach(node=>node.classList.toggle('selected',node.dataset.person===person.id));
-    world.querySelectorAll('.genealogy-edge').forEach(edge=>edge.classList.toggle('related',edge.dataset.from===person.id||edge.dataset.to===person.id));
+    world.querySelectorAll('.genealogy-person').forEach(node=>node.classList.toggle('selected',node.dataset.person===person.id));
     inspector.replaceChildren(element('h2','',person.name),element('p','',person.note),element('p','source-line',person.source));
-    if(person.birth)inspector.append(element('p','',`Nascimento / local: ${person.birth}`));
-    if(person.death)inspector.append(element('p','',`Falecimento: ${person.death}`));
+    if(person.birth)inspector.append(element('p','', 'Nascimento / local: '+person.birth));
+    if(person.death)inspector.append(element('p','', 'Falecimento: '+person.death));
     for(const [type,label] of [['parent','Pais / mães informados'],['child','Filhos relacionados'],['partner','Relacionamentos']]){
       const relatives=relationships.filter(edge=>type==='parent'?edge.type==='parent'&&edge.to===person.id:type==='child'?edge.type==='parent'&&edge.from===person.id:edge.type==='partner'&&(edge.from===person.id||edge.to===person.id));
       if(!relatives.length)continue;
-      const row=element('div','inspector-relatives');row.append(element('strong','',`${label}: `));
-      relatives.forEach(edge=>{const id=type==='parent'?edge.from:type==='child'?edge.to:edge.from===person.id?edge.to:edge.from;const other=people.get(id);const button=element('button','',other.name);button.type='button';button.addEventListener('click',()=>{if(!shown.includes(other)){filter.value='';render();}center(other);inspect(other);});row.append(button);});inspector.append(row);
+      const row=element('div','inspector-relatives');row.append(element('strong','',label+': '));
+      relatives.forEach(edge=>{const id=type==='parent'?edge.from:type==='child'?edge.to:edge.from===person.id?edge.to:edge.from;const other=people.get(id);const button=element('button','',other.name);button.type='button';button.addEventListener('click',()=>{if(!shown.includes(other)){filter.value='';render();}focusPerson(other);inspect(other);});row.append(button);});inspector.append(row);
     }
   }
-  function center(person){viewport.scrollTo({left:Math.max(0,(person.x+boxW/2)*zoom-viewport.clientWidth/2),top:Math.max(0,person.y*zoom-100),behavior:'instant'});}
   function setZoom(value,anchor){
-    const old=zoom;const cx=(viewport.scrollLeft+viewport.clientWidth/2)/old,cy=(viewport.scrollTop+viewport.clientHeight/2)/old;
-    zoom=Math.max(.08,Math.min(1.6,value));world.style.transform=`scale(${zoom})`;canvas.style.width=`${dimensions.width*zoom}px`;canvas.style.height=`${dimensions.height*zoom}px`;document.getElementById('zoom-level').textContent=`${Math.round(zoom*100)}%`;
-    if(anchor)center(anchor);else viewport.scrollTo({left:cx*zoom-viewport.clientWidth/2,top:cy*zoom-viewport.clientHeight/2,behavior:'instant'});
+    const old=zoom,cx=(viewport.scrollLeft+viewport.clientWidth/2)/old,cy=(viewport.scrollTop+viewport.clientHeight/2)/old;
+    zoom=Math.max(.025,Math.min(1.6,value));world.style.transform='scale('+zoom+')';canvas.style.width=dimensions.width*zoom+'px';canvas.style.height=dimensions.height*zoom+'px';document.getElementById('zoom-level').textContent=Math.round(zoom*100)+'%';
+    if(anchor)centerRect(anchor);else viewport.scrollTo({left:cx*zoom-viewport.clientWidth/2,top:cy*zoom-viewport.clientHeight/2,behavior:'instant'});
+  }
+  function centerRect(rect){viewport.scrollTo({left:Math.max(0,(rect.x+rect.width/2)*zoom-viewport.clientWidth/2),top:Math.max(0,rect.y*zoom-36),behavior:'instant'});}
+  function focusPerson(person,fit=true){
+    framing='person';focusTarget=person;
+    const rect=bounds.get(person.id)||appearances.get(person.id)?.[0];if(!rect)return;
+    if(fit)setZoom(Math.min(.6,(viewport.clientWidth-36)/rect.width,(viewport.clientHeight-45)/Math.min(rect.height,4*(boxH+gapY))));
+    centerRect(rect);
   }
   function render(){
-    root.replaceChildren();shown=[...people.values()].filter(person=>!filter.value||person.generation<=9||person.branch===filter.value);
-    const rows=Array.from({length:13},(_,i)=>shown.filter(person=>person.generation===i+1).sort((a,b)=>a.order-b.order));
-    const modernRoots=shown.filter(person=>person.generation===10&&person.path);
-    const visibleIds=new Set(shown.map(person=>person.id));
-    const childrenOf=person=>relationships.filter(edge=>edge.type==='parent'&&edge.from===person.id&&visibleIds.has(edge.to)&&people.get(edge.to).path).map(edge=>people.get(edge.to));
-    const partnersOf=person=>relationships.filter(edge=>edge.type==='partner'&&edge.from===person.id&&visibleIds.has(edge.to)&&!people.get(edge.to).path).map(edge=>people.get(edge.to));
-    const widths=new Map();
-    function measure(person){const children=childrenOf(person);const width=Math.max((1+partnersOf(person).length)*(boxW+gapX),children.reduce((sum,child)=>sum+measure(child),0));widths.set(person.id,width);return width;}
-    const forestWidth=modernRoots.reduce((sum,person)=>sum+measure(person),0);
-    const width=Math.max(forestWidth,...rows.map(row=>row.length*(boxW+gapX)))+padding*2;
-    dimensions={width,height:13*(boxH+gapY)+padding*2};
-    rows.forEach((row,index)=>row.forEach((person,position)=>{person.x=(width-row.length*(boxW+gapX))/2+position*(boxW+gapX);person.y=padding+index*(boxH+gapY);}));
-    function place(person,left){const partners=partnersOf(person),unitWidth=(partners.length+1)*(boxW+gapX);person.x=left+(widths.get(person.id)-unitWidth)/2;partners.forEach((partner,index)=>{partner.x=person.x+(index+1)*(boxW+gapX);});const children=childrenOf(person),childWidth=children.reduce((sum,child)=>sum+widths.get(child.id),0);let childLeft=left+(widths.get(person.id)-childWidth)/2;children.forEach(child=>{place(child,childLeft);childLeft+=widths.get(child.id);});}
-    let left=(width-forestWidth)/2;modernRoots.forEach(person=>{place(person,left);left+=widths.get(person.id);});
-    canvas=element('div','genealogy-canvas');world=element('div','genealogy-world');world.style.width=`${width}px`;world.style.height=`${dimensions.height}px`;canvas.append(world);root.append(canvas);
+    root.replaceChildren();appearances=new Map();bounds=new Map();
+    shown=[...people.values()].filter(person=>filter.value==='ancestry'?person.generation<=9:!filter.value||person.generation<=9||person.branch===filter.value);
+    const visible=new Set(shown.map(person=>person.id)),visited=new Set();
+    function build(person,trail=new Set()){
+      const next=new Set(trail);next.add(person.id);
+      const families=(owned.get(person.id)||[]).filter(unit=>unit.parents.every(p=>visible.has(p.id))&&unit.children.some(child=>visible.has(child.id)));
+      const blocks=families.length?families.map(unit=>{
+        const children=unit.children.filter(child=>visible.has(child.id)).map(child=>build(child,next));
+        const parents=[...unit.parents];
+        const companions=families.length===1?relationships.filter(edge=>edge.type==='partner'&&(edge.from===person.id||edge.to===person.id)).map(edge=>people.get(edge.from===person.id?edge.to:edge.from)).filter(p=>visible.has(p.id)&&!parents.includes(p)):[];
+        // Companion cards do not become parents; descent starts at the known parent.
+        return {person,parents,cards:[...parents,...companions],children,unit};
+      }):(()=>{const partners=relationships.filter(edge=>edge.type==='partner'&&(edge.from===person.id||edge.to===person.id)).map(edge=>people.get(edge.from===person.id?edge.to:edge.from)).filter(p=>visible.has(p.id));return partners.length?partners.map(partner=>({person,parents:[person],cards:[person,partner],children:[],unit:null})):[{person,parents:[person],cards:[person],children:[],unit:null}];})();
+      const width=blocks.reduce((total,block)=>{block.width=Math.max(block.cards.length*(boxW+gapX)-gapX,block.children.reduce((sum,child)=>sum+child.width+gapX,0)-gapX,boxW);return total+block.width+gapX;},0)-gapX;
+      return {person,blocks,width,height:boxH+gapY+Math.max(0,...blocks.flatMap(block=>block.children.map(child=>child.height)))};
+    }
+    const roots=shown.filter(person=>!relationships.some(edge=>edge.type==='parent'&&edge.to===person.id&&visible.has(edge.from)) && owned.has(person.id));
+    const trees=roots.map(person=>build(person));
+    function remember(tree){tree.blocks.forEach(block=>{block.cards.forEach(person=>visited.add(person.id));block.children.forEach(remember);});}
+    trees.forEach(remember);
+    // Collateral records with unresolved parentage are shown separately, without invented links.
+    const unlinked=shown.filter(person=>!visited.has(person.id));
+    const width=Math.max(trees.reduce((sum,tree)=>sum+tree.width+60,0),Math.min(8,unlinked.length)*(boxW+gapX))+padding*2;
+    const maxGeneration=Math.max(...shown.map(person=>person.generation));
+    const unlinkedY=padding+maxGeneration*(boxH+gapY)+40;
+    dimensions={width,height:unlinkedY+Math.ceil(unlinked.length/8)*(boxH+50)+padding};
+    canvas=element('div','genealogy-canvas');world=element('div','genealogy-world');world.style.width=width+'px';world.style.height=dimensions.height+'px';canvas.append(world);root.append(canvas);
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('width',width);svg.setAttribute('height',dimensions.height);svg.setAttribute('aria-hidden','true');svg.classList.add('genealogy-lines');world.append(svg);
-    const visible=new Set(shown.map(person=>person.id));
-    const parentLanes=new Map();
-    relationships.filter(edge=>visible.has(edge.from)&&visible.has(edge.to)).forEach(edge=>{
-      const from=people.get(edge.from),to=people.get(edge.to),path=document.createElementNS(svg.namespaceURI,'path');
-      let d;
-      if(edge.type==='partner'){const a=from.x<to.x?from:to,b=a===from?to:from;d=`M${a.x+boxW},${a.y+boxH/2} H${b.x}`;}
-      else{if(!parentLanes.has(from.id))parentLanes.set(from.id,[...parentLanes.keys()].filter(id=>people.get(id).generation===from.generation).length);const x=from.x+boxW/2,y=from.y+boxH,tx=to.x+boxW/2,ty=to.y,mid=y+18+(parentLanes.get(from.id)%18)*3;d=`M${x},${y} V${mid} H${tx} V${ty}`;}
-      path.setAttribute('d',d);path.classList.add('genealogy-edge',edge.type);if(edge.uncertain)path.classList.add('uncertain');path.dataset.from=edge.from;path.dataset.to=edge.to;svg.append(path);
-    });
-    rows.forEach((row,index)=>{if(!row.length)return;const label=element('div','generation-label',`${index+1}ª GERAÇÃO`);label.style.top=`${padding+index*(boxH+gapY)-28}px`;label.style.left=`${Math.min(...row.map(person=>person.x))}px`;world.append(label);});
+    active=[];
     const query=normalize(input.value);let matches=[];
-    shown.forEach(person=>{
-      const button=element('button','genealogy-person');button.type='button';button.dataset.person=person.id;button.style.left=`${person.x}px`;button.style.top=`${person.y}px`;button.setAttribute('aria-label',`${person.name}, ${person.generation}ª geração${person.uncertain?', vínculo em investigação':''}`);
-      button.append(element('span','chart-name',`${person.name}${person.deceased||person.death?' †':''}`));button.append(element('span','chart-record',person.birth||`${person.generation}ª geração`));button.append(element('span','chart-source',person.uncertain?'Em investigação':person.source.startsWith('Confirmação')?'Confirmação familiar':person.source.startsWith('Texto')?'Texto familiar fornecido':'Compilação histórica'));
-      if(person.uncertain)button.classList.add('uncertain');if(query&&normalize(`${person.name} ${person.note}`).includes(query)){button.classList.add('match');matches.push(person);}button.addEventListener('click',()=>inspect(person));world.append(button);
-    });
+    function drawPath(d,cls,unit){
+      const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',d);path.classList.add('genealogy-edge',cls);
+      if(unit?.parents.some(person=>person.uncertain))path.classList.add('uncertain');
+      if(unit)path.dataset.family=unit.id;svg.append(path);
+    }
+    function card(person,x,y){
+      const locations=appearances.get(person.id)||[];const repeated=locations.length>0;locations.push({x,y,width:boxW,height:boxH});appearances.set(person.id,locations);
+      const button=element('button','genealogy-person');button.type='button';button.dataset.person=person.id;button.style.left=x+'px';button.style.top=y+'px';
+      button.setAttribute('aria-label',person.name+', '+person.generation+'ª geração'+(repeated?', mesmo registro em outro núcleo':''));
+      button.append(element('span','chart-name',person.name+(person.deceased||person.death?' †':'')),element('span','chart-record',person.birth||person.generation+'ª geração'),element('span','chart-source',repeated?'↗ Mesma pessoa · outro núcleo':person.uncertain?'Em investigação':person.source.startsWith('Confirmação')?'Confirmação familiar':person.source.startsWith('Texto')?'Texto familiar fornecido':'Compilação histórica'));
+      if(person.uncertain)button.classList.add('uncertain');if(query&&normalize(person.name+' '+person.note).includes(query)){button.classList.add('match');matches.push(person);}button.addEventListener('click',()=>inspect(person));world.append(button);
+    }
+    function place(tree,left){
+      const y=padding+(tree.person.generation-1)*(boxH+gapY);let bx=left;
+      tree.blocks.forEach(block=>{
+        const cardWidth=block.cards.length*(boxW+gapX)-gapX,start=bx+(block.width-cardWidth)/2;
+        const positions=block.cards.map((person,index)=>({person,x:start+index*(boxW+gapX),y}));
+        positions.forEach(({person,x,y})=>card(person,x,y));
+        const primary=positions.find(position=>position.person.id===tree.person.id)||positions[0];
+        block.anchor={x:primary.x+boxW/2,y};if(!tree.anchor)tree.anchor=block.anchor;
+        // Draw each partnership only inside its own family unit, never through another partner.
+        for(const edge of relationships.filter(edge=>edge.type==='partner')){
+          const a=positions.find(p=>p.person.id===edge.from),b=positions.find(p=>p.person.id===edge.to);
+          if(a&&b)drawPath('M'+(Math.min(a.x,b.x)+boxW)+','+(y+boxH/2)+' H'+Math.max(a.x,b.x),'partner',block.unit);
+        }
+        let sourceX=positions.filter(position=>block.parents.includes(position.person)).reduce((sum,p)=>sum+p.x+boxW/2,0)/block.parents.length;
+        const sourceY=block.parents.length===2?y+boxH/2:y+boxH;
+        const childWidth=block.children.reduce((sum,child)=>sum+child.width+gapX,0)-gapX;let childLeft=bx+(block.width-childWidth)/2;
+        block.children.forEach(child=>{place(child,childLeft);childLeft+=child.width+gapX;});
+        if(block.children.length){
+          const junctionY=y+boxH+46,anchors=block.children.map(child=>child.anchor);
+          drawPath('M'+sourceX+','+sourceY+' V'+junctionY,'parent',block.unit);
+          const xs=[sourceX,...anchors.map(anchor=>anchor.x)];
+          drawPath('M'+Math.min(...xs)+','+junctionY+' H'+Math.max(...xs),'parent',block.unit);
+          anchors.forEach(anchor=>drawPath('M'+anchor.x+','+junctionY+' V'+anchor.y,'parent',block.unit));
+          if(block.parents.length===1 && block.cards.length>1){const label=element('div','family-caption','Filiação informada: '+block.parents[0].name);label.style.left=bx+'px';label.style.top=y+boxH+8+'px';label.style.width=block.width+'px';world.append(label);}
+          active.push({id:block.unit.id,parents:block.parents.map(p=>p.id),children:block.children.map(child=>child.person.id),x:bx,y,width:block.width});
+        }
+        bx+=block.width+gapX;
+      });
+      bounds.set(tree.person.id,{x:left,y,width:tree.width,height:tree.height});return tree;
+    }
+    let left=padding;trees.forEach(tree=>{place(tree,left);left+=tree.width+60;});
+    if(unlinked.length){const label=element('div','generation-label','REGISTROS SEM CONTINUAÇÃO DE FILIAÇÃO NESTA VISTA · CONSULTE OS DETALHES');label.style.left=padding+'px';label.style.top=unlinkedY-28+'px';world.append(label);unlinked.forEach((person,index)=>card(person,padding+(index%8)*(boxW+gapX),unlinkedY+Math.floor(index/8)*(boxH+50)));}
+    for(let generation=1;generation<=maxGeneration;generation++){const label=element('div','generation-label',generation+'ª GERAÇÃO');label.style.top=padding+(generation-1)*(boxH+gapY)-24+'px';label.style.left=padding+'px';world.append(label);}
     document.getElementById('empty').hidden=!query||matches.length>0;
-    document.getElementById('tree-status').textContent=`${shown.length} registros na árvore · ${query?`${matches.length} correspondências`:'13 gerações na linhagem e nos ramos disponíveis'}. Selecione uma pessoa para ver os detalhes.`;
-    setZoom(zoom);if(matches.length){center(matches[0]);inspect(matches[0]);}
+    const uniqueMatches=[...new Set(matches.map(person=>person.id))];
+    document.getElementById('tree-status').textContent=shown.length+' pessoas · '+maxGeneration+' gerações'+(query?' · '+uniqueMatches.length+' correspondências':'')+'. Casais com filhos em comum têm uma única linha de descendência.';
+    setZoom(zoom);if(matches.length){focusPerson(matches[0]);inspect(matches[0]);}
+    window.NAVES_CHART={people:[...people.values()],relationships,families:[...unitsByKey.values()].map(unit=>({id:unit.id,parents:unit.parents.map(p=>p.id),children:unit.children.map(p=>p.id)})),visibleFamilies:active};
   }
-  document.getElementById('zoom-in').addEventListener('click',()=>setZoom(zoom*1.3));document.getElementById('zoom-out').addEventListener('click',()=>setZoom(zoom/1.3));
-  document.getElementById('fit-tree').addEventListener('click',()=>{filter.value='';input.value='';render();setZoom(Math.min(viewport.clientWidth/dimensions.width,viewport.clientHeight/dimensions.height));viewport.scrollTo(0,0);});
-  document.getElementById('center-anesia').addEventListener('click',()=>{filter.value='';input.value='';render();setZoom(.8,anesia);inspect(anesia);});
-  document.getElementById('show-origins').addEventListener('click',()=>{setZoom(.8,shown.find(person=>person.generation===1));});
-  input.addEventListener('input',render);filter.addEventListener('change',()=>{render();center(branchRoots.get(filter.value)||anesia);});
-  document.getElementById('tree-search').addEventListener('submit',event=>event.preventDefault());document.getElementById('tree-search').addEventListener('reset',()=>{input.value='';filter.value='';render();center(anesia);});
-  function openBranch(){const id=location.hash.slice(1);if(branchRoots.has(id)){filter.value=id;render();const person=branchRoots.get(id);center(person);inspect(person);viewport.scrollIntoView({block:'start',behavior:'instant'});}}
-  render();center(anesia);window.addEventListener('hashchange',openBranch);document.fonts.ready.then(openBranch);
-  window.NAVES_CHART={people:[...people.values()],relationships};
+  function fitAll(){framing='overview';setZoom(Math.min(.6,(viewport.clientWidth-24)/dimensions.width,(viewport.clientHeight-24)/dimensions.height));viewport.scrollTo(0,0);}
+  document.getElementById('zoom-in').addEventListener('click',()=>{framing='manual';setZoom(zoom*1.3);});document.getElementById('zoom-out').addEventListener('click',()=>{framing='manual';setZoom(zoom/1.3);});
+  document.getElementById('fit-tree').addEventListener('click',()=>{input.value='';filter.value=historicalPage?'ancestry':'';render();fitAll();});
+  document.getElementById('center-anesia').addEventListener('click',()=>{filter.value='';input.value='';render();focusPerson(anesia);inspect(anesia);});
+  document.getElementById('show-origins').addEventListener('click',()=>{filter.value='ancestry';render();fitAll();});
+  input.addEventListener('input',render);filter.addEventListener('change',()=>{render();const person=branchRoots.get(filter.value);if(person)focusPerson(person);else fitAll();});
+  document.getElementById('tree-search').addEventListener('submit',event=>event.preventDefault());document.getElementById('tree-search').addEventListener('reset',()=>{input.value='';filter.value=historicalPage?'ancestry':'';render();fitAll();});
+  function openBranch(){const id=location.hash.slice(1);if(branchRoots.has(id)){filter.value=id;render();const person=branchRoots.get(id);focusPerson(person);inspect(person);viewport.scrollIntoView({block:'start',behavior:'instant'});}}
+  render();if(historicalPage)fitAll();else focusPerson(anesia);window.addEventListener('hashchange',openBranch);document.fonts.ready.then(openBranch);
+  let previousWidth=viewport.clientWidth;
+  new ResizeObserver(()=>{if(viewport.clientWidth===previousWidth)return;previousWidth=viewport.clientWidth;if(framing==='overview')fitAll();else if(framing==='person')focusPerson(focusTarget);}).observe(viewport);
 })();

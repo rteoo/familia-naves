@@ -4,7 +4,7 @@
   const branches = [
     {id:'neuza',name:'Neuza',note:'Casada com Ossualdo.',children:[
       p('Ossualdo Júnior','Atualmente casado com Leidiana.',[p('Polyana','',[p('Pedro')]),p('Jean'),p('Mayk','',[p('Bento')]),p('Marlon','',[p('Manuela'),p('Miguel')])]),
-      p('Leandro','Casado com Andreia.',[p('Isadora')]),p('Carla Bianca','Casada com Itanel.',[p('Gustavo'),p('Rafaela')])]},
+      p('Leandro','Casado com Andreia.',[p('Isadora')]),p('Carla Bianca','Casada com Itanel.',[p('Gustavo','Filho de Carla Bianca e Itanel.'),p('Rafaela','Filha de Carla Bianca e Itanel.')])]},
     {id:'neyde',name:'Neyde',note:'Atualmente casada com Edilson. A paternidade de Juliano e Luciano não foi indicada nesta atualização.',children:[p('Juliano','',[],true),p('Luciano','Casado com Franciele.',[p('Yasmin','Filha de Luciano e Denise, do casamento anterior.'),p('Artur','Filho de Luciano e Franciele.'),p('Heitor','Filho de Luciano e Franciele.'),p('Rafael','Filho de Luciano e Franciele.')])]},
     {id:'gilberto',name:'Gilberto',note:'Cristiane é filha do casamento com Olga. A mãe de Gilberto Filho não foi indicada nesta atualização.',children:[p('Cristiane','Filha de Gilberto e Olga.',[p('Rogério'),p('Rubem')]),p('Gilberto Filho','',[p('Kallyan')])]},
     {id:'nilza',name:'Nilza',note:'Casada com Edmo.',children:[p('Leonardo','',[p('Mateus'),p('Victor')],true),p('Eduardo','',[p('Manuela'),p('Rafaela')]),p('Viviane','Casada com Alexandre.',[p('Gabriel','Filho de Viviane e Fabrício, de relacionamento anterior.'),p('Laura','Filha de Viviane e Alexandre.'),p('Pedro','Filho de Viviane e Alexandre.')])]},

@@ -2,7 +2,7 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/arvore", "destination": "/familia.html" },
-    { "source": "/linhagem", "destination": "/arvore_naves.html" },
+    { "source": "/linhagem", "destination": "/familia.html" },
     { "source": "/mapa", "destination": "/mapa_migracao_naves.html" }
   ]
 }
