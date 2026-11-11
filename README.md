@@ -9,7 +9,9 @@ Site estático da Família Naves: seis ramos de Anésia com parentescos confirma
 ## O que tem aqui
 
 ### Árvore Genealógica (`/arvore`)
-- Seis ramos com busca por nome e filtro de ramo; buscas ignoram acentos
+- Árvore tradicional com a linhagem histórica e os seis ramos de Anésia, em 13 gerações disponíveis
+- Caixas individuais, linhas de parentesco, casamentos e vínculos incertos diferenciados
+- Zoom, visão geral, atalhos para família/origens, busca por nome e filtro de ramo; buscas ignoram acentos
 - Parentescos, cônjuges, relacionamentos anteriores e falecidos identificados
 - Fontes familiares separadas das alegações históricas
 - `/linhagem` mantém a pesquisa histórica com divergências explícitas
@@ -83,15 +85,15 @@ de identidade, datas e localidades aparecem na página `/linhagem`.
 **Criação original:** Jales Naves  
 **Editora Naves, 2025**
 
-## Design system
+## Interface
+
+The site has its own genealogical atlas identity: cobalt diagrams, warm paper,
+large typography and numbered family chapters. It loads no shared design system.
+Presentation lives in `assets/atlas.css`; typography uses local system fonts.
+Paper is the default, with an optional dark appearance retained across routes.
 
 Browser checks: `node scripts/check-site.mjs` uses an existing Chrome installation
 and Node 22+; no npm packages are needed. Set `CHROME_PATH` if Chrome is elsewhere.
 The check starts an isolated local server and browser profile and cleans both up.
 It exercises family relationships, search, filters, route navigation, themes,
 historical generation navigation, map selection and responsive overflow.
-
-The site uses **Teô Design System v2.7.1**, vendored under `assets/teo/`.
-See [DESIGN.md](DESIGN.md) for the release source and project-specific extensions.
-All pages support dark and light themes through the “Tema claro / Tema escuro”
-button, with the choice retained across pages. No build or package installation is required.

@@ -41,35 +41,63 @@ try {
   }
   const setInput=(value)=>evaluate(`document.querySelector('#person-search').value=${JSON.stringify(value)};document.querySelector('#person-search').dispatchEvent(new Event('input'));`);
   console.log('Checking family interactions');
+  await navigate('/');
+  assert.equal(await evaluate(`document.querySelectorAll('.atlas-node').length`),6);
+  await evaluate(`document.querySelector('.atlas-node[href="/arvore#gilmar"]').focus()`);
+  await call('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  await call('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  for(let n=0;n<40;n++){if(await evaluate(`location.pathname==='/arvore' && location.hash==='#gilmar' && document.readyState==='complete'`))break;await new Promise(done=>setTimeout(done,50));}
+  assert.ok(await evaluate(`location.pathname==='/arvore' && location.hash==='#gilmar'`),'Diagram keyboard navigation');
   await navigate('/arvore');
-  assert.equal(await evaluate(`document.querySelectorAll('.family-branch').length`),6);
-  assert.deepEqual(await evaluate(`[...document.querySelectorAll('.person-detail')].reduce((totals,node)=>{const level=node.textContent;totals[level]=(totals[level]||0)+1;return totals;},{})`),{'Neto(a) de Anésia':15,'Bisneto(a) de Anésia':30,'Tataraneto(a) de Anésia':4});
-  const parents=await evaluate(`Object.fromEntries([...document.querySelectorAll('.person-name')].map(node=>{const li=node.parentElement;return [node.textContent+'|'+(li.parentElement.closest('li')?.querySelector('.person-name')?.textContent||''),true]}))`);
-  for(const key of ['Bento|Mayk','Laura|Viviane','Pedro|Viviane','Gabriel|Viviane','Mariana|Waleska','Lukas|Waleska','Rafaela|Carla Bianca','Maitê|Brunno','Antônio|Brunno'])assert.ok(parents[key],key);
-  assert.equal(await evaluate(`document.querySelectorAll('.deceased').length`),2);
-  await setInput('antonio');assert.equal(await evaluate(`document.querySelectorAll('.family-branch').length`),2);assert.ok(await evaluate(`[...document.querySelectorAll('mark')].some(node=>node.textContent==='Antônio')`));
+  assert.equal(await evaluate('window.NAVES_CHART.people.filter(p=>p.generation===1).length'),2);
+  assert.ok(await evaluate('window.NAVES_CHART.people.length>100'));
+  assert.deepEqual(await evaluate(`window.NAVES_FAMILY.reduce((totals,branch)=>{const visit=(p,depth)=>{totals[depth]++;p.children.forEach(c=>visit(c,depth+1))};branch.children.forEach(p=>visit(p,0));return totals},[0,0,0])`),[15,30,4]);
+  assert.ok(await evaluate(`window.NAVES_CHART.relationships.every(e=>window.NAVES_CHART.people.some(p=>p.id===e.from)&&window.NAVES_CHART.people.some(p=>p.id===e.to))`));
+  assert.ok(await evaluate(`window.NAVES_CHART.relationships.every(e=>{const p=window.NAVES_CHART.people;const from=p.find(p=>p.id===e.from),to=p.find(p=>p.id===e.to);return e.type==='parent'?to.generation===from.generation+1:to.generation===from.generation})`),'Parent links advance one generation; couples share a generation');
+  assert.ok(await evaluate(`(()=>{const p=window.NAVES_CHART.people;const purcina=p.find(p=>p.name==='Purcina Maria de Jesus');return window.NAVES_CHART.relationships.filter(e=>e.type==='parent'&&e.from===purcina.id).length===4})()`),'Messias and Purcina’s four children are included');
+  assert.ok(await evaluate(`(()=>{const {people,relationships}=window.NAVES_CHART;const edge=(child,parent)=>relationships.some(e=>e.type==='parent'&&e.from===people.find(p=>p.path===parent)?.id&&e.to===people.find(p=>p.path===child)?.id);return edge('neuza/Ossualdo Júnior/Mayk/Bento','neuza/Ossualdo Júnior/Mayk')&&edge('nilza/Viviane/Laura','nilza/Viviane')&&edge('nilda/Waleska/Mariana','nilda/Waleska')})()`));
+  assert.ok(await evaluate(`(()=>{const {people,relationships}=window.NAVES_CHART;const fabio=people.find(p=>p.path==='gilmar/Fábio');const zelia=people.find(p=>p.name==='Zélia');return !relationships.some(e=>e.type==='parent'&&e.from===zelia.id&&e.to===fabio.id)})()`),'Current spouse is not assumed to be every child’s mother');
+  assert.ok(await evaluate(`document.querySelectorAll('.genealogy-edge.partner').length>10`));
+  assert.ok(await evaluate(`document.querySelectorAll('.genealogy-person.uncertain').length>0`));
+  await setInput('antonio');assert.ok(await evaluate(`document.querySelectorAll('.genealogy-person.match').length>=2`));
   await setInput('not-a-family-name');assert.equal(await evaluate(`document.querySelector('#empty').hidden`),false);
-  await evaluate(`document.querySelector('#tree-search').reset()`);assert.equal(await evaluate(`document.querySelectorAll('.family-branch').length`),6);
-  await evaluate(`document.querySelector('#branch-filter').value='nilza';document.querySelector('#branch-filter').dispatchEvent(new Event('change'))`);assert.equal(await evaluate(`document.querySelectorAll('.family-branch').length`),1);
-  await navigate('/arvore#gilmar');
-  const position=await evaluate(`({top:document.querySelector('#gilmar').getBoundingClientRect().top,hash:location.hash,scroll:scrollY,behavior:getComputedStyle(document.documentElement).scrollBehavior})`);
-  assert.ok(position.top<100,JSON.stringify(position));
+  await evaluate(`document.querySelector('#tree-search').reset()`);assert.equal(await evaluate(`document.querySelector('#empty').hidden`),true);
+  await evaluate(`document.querySelector('#branch-filter').value='nilza';document.querySelector('#branch-filter').dispatchEvent(new Event('change'))`);
+  assert.ok(await evaluate(`[...document.querySelectorAll('.genealogy-person')].every(node=>{const p=window.NAVES_CHART.people.find(p=>p.id===node.dataset.person);return p.generation<=9||p.branch==='nilza'})`));
+  await navigate('/arvore#gilmar');assert.equal(await evaluate(`document.querySelector('#branch-filter').value`),'gilmar');
+  await evaluate(`document.querySelector('#zoom-in').click()`);assert.equal(await evaluate(`document.querySelector('#zoom-level').textContent`),'98%');
+  await evaluate(`document.querySelector('#fit-tree').click()`);
+  assert.ok(await evaluate(`document.querySelector('.genealogy-canvas').getBoundingClientRect().width<=document.querySelector('#tree-viewport').clientWidth+1`));
+  await evaluate(`document.querySelector('#center-anesia').click()`);assert.ok(await evaluate(`document.querySelector('#person-inspector').textContent.includes('Anésia')`));
   await evaluate(`document.querySelector('[data-theme-toggle]').click()`);const theme=await evaluate(`document.documentElement.dataset.theme`);
   await navigate('/');assert.equal(await evaluate(`document.documentElement.dataset.theme`),theme);
   console.log('Checking responsive routes');
   for(const appearance of ['light','dark']) {
-  await evaluate(`document.documentElement.dataset.theme=${JSON.stringify(appearance)};localStorage.setItem('teo-personal-theme',${JSON.stringify(appearance)})`);
+  await evaluate(`document.documentElement.dataset.theme=${JSON.stringify(appearance)};localStorage.setItem('naves-atlas-theme',${JSON.stringify(appearance)})`);
   for(const width of [320,768,1440]) {
     await call('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false});
-    for(const path of ['/','/arvore','/linhagem','/mapa']) {await navigate(path);assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth`),`${path}: overflow at ${width}`);}
+    for(const path of ['/','/arvore','/linhagem','/mapa']) {await navigate(path);assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth`),`${path}: overflow at ${width}`);assert.ok(await evaluate(`![...document.styleSheets].some(sheet=>['/assets/teo/','/assets/archive.css','/assets/site.css'].some(path=>(sheet.href||'').includes(path)))`),'No shared-system stylesheets');}
   }
   }
   await navigate('/linhagem');assert.equal(await evaluate(`document.querySelectorAll('.gen-section').length`),11);assert.ok(await evaluate(`document.querySelector('#g8').textContent.includes('1944')`));
   await evaluate(`document.querySelector('a[href="#g8"]').click()`);assert.equal(await evaluate(`location.hash`),'#g8');
   await navigate('/mapa');await evaluate(`document.querySelectorAll('.tl-item')[7].click()`);assert.ok(await evaluate(`document.querySelectorAll('.tl-item')[7].classList.contains('active')`));
   assert.deepEqual(errors,[],'Uncaught browser errors');
-  if(process.env.SCREENSHOT_DIR){await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});for(const [path,name] of [['/','home'],['/arvore','family']]){await navigate(path);const shot=await call('Page.captureScreenshot',{format:'png'});await writeFile(join(process.env.SCREENSHOT_DIR,`${name}.png`),Buffer.from(shot.data,'base64'));}}
-  console.log('PASS: six branches; 15/30/4 named descendants; clarified parentage; deaths; accent-insensitive search; empty/reset/filter; deep link; theme persistence; historical navigation; map selection; 320/768/1440px reflow; no runtime exceptions.');
+  if(process.env.SCREENSHOT_DIR){
+    for(const [width,appearance,path,name] of [[1440,'light','/','atlas-home'],[1440,'light','/arvore','atlas-family'],[390,'light','/','atlas-mobile'],[390,'light','/arvore','atlas-family-mobile'],[1440,'dark','/','atlas-dark']]){
+      await evaluate(`localStorage.setItem('naves-atlas-theme',${JSON.stringify(appearance)})`);
+      await call('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await navigate(path);
+      const shot=await call('Page.captureScreenshot',{format:'png'});await writeFile(join(process.env.SCREENSHOT_DIR,`${name}.png`),Buffer.from(shot.data,'base64'));
+    }
+    await evaluate(`localStorage.setItem('naves-atlas-theme','light')`);
+    await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1000,deviceScaleFactor:1,mobile:false});
+    await navigate('/arvore#neuza');
+    await evaluate(`document.querySelector('#tree-viewport').scrollIntoView({block:'center',behavior:'instant'})`);
+    let shot=await call('Page.captureScreenshot',{format:'png'});await writeFile(join(process.env.SCREENSHOT_DIR,'genealogy-neuza.png'),Buffer.from(shot.data,'base64'));
+    await evaluate(`document.querySelector('#fit-tree').click()`);
+    shot=await call('Page.captureScreenshot',{format:'png'});await writeFile(join(process.env.SCREENSHOT_DIR,'genealogy-overview.png'),Buffer.from(shot.data,'base64'));
+  }
+  console.log('PASS: full 13-generation chart; source/relationship integrity; 15/30/4 named modern descendants; explicit parentage; zoom/overview; search/reset/filter; keyboard diagram navigation; direct links; themes; historical/map controls; 320/768/1440px reflow; no runtime exceptions.');
   await call('Browser.close');
 } finally {
   ws?.close();

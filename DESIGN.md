@@ -1,16 +1,21 @@
-# Família Naves design
+# Família Naves — genealogical atlas
 
-This personal genealogy site adopts [Teô Design System v2.7.1](https://github.com/rteoo/teo-design-system/releases/tag/v2.7.1), release commit `ae9756c3411acda96171181ae83b334c9c149c01`.
+A site-specific identity, independent of the existing Teô, Strateo and Gilenge systems. No shared-system CSS, font assets or components are loaded. Preserved legacy assets are unused reference files.
 
-`assets/teo/tokens.css` and `assets/teo/components.css` are copied from that release. The only change to the upstream layers is replacing the remote font import in `tokens.css` with `../fonts/fonts.css`. They own the Ink & Copper palette, semantic theme roles, typography, focus, and control sizing. Load them in that order. `assets/site.css` contains site-specific presentation; `assets/theme.js` implements the reference theme behavior with Portuguese labels and local preference persistence. Dark is the default; both appearances are supported. Fonts are self-hosted WOFF2 with their SIL OFL licenses and provenance under `assets/fonts/`; runtime requests remain local.
+## Direction
 
-The landing page leads to the six branches of Anésia's family at `/arvore`, the historical compilation at `/linhagem`, and the SVG geography at `/mapa`. `assets/archive.css` owns the rebuilt reading and family exploration layouts; `assets/family.js` renders the family-confirmed relationships, accent-insensitive search and branch filters. Historical conflicts are qualified in the lineage and map. This content site does not need the design system's application rail or dashboard shell, so `layouts.css` and the unrelated reference JavaScript are not shipped.
+An exploratory atlas of people, time and place: oversized grotesque headings, serif asides, cobalt relationship lines, warm off-white paper and a vermilion meeting date. The home diagram is a real navigation surface connecting Anésia and Antônio to their six children. It contains no invented portraits, archival artifacts or geographic precision.
 
-Project extensions:
+## Reading and interaction
 
-- Long genealogy sections retain the vertical lineage and generation navigation. Use display typography for names, body typography for records, and neutral surfaces; copper signals navigation and the current map stage.
-- Map regions use the canonical secondary, neutral, and primary chart roles. State abbreviations and names accompany color; the full textual timeline provides the map's equivalent historical data and full-size native buttons. Spatial SVG markers remain compact to preserve geographic positions; every stage is also operable through the 44px-or-larger timeline buttons. Markers support Enter/Space and visible keyboard focus.
-- The migration map is a geographic illustration rather than a numeric chart; its labeled timeline is the accessible data equivalent.
-- No automatic map playback, pulse rings, glow, grain, decorative gradients, or glass effects. Reduced-motion preferences suppress transitions and entry animations.
+- Home: family diagram → six branches → migrations and lineage → gathering → sources.
+- Family: a traditional connected chart spanning the 13 available generations, with individual person boxes, same-generation relationship lines and orthogonal parent-child lines. Historical collateral relatives and all six modern branches are included. Shared people are reused; unknown parentage is not invented. Unresolved links are dashed, with provenance in the person inspector.
+- The chart has its own scroll viewport, zoom controls, full-tree overview, family/origins shortcuts, search and branch filtering. Couples do not automatically share parentage: explicit mother/father links are modeled separately from current and former relationships.
+- `assets/lineage.js` is shared by the chart and historical reading page. `assets/family.js` holds the supplied family roster; `assets/genealogy.js` models and renders relationships; `assets/genealogy.css` styles the chart. Home uses a traditional two-parent/six-child diagram.
+- Historical lineage and SVG map retain their data and controls, with the same atlas typography and colors.
+- Paper is the default appearance; a dark appearance is optional. Preference uses `naves-atlas-theme`.
+- `assets/atlas.css` owns all presentation. System Arial and Georgia require no downloads. Historical inline layouts use semantic variable aliases defined locally in this stylesheet; no upstream tokens are imported.
+- Touch targets ≥44px, visible focus, keyboard navigation, reduced-motion support and reflow at 320px.
+- Names and provenance take priority over decoration. Research uncertainty stays explicit.
 
-Validate both themes, theme persistence across routes, tree generation navigation, map timeline/marker selection, keyboard focus, 320px reflow, and 200% zoom. The site remains static and needs no build or package installation.
+Run `node scripts/check-site.mjs` for interaction, route, theme, kinship and responsive checks. No build or dependency installation is required.
