@@ -4,7 +4,7 @@ This personal genealogy site adopts [Teô Design System v2.7.1](https://github.c
 
 `assets/teo/tokens.css` and `assets/teo/components.css` are copied from that release. The only change to the upstream layers is replacing the remote font import in `tokens.css` with `../fonts/fonts.css`. They own the Ink & Copper palette, semantic theme roles, typography, focus, and control sizing. Load them in that order. `assets/site.css` contains site-specific presentation; `assets/theme.js` implements the reference theme behavior with Portuguese labels and local preference persistence. Dark is the default; both appearances are supported. Fonts are self-hosted WOFF2 with their SIL OFL licenses and provenance under `assets/fonts/`; runtime requests remain local.
 
-The existing landing page, genealogy reading layout, SVG geography, routes, and historical records remain. This content site does not need the design system's application rail or dashboard shell, so `layouts.css` and the unrelated reference JavaScript are not shipped.
+The landing page leads to the six branches of Anésia's family at `/arvore`, the historical compilation at `/linhagem`, and the SVG geography at `/mapa`. `assets/archive.css` owns the rebuilt reading and family exploration layouts; `assets/family.js` renders the family-confirmed relationships, accent-insensitive search and branch filters. Historical conflicts are qualified in the lineage and map. This content site does not need the design system's application rail or dashboard shell, so `layouts.css` and the unrelated reference JavaScript are not shipped.
 
 Project extensions:
 

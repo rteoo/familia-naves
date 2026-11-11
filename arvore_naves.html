@@ -473,6 +473,7 @@ footer p {
 .gen-section.last-gen .gen-section::before { display: none; }
 </style>
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/archive.css">
 </head>
 <body>
 <button class="theme-toggle tp-button tp-button--ghost" type="button" data-theme-toggle aria-pressed="false">Tema claro</button>
@@ -489,7 +490,7 @@ footer p {
   <p class="hero-eyebrow">Brasil · Portugal · 1624 — 1990</p>
   <h1 class="hero-title">Família<em>Naves</em></h1>
   <div class="hero-rule"></div>
-  <p class="hero-sub">Onze gerações de uma linhagem — do sertão de Portugal às planícies do cerrado brasileiro</p>
+  <p class="hero-sub">Onze gerações reunidas na pesquisa de Nilson N. Naves e Jales Naves. Uma linhagem em revisão, com divergências identificadas nas fontes.</p>
   <div class="hero-stats">
     <div class="stat"><span class="stat-num">11</span><span class="stat-label">gerações</span></div>
     <div class="stat"><span class="stat-num">370</span><span class="stat-label">anos</span></div>
@@ -502,6 +503,7 @@ footer p {
   </div>
 </header>
 
+<aside class="history-notice" aria-label="Fontes e limites da pesquisa"><h2>Como ler esta linhagem</h2><p>As datas antigas são registros da compilação genealógica da Editora Naves (2025), não certidões autenticadas. A localidade portuguesa, algumas datas de falecimento e a identidade da mãe de Messias continuam em aberto.</p><p>Maria José Pereira faleceu em 1944, conforme confirmação familiar. A data de Anésia (25.04.2013) e a de Messias (17.01.1938) vêm do PDF fornecido.</p><a href="/arvore">Ver os seis ramos atuais da família de Anésia →</a><br><a href="https://editoranaves.com.br/gilmar-alves-quer-conhecer-a-origem-da-familia-naves/">Ler a apresentação da pesquisa por Jales ↗</a></aside>
 <div id="treeRoot"></div>
 
 <footer>
@@ -520,7 +522,7 @@ footer p {
 const GEN_DATA = [
   {
     id:'g1', num:'1ª Geração', era:'1653 — 1715', place:'São Paulo, SP',
-    p1:{ name:'João de Almeida Naves', b:'Vila de Algodres, Portugal, 17.12.1624', d:'Santana de Parnaíba, SP, 11.03.1715', note:'Português · filho de Balthasar de Almeida Naves e Maria Sebastiana Naves' },
+    p1:{ name:'João de Almeida Naves', b:'Portugal, 17.12.1624 (compilação)', d:'Santana de Parnaíba, SP, 11.03.1715', note:'Localidade de origem em investigação: as fontes divergem entre Algodres e Fornos de Algodres. Filho de Balthasar de Almeida Naves e Maria Sebastiana Naves, conforme a compilação.' },
     p2:{ name:'Maria da Silva Leite', b:'São Paulo, SP, 1636', d:'Santana de Parnaíba, SP, 1715', note:'Filha de João Nunes da Silva e Úrsula Pedroso' },
     union:'São Paulo, SP · c. 1653',
     via:'Florência da Silva Naves',
@@ -559,7 +561,7 @@ const GEN_DATA = [
   },
   {
     id:'g4', num:'4ª Geração', era:'1760 — 1841', place:'Lavras & Bom Sucesso, MG',
-    p1:{ name:'João Naves Damasceno', b:'Lavras, MG, 1760', d:'Bom Sucesso, MG, 30.05.1831', note:'Filho de João de Almeida Naves e Luzia Moreira da Fonseca' },
+    p1:{ name:'João Naves Damasceno', b:'Lavras, MG, 1760', d:'Bom Sucesso, MG, maio de 1831 — dia em aberto', note:'Filho de João de Almeida Naves e Luzia Moreira da Fonseca. O PDF diverge entre 27 e 30 de maio. A lista de doze filhos não equivale aos onze herdeiros do inventário resumido.' },
     p2:{ name:'Anna Vittoria de São Thomé', b:'Prado, MG, 1761', d:'Bom Sucesso, MG, 19.05.1841', note:'Filha de Antônio José Teyxeira e Maria Rita do Nascimento' },
     union:'Lavras, MG · 24.02.1786',
     via:'Manoel Antônio Naves & Maria Rita Nascimento',
@@ -592,7 +594,7 @@ const GEN_DATA = [
   },
   {
     id:'g6', num:'6ª Geração', era:'1831/1833 — 1892/1909', place:'Lavras & Bom Sucesso, MG',
-    p1:{ name:'Francisco de Paula Naves', b:'Lavras, MG, 1833', d:'Lavras, MG, 10.01.1909', note:'Filho de Maria Rita Nascimento e Alexandre Esmayel Carvalho' },
+    p1:{ name:'Francisco de Paula Naves', b:'Lavras, MG, 1833 (compilação)', d:'Data em investigação: 1909 no PDF; 1864 na árvore enviada', note:'Filho de Maria Rita Nascimento e Alexandre Esmayel Carvalho, conforme o PDF. A identificação e os vínculos precisam de reconciliação: há filhos atribuídos a ele nascidos após 1864.' },
     p2:{ name:'Umbelina Rosa Naves', b:'Bom Sucesso, MG, 26.12.1831', d:'Bom Sucesso, MG, 14.04.1892', note:'Filha de Manoel Antônio Naves e Anna Rosa Sampaio — primos que se uniram' },
     union:'c. 1860, MG',
     via:'Américo Brasiliense Naves',
@@ -605,8 +607,8 @@ const GEN_DATA = [
   },
   {
     id:'g7', num:'7ª Geração', era:'1868 — 1955', place:'Uberlândia, MG',
-    p1:{ name:'Américo Brasiliense Naves', b:'Lavras, MG, c. 1868', d:'Uberlândia, MG, 19.03.1955', note:'Filho de Francisco de Paula Naves e Umbelina Rosa Naves' },
-    p2:{ name:'Maria Cândida de Mello', b:'Lavras, MG', d:'Uberlândia, MG, 19.03.1955', note:'Faleceram no mesmo dia, 19.03.1955' },
+    p1:{ name:'Américo Brasiliense Naves', b:'Lavras, MG, c. 1868 (compilação)', d:'Data em investigação: 19.03.1955 no PDF; 1919 na árvore enviada', note:'Filho de Francisco de Paula Naves e Umbelina Rosa Naves, conforme a compilação.' },
+    p2:{ name:'Identidade em investigação', b:'Local e data não confirmados', d:'Data não confirmada', note:'As fontes citam Maria Cândida de Mello, Maria Januária Naves e Maria Januária de Melo. Não está estabelecido se são variantes da mesma pessoa ou relações distintas.' },
     union:'c. 1882, MG',
     via:'Messias Brasiliense Naves',
     children:[
@@ -618,8 +620,8 @@ const GEN_DATA = [
   },
   {
     id:'g8', num:'8ª Geração', era:'1883 — 1938', place:'Morrinhos, GO',
-    p1:{ name:'Messias Brasiliense Naves', b:'Uberlândia, MG, 1883', d:'Morrinhos, GO, 17.01.1938', note:'Filho de Américo Brasiliense Naves e Maria Cândida de Mello · migrou para Goiás' },
-    p2:{ name:'Maria José Pereira', b:'Morrinhos, GO', d:'Morrinhos, GO, 1941', note:'Filha de José Silvério Pereira e Abadia Pereira' },
+    p1:{ name:'Messias Brasiliense Naves', b:'Uberlândia, MG, 1883', d:'Morrinhos, GO, 17.01.1938 (PDF)', note:'Filho de Américo Brasiliense Naves; identidade da mãe em investigação. Data do falecimento apoiada no PDF, sem autenticação do registro civil.' },
+    p2:{ name:'Maria José Pereira', b:'Morrinhos, GO', d:'1944 — confirmação familiar', note:'Correção informada por Elma e confirmada por Rodrigo. O PDF mantém 1941. Os nomes dos pais também apresentam variantes nas árvores fornecidas.' },
     union:'c. 1920, Morrinhos, GO',
     via:'Anésia Naves da Silva',
     children:[
@@ -634,10 +636,10 @@ const GEN_DATA = [
     id:'g9', num:'9ª Geração', era:'1932 — 2013', place:'Quirinópolis, GO',
     p1:{ name:'Anésia Naves da Silva', b:'Morrinhos, GO, 25.03.1932', d:'Goiânia, GO, 25.04.2013', note:'Filha de Messias Brasiliense Naves e Maria José Pereira' },
     p2:{ name:'Antônio Alves da Silva', b:'Quirinópolis, GO, 17.06.1926', d:'Quirinópolis, GO, 19.07.2017', note:'Filho de Pedro José Alves e Francelina Teodoro Alves' },
-    union:'c. 1950, Quirinópolis, GO',
+    union:'25.01.1951 — data relatada nas fontes familiares',
     via:'Gilmar Alves da Silva',
     children:[
-      {n:'Neusa Aparecida da Silva',d:'Quirinópolis, 1951'},{n:'Neyde Aparecida da Silva',d:'Quirinópolis, 1952'},
+      {n:'Neuza Aparecida',d:'Quirinópolis, 1951 — grafia confirmada pela família'},{n:'Neyde Aparecida da Silva',d:'Quirinópolis, 1952'},
       {n:'Gilberto Alves da Silva',d:'Quirinópolis, 1953'},{n:'Nilza Helena da Silva',d:'Quirinópolis, 1954'},
       {n:'Nilda Maria da Silva',d:'Quirinópolis, 1957'},
       {n:'Gilmar Alves da Silva',d:'Quirinópolis, 1958',hl:true}
@@ -694,7 +696,7 @@ function buildSection(g) {
     `<span class="child-tag${c.hl?' hl':''}" title="${c.d}">${c.n}</span>`
   ).join('');
 
-  const unionHTML = g.union ? `<div class="union-col">
+  const unionHTML = g.isLast ? `<div class="union-col"><span class="union-date">Irmãos</span></div>` : g.union ? `<div class="union-col">
     <div class="union-ring">✦</div>
     <div class="union-date">${g.union}</div>
   </div>` : `<div class="union-col">
@@ -708,8 +710,8 @@ function buildSection(g) {
     </div>` : '';
 
   const lastNote = g.isLast ? `<div style="text-align:center;padding:2rem;border:1px solid var(--color-border-subtle);background:var(--color-bg-raised);max-width:500px;width:100%;position:relative;z-index:1;margin-top:1rem;">
-    <div style="font-size: 0.875rem;letter-spacing: 0.04em;color:var(--color-link);margin-bottom:0.75rem">FIM DA LINHAGEM DOCUMENTADA</div>
-    <div style="font-size:1rem;font-style: normal;color:var(--color-text-muted);font-weight: 400;line-height:1.7">11 gerações · 370 anos · de Portugal<br>ao coração do cerrado brasileiro</div>
+    <div style="font-size: 0.875rem;letter-spacing: 0.04em;color:var(--color-link);margin-bottom:0.75rem">A HISTÓRIA CONTINUA</div>
+    <a href="/arvore">Conheça os descendentes nos seis ramos de Anésia →</a>
   </div>` : '';
 
   return `<section class="gen-section${g.isLast?' last-gen':''}" id="${g.id}">
@@ -726,7 +728,7 @@ function buildSection(g) {
     ${secondCouple}
     ${via}
     <div class="children-wrap fade-up">
-      <div class="children-title">filhos desta geração</div>
+      <div class="children-title">${g.isLast ? 'Filhos de Gilmar' : g.p1b ? 'Descendentes dos dois núcleos familiares desta geração' : 'Filhos relacionados na compilação'}</div>
       <div class="children-grid">${childTags}</div>
     </div>
     ${lastNote}

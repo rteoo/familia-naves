@@ -237,49 +237,46 @@ footer {
 }
 </style>
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/archive.css">
 </head>
-<body>
+<body class="archive-home">
 <button class="theme-toggle tp-button tp-button--ghost" type="button" data-theme-toggle aria-pressed="false">Tema claro</button>
-  <div class="wrap">
-    <p class="eyebrow">Brasil · Portugal · 1653 — presente</p>
-    <h1>Família<em>Naves</em></h1>
+  <main class="wrap" id="conteudo">
+    <p class="eyebrow">Família Naves · Memória de família</p>
+    <h1>Uma família.<em>Muitas histórias.</em></h1>
     <div class="rule"></div>
-    <p class="subtitle">Uma linhagem de onze gerações — do sertão de Portugal ao coração do cerrado</p>
-
-    <div class="stats">
-      <div class="stat"><span class="stat-n">11</span><span class="stat-l">gerações</span></div>
-      <div class="stat"><span class="stat-n">370</span><span class="stat-l">anos</span></div>
-      <div class="stat"><span class="stat-n">1653</span><span class="stat-l">primeiro registro</span></div>
-    </div>
+    <p class="subtitle">Os caminhos que vieram antes de nós. Os nomes que seguimos levando. Um lugar para conhecer a família Naves e cuidar da nossa memória.</p>
 
     <p class="desc-block">
-      Documentação genealógica da família Naves brasileira — onze gerações desde
-      João de Almeida Naves, português chegado a São Paulo em 1653, até os
-      descendentes contemporâneos em Goiás. Pesquisa de <em>Nilson N. Naves</em>,
-      publicada pelo Boletim «Notícias de Naves», Goiânia, GO.
+      Anésia Naves e Antônio Alves da Silva formaram uma família de seis filhos.
+      Explore cada ramo, conheça os parentes e acompanhe a pesquisa das nossas origens.
     </p>
 
     <nav class="nav-grid">
       <a href="/arvore" class="nav-card">
         <div class="card-icon">✦</div>
-        <span class="card-label">Árvore Genealógica</span>
-        <span class="card-desc">11 gerações · ancestrais e descendentes</span>
+        <span class="card-label">A família de Anésia</span>
+        <span class="card-desc">Seis ramos · parentescos confirmados pela família</span>
       </a>
       <a href="/mapa" class="nav-card">
         <div class="card-icon">◈</div>
         <span class="card-label">Mapa de Migração</span>
         <span class="card-desc">Portugal → SP → MG → GO</span>
       </a>
+      <a href="/linhagem" class="nav-card"><span class="card-label">As origens</span><span class="card-desc">Linhagem histórica · fontes e questões em aberto</span></a>
     </nav>
-  </div>
+    <section class="home-section" aria-labelledby="ramos"><h2 id="ramos">Seis ramos, uma história em comum.</h2><div class="branch-links"><a href="/arvore#neuza">01 · Neuza <span>↗</span></a><a href="/arvore#neyde">02 · Neyde <span>↗</span></a><a href="/arvore#gilberto">03 · Gilberto <span>↗</span></a><a href="/arvore#nilza">04 · Nilza <span>↗</span></a><a href="/arvore#nilda">05 · Nilda <span>↗</span></a><a href="/arvore#gilmar">06 · Gilmar <span>↗</span></a></div></section>
+    <section class="home-section"><p class="eyebrow">Para nos reencontrarmos</p><h2>I Encontro dos Primos Naves</h2><p>19 de dezembro de 2026 · Goiânia</p><p class="source-line">Data, nome e cidade confirmados pela família. Horário e endereço aguardam confirmação.</p></section>
+    <section class="home-section" id="fontes"><h2>Memória com referências</h2><p>A pesquisa de Nilson N. Naves e as publicações de Jales Naves, da Editora Naves, são a base histórica. As atualizações de parentesco foram fornecidas pela família em 11 de novembro de 2026.</p><p><a href="https://editoranaves.com.br/gilmar-dos-naves-vai-reunir-a-familia-na-passagem-do-ano-em-quirinopolis/">Jales · a família de Anésia (2025) ↗</a></p><p><a href="https://editoranaves.com.br/gilmar-alves-quer-conhecer-a-origem-da-familia-naves/">Jales · a pesquisa de Gilmar (2024) ↗</a></p><p class="source-line">O relato de 2025 anuncia outro encontro, na passagem do ano em Quirinópolis. Ele não é a fonte da data de dezembro de 2026.</p></section>
+  </main>
 
   <footer>
     <div class="footer-author">
       Desenvolvido por <strong>Rodrigo Teodoro</strong>
     </div>
-    <a class="gh-link" href="https://github.com/TeodoroRodrigo/familia-naves" target="_blank" rel="noopener">
+    <a class="gh-link" href="https://github.com/rteoo/familia-naves" target="_blank" rel="noopener">
       <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      TeodoroRodrigo/familia-naves
+      rteoo/familia-naves
     </a>
     <div class="footer-credit">Pesquisa: Nilson N. Naves · Editora Naves, 2025</div>
   </footer>

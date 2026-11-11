@@ -231,6 +231,7 @@ footer {
 footer p { font-size: 0.875rem; font-style: normal; color: var(--color-text-muted); line-height: 2.2; }
 </style>
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/archive.css">
 </head>
 <body>
 <button class="theme-toggle tp-button tp-button--ghost" type="button" data-theme-toggle aria-pressed="false">Tema claro</button>
@@ -239,7 +240,7 @@ footer p { font-size: 0.875rem; font-style: normal; color: var(--color-text-mute
   <p class="hero-eye">Portugal · SP · MG · GO · 1624 — 1990</p>
   <h1 class="hero-title">Rotas da <em>Família Naves</em></h1>
   <div class="hero-rule"></div>
-  <p class="hero-sub">Quatrocentos anos de migração — do Atlântico ao coração do cerrado</p>
+  <p class="hero-sub">Uma leitura geográfica da compilação familiar. Rotas ilustrativas; datas antigas e alguns vínculos continuam em investigação. <a href="/arvore">Conheça os seis ramos atuais de Anésia.</a></p>
 </header>
 
 <div class="stats-bar">
@@ -459,23 +460,23 @@ footer p { font-size: 0.875rem; font-style: normal; color: var(--color-text-mute
 <script>
 const STOPS = [
   { city:'São Paulo, SP', year:'1624 — 1653', gen:'1ª Geração', state:'SP', col:'var(--chart-secondary)',
-    desc:'João de Almeida Naves chega de Portugal e casa-se com Maria da Silva Leite em São Paulo (~1653). Início da linhagem brasileira dos Naves.',
+    desc:'A compilação situa João de Almeida Naves em São Paulo e o casamento com Maria da Silva Leite por volta de 1653. A localidade portuguesa e a data exata da chegada não estão confirmadas.',
     names:'João de Almeida Naves · Maria da Silva Leite', seg:null },
   { city:'Santana de Parnaíba, SP', year:'1676 — 1714', gen:'2ª Geração', state:'SP', col:'var(--chart-secondary)',
-    desc:'Florência da Silva Naves cresce e casa em 1714 com Domingos Lopes da Silva. Único filho: João (neto), que levará o nome do avô materno.',
+    desc:'A compilação relata o casamento de Florência da Silva Naves com Domingos Lopes da Silva em 1714 e identifica João, neto do pioneiro, na linha de descendência. A lista não estabelece que fosse filho único.',
     names:'Florência da Silva Naves · Domingos Lopes da Silva', seg:'seg0' },
   { city:'São João Del Rey, MG', year:'1715 — 1780', gen:'3ª Geração', state:'MG', col:'var(--chart-neutral)',
     desc:'João de Almeida Naves (neto) migra para Minas Gerais acompanhando a corrida do ouro. Casa-se com Luzia Moreira da Fonseca. A família se interioriza.',
     names:'João de Almeida Naves (neto) · Luzia Moreira da Fonseca', seg:'seg1' },
   { city:'Lavras, MG', year:'1760 — 1831', gen:'4ª Geração', state:'MG', col:'var(--chart-neutral)',
-    desc:'João Naves Damasceno e Anna Vittoria de São Thomé têm 12 filhos em Lavras. A família Naves se multiplica no sul de Minas Gerais.',
+    desc:'O PDF lista doze filhos de João Naves Damasceno e Anna Vittoria de São Thomé. O resumo do inventário menciona onze herdeiros; as duas contagens exigem reconciliação. O dia da morte de Damasceno também diverge entre as fontes.',
     names:'João Naves Damasceno · Anna Vittoria de São Thomé', seg:'seg2' },
   { city:'Bom Sucesso, MG', year:'1805 — 1882', gen:'5ª e 6ª Gerações', state:'MG', col:'var(--chart-neutral)',
     desc:'Manoel Antônio Naves e Maria Rita Nascimento (irmãos) geram descendentes que se unem entre si: Francisco de Paula Naves casa com Umbelina Rosa Naves (primos).',
     names:'Manoel Antônio Naves · Francisco de Paula Naves · Umbelina Rosa Naves', seg:'seg3' },
   { city:'Uberlândia, MG', year:'1868 — 1955', gen:'7ª Geração', state:'MG', col:'var(--chart-neutral)',
-    desc:'Américo Brasiliense Naves e Maria Cândida de Mello constroem família em Uberlândia. Notável: faleceram no mesmo dia — 19.03.1955.',
-    names:'Américo Brasiliense Naves · Maria Cândida de Mello', seg:'seg4' },
+    desc:'A compilação situa Américo Brasiliense Naves em Uberlândia. A identidade de sua esposa e mãe de Messias permanece em investigação. O PDF aponta morte em 1955, enquanto a árvore enviada aponta 1919.',
+    names:'Américo Brasiliense Naves · identidade da esposa em investigação', seg:'seg4' },
   { city:'Morrinhos, GO', year:'1883 — 1938', gen:'8ª Geração', state:'GO', col:'var(--chart-primary)',
     desc:'Messias Brasiliense Naves cruza a fronteira para Goiás — a família entra no cerrado. Casa com Maria José Pereira em Morrinhos. Seis filhos.',
     names:'Messias Brasiliense Naves · Maria José Pereira', seg:'seg5' },
@@ -483,7 +484,7 @@ const STOPS = [
     desc:'Anésia Naves da Silva e Antônio Alves da Silva fixam raízes em Quirinópolis. Seu filho Gilmar Alves da Silva — o sujeito desta genealogia — nasce em 02.03.1958.',
     names:'Anésia Naves da Silva · Antônio Alves da Silva · Gilmar Alves da Silva', seg:'seg6' },
   { city:'Goiânia, GO', year:'1985 — presente', gen:'11ª Geração', state:'GO', col:'var(--chart-primary)',
-    desc:'A 11ª geração chega à capital goiana. Fábio Henrique Fagundes Alves (1985), Brunno Teodoro Alves (1989) e Rodrigo Teodoro Alves (1990) encerram a genealogia documentada.',
+    desc:'Brunno e Rodrigo são naturais de Goiânia, conforme confirmação familiar. A família continua nas gerações seguintes: a árvore atual reúne os seis ramos de Anésia, com os parentescos fornecidos pela família.',
     names:'Fábio Henrique Fagundes Alves · Brunno Teodoro Alves · Rodrigo Teodoro Alves', seg:'seg7' }
 ];
 
