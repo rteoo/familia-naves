@@ -42,12 +42,15 @@ try {
   const setInput=(value)=>evaluate(`document.querySelector('#person-search').value=${JSON.stringify(value)};document.querySelector('#person-search').dispatchEvent(new Event('input'));`);
   console.log('Checking family interactions');
   await navigate('/');
-  assert.equal(await evaluate(`document.querySelectorAll('.atlas-node').length`),6);
-  await evaluate(`document.querySelector('.atlas-node[href="/arvore#gilmar"]').focus()`);
+  assert.equal(await evaluate(`document.querySelectorAll('.generation-spine a').length`),13);
+  assert.ok(await evaluate(`!document.querySelector('#fontes')&&!document.querySelector('.gathering .source-line')`),'Annotated homepage sections removed');
+  assert.equal(await evaluate(`document.querySelectorAll('.era-links a').length`),4);
+  await evaluate(`document.querySelector('.generation-spine a[href="/arvore#generation-11"]').focus()`);
   await call('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
   await call('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
-  for(let n=0;n<40;n++){if(await evaluate(`location.pathname==='/arvore' && location.hash==='#gilmar' && document.readyState==='complete'`))break;await new Promise(done=>setTimeout(done,50));}
-  assert.ok(await evaluate(`location.pathname==='/arvore' && location.hash==='#gilmar'`),'Diagram keyboard navigation');
+  for(let n=0;n<40;n++){if(await evaluate(`location.pathname==='/arvore' && location.hash==='#generation-11' && document.readyState==='complete'`))break;await new Promise(done=>setTimeout(done,50));}
+  assert.ok(await evaluate(`location.pathname==='/arvore' && location.hash==='#generation-11'`),'Generation keyboard navigation');
+  await navigate('/linhagem#generation-4');assert.equal(await evaluate(`document.querySelector('#branch-filter').value`),'ancestry');
   await navigate('/arvore');
   assert.equal(await evaluate('window.NAVES_CHART.people.filter(p=>p.generation===1).length'),2);
   assert.ok(await evaluate('window.NAVES_CHART.people.length>100'));

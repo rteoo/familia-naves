@@ -1,6 +1,6 @@
 # 🌳 Família Naves — Genealogia Brasileira
 
-Site estático da Família Naves: seis ramos de Anésia com parentescos confirmados pela família, linhagem histórica em revisão e mapa ilustrativo das migrações.
+Atlas genealógico da Família Naves: da geração inicial da pesquisa às treze gerações disponíveis, incluindo os descendentes atuais na linhagem de Anésia. Reúne a árvore por núcleos familiares, a compilação histórica em revisão e o mapa ilustrativo das migrações.
 
 🔗 **[familia-naves.vercel.app](https://familia-naves.vercel.app)** 
 

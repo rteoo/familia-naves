@@ -219,8 +219,20 @@
   document.getElementById('show-origins').addEventListener('click',()=>{filter.value='ancestry';render();fitAll();});
   input.addEventListener('input',render);filter.addEventListener('change',()=>{render();const person=branchRoots.get(filter.value);if(person)focusPerson(person);else fitAll();});
   document.getElementById('tree-search').addEventListener('submit',event=>event.preventDefault());document.getElementById('tree-search').addEventListener('reset',()=>{input.value='';filter.value=historicalPage?'ancestry':'';render();fitAll();});
-  function openBranch(){const id=location.hash.slice(1);if(branchRoots.has(id)){filter.value=id;render();const person=branchRoots.get(id);focusPerson(person);inspect(person);viewport.scrollIntoView({block:'start',behavior:'instant'});}}
-  render();if(historicalPage)fitAll();else focusPerson(anesia);window.addEventListener('hashchange',openBranch);document.fonts.ready.then(openBranch);
+  function openBranch(){
+    const id=location.hash.slice(1);
+    if(id==='overview'){filter.value='';input.value='';render();fitAll();viewport.scrollIntoView({block:'start',behavior:'instant'});return;}
+    const match=id.match(/^generation-(\d+)$/);
+    if(match){
+      const generation=Number(match[1]);if(generation<1||generation>13)return;
+      filter.value=generation<=9?'ancestry':'';input.value='';render();
+      const rectangles=shown.filter(person=>person.generation===generation).flatMap(person=>appearances.get(person.id)||[]);
+      if(rectangles.length){const x=Math.min(...rectangles.map(rect=>rect.x)),right=Math.max(...rectangles.map(rect=>rect.x+rect.width));setZoom(Math.min(.6,(viewport.clientWidth-36)/(right-x)));centerRect({x,y:rectangles[0].y,width:right-x,height:boxH});framing='manual';}
+      viewport.scrollIntoView({block:'start',behavior:'instant'});return;
+    }
+    if(branchRoots.has(id)){filter.value=id;render();const person=branchRoots.get(id);focusPerson(person);inspect(person);viewport.scrollIntoView({block:'start',behavior:'instant'});}
+  }
+  render();fitAll();window.addEventListener('hashchange',openBranch);document.fonts.ready.then(openBranch);
   let previousWidth=viewport.clientWidth;
   new ResizeObserver(()=>{if(viewport.clientWidth===previousWidth)return;previousWidth=viewport.clientWidth;if(framing==='overview')fitAll();else if(framing==='person')focusPerson(focusTarget);}).observe(viewport);
 })();
