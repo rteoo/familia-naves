@@ -37,3 +37,11 @@ ID 13659 has no title in the API and is preserved under its ID rather than inven
 ## Validation
 
 The final local validation checks 683 unique catalogue anchors, one source URL per entry, matching yearly totals, valid internal Markdown links/anchors, UTF-8 decoding, and absence of Blogger URLs in the collection. It does not certify the historical accuracy of the source.
+
+## Follow-up validation on 2026-11-11
+
+All seven API pages (683 post bodies) were fetched again to reconcile the flagged years across the corpus. [Family-history notes](family-history.md#year-validation-and-reference-check) record the original wording, corroborating posts, the visually inspected linked chart, inaccessible book-reader content and remaining documentary limits. [Institutional checks for Haroldo](family-history.md#haroldo-naves--institutional-cross-check) distinguish mayoral terms, FGM mandates, award base year and reporting year.
+
+Direct family confirmations update the [Quirinópolis notes](quirinopolis.md) and [validation status](open-questions.md) without changing the source catalogue or website. Descendant counting is deferred until descendant records are validated, as requested. The supplied local biographies `sources/bio/neyde-aparecida.md` and `sources/bio/gilmar-alves.md` were inspected and left unchanged. Their claims are not automatically promoted to independently verified facts. These locally supplied files are outside the original 18-file collection and are ignored by the current workspace rule; this update does not change that rule or publish them.
+
+The additional [supplied PDF and screenshot review](pdf-review.md) covers all 14 PDF pages, using text extraction and visual rendering. It preserves the PDF's SHA-256, physical-page references, source conflicts and distinction between compiled charts and original records. The PDF and attached screenshot were not changed or uploaded. The original 683-record catalogue remains unchanged; the PDF review is a separate local validation note outside the original 18-file collection.

@@ -1,6 +1,6 @@
 # Quirinópolis branch — dated editorial evidence
 
-Collected 2026-11-11. Source priority: Blog do Jales / Editora Naves. These notes do not alter the interactive family tree.
+Collected and updated 2026-11-11. Source priority: Blog do Jales / Editora Naves for published claims; direct family confirmations and institutional checks are identified separately. These notes do not alter the interactive family tree.
 
 ## Anésia and Antônio: family snapshot in December 2025
 
@@ -29,9 +29,9 @@ The source describes Gilmar as the youngest of six siblings, born in Quirinópol
 
 It names three children: Fábio Henrique Fagundes Alves (1985, before the marriage), and Bruno (1989, the source's spelling) and Rodrigo (1990), sons with Maria Zélia. The source gives both younger sons May 1 birthdays and Quirinópolis birthplace. Professional qualifications are a dated report, not independently verified credentials.
 
-Direct family corrections supplied by Rodrigo on 2026-11-11: his birthplace is Goiânia, GO, and his brother's name is spelled Brunno. These corrections govern the consolidated account; the original source wording remains preserved as evidence of the discrepancy. Rodrigo did not confirm Brunno's birthplace in this correction, so that detail remains pending.
+Direct family corrections supplied by Rodrigo on 2026-11-11: his birthplace and Brunno's birthplace are Goiânia, GO; his brother's name is spelled Brunno. These corrections govern the consolidated account; the original source wording remains preserved as evidence of the discrepancy.
 
-The written term range 2016–2020 and the claim that both parents came from Morrinhos require checking against other records. Retain the distinction between an election year and taking office.
+Rodrigo confirmed Gilmar's three mayoral terms as 2005–2008, 2009–2012 and 2017–2020. The supplied local biography, `sources/bio/gilmar-alves.md`, gives the same periods. Use 2017–2020 for the third term; 2016 is the election year. This is a direct family confirmation supported by the supplied compilation, not a claim that all original electoral records were inspected. The article's claim that both parents came from Morrinhos is superseded for Antônio by the family confirmation below.
 
 ## Contemporary election report
 
@@ -59,6 +59,12 @@ The November 2025 article announces the 12th meeting for 2025-11-30 in Varjão, 
 
 ## Implications for the supplied publication draft
 
-The supplied draft is a separate, unpublished input; its December 19 date, first-edition label and location at Neyde's home remain unconfirmed. Its 14/19/1 descendant counts differ from the dated December 2025 report above. Confirm current totals with the family and specify whether deceased descendants are included. Do not carry relative ages, current occupations or planned studies forward automatically.
+Rodrigo confirmed the event as **I Encontro dos Primos Naves**, on **2026-12-19**, in **Goiânia**. This is a family-confirmed future event, distinct from the December 2025 New Year gathering. The specific address, host and time were not confirmed in this update; do not assume Neyde's home from the older draft.
 
-Elma's correction supplied by the user says Maria José died in 1944 rather than 1941. This is family testimony from the conversation, not a claim found on Jales's website. It has not been independently documented. The text should identify its basis when proposing that correction.
+The supplied draft's 14/19/1 descendant counts differ from the dated December 2025 report above. Rodrigo subsequently supplied a [named family roster and relationship clarifications](../familia-anesia.md): it contains 15 grandchildren, 30 great-grandchildren and four great-great-grandchildren, including deceased descendants. This is an arithmetic count of supplied names, not proof that the roster is exhaustive. The fifth great-great-grandchild in the 2025 report remains unidentified. Keep the complete current total open until reconciled. Do not carry relative ages, current occupations or planned studies forward automatically.
+
+Rodrigo directly confirmed the spellings **Anésia** and **Neuza**, Maria José Pereira's death year **1944**, and Antônio's birthplace **Quirinópolis, GO**, on 2026-11-11. The 1944 correction was first supplied through Elma and is now also confirmed by Rodrigo. Use these family-confirmed details in the consolidated account while preserving Jales's original variants as published evidence. No civil certificate was inspected. Rodrigo did not know Messias's or Anésia's exact death dates; the subsequently inspected PDF reports 1938-01-17 and 2013-04-25 respectively, as [documented compilation claims](pdf-review.md), not authenticated civil records. The later family roster resolves Neuza's children as Ossualdo Júnior, Leandro and Carla Bianca; Ossualdo's birth year remains unknown.
+
+## Neyde's union presidency
+
+The supplied local biography, `sources/bio/neyde-aparecida.md`, records presidency of Sintego from **1993 to 2001**. This period is corroborated by the [Chamber of Deputies biography](https://www.camara.leg.br/deputados/74369/biografia) and a [CNTE report attributed to Sintego, dated 2011-01-05](https://cnte.org.br/noticias/go-sintego-quer-audiencia-com-novos-secretarios-da-educacao-9cb4), checked on 2026-11-11. Neither inspected reference establishes three separate mandates. Safe wording: she presided over Sintego between 1993 and 2001; keep the mandate count open.
