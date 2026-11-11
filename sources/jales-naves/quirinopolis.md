@@ -27,7 +27,9 @@ The reported descendant totals are 15 grandchildren, 30 great-grandchildren and 
 
 The source describes Gilmar as the youngest of six siblings, born in Quirinópolis, a civil engineer trained at UFV in 1983. It records election in 2004, reelection in 2008, and election for a third term in 2016, and associates him with Gilenge and Rádio Alvorada.
 
-It names three children: Fábio Henrique Fagundes Alves (1985, before the marriage), and Bruno (1989) and Rodrigo (1990), sons with Maria Zélia. The source gives both younger sons May 1 birthdays and Quirinópolis birthplace; these conflict with the project's existing details and need direct family confirmation. Professional qualifications are a dated report, not independently verified credentials.
+It names three children: Fábio Henrique Fagundes Alves (1985, before the marriage), and Bruno (1989, the source's spelling) and Rodrigo (1990), sons with Maria Zélia. The source gives both younger sons May 1 birthdays and Quirinópolis birthplace. Professional qualifications are a dated report, not independently verified credentials.
+
+Direct family corrections supplied by Rodrigo on 2026-11-11: his birthplace is Goiânia, GO, and his brother's name is spelled Brunno. These corrections govern the consolidated account; the original source wording remains preserved as evidence of the discrepancy. Rodrigo did not confirm Brunno's birthplace in this correction, so that detail remains pending.
 
 The written term range 2016–2020 and the claim that both parents came from Morrinhos require checking against other records. Retain the distinction between an election year and taking office.
 
