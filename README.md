@@ -9,12 +9,12 @@ Atlas genealógico da Família Naves: da geração inicial da pesquisa às treze
 ## O que tem aqui
 
 ### Árvore Genealógica (`/arvore`)
-- Árvore tradicional com a linhagem histórica e os seis ramos de Anésia, em 13 gerações disponíveis
-- Caixas individuais, linhas de parentesco, casamentos e vínculos incertos diferenciados
-- Zoom, visão geral, atalhos para família/origens, busca por nome e filtro de ramo; buscas ignoram acentos
+- Genealogia centrada em uma pessoa, com pais, relacionamentos e filhos agrupados por filiação
+- As 13 gerações disponíveis são acessíveis por busca e por geração; buscas ignoram acentos
+- Navegação com links individuais e histórico do navegador; a página usa rolagem e zoom nativos
 - Parentescos, cônjuges, relacionamentos anteriores e falecidos identificados
 - Fontes familiares separadas das alegações históricas
-- `/linhagem` usa a mesma árvore por núcleos familiares, na vista histórica (gerações 1–9); `/arvore_naves.html` preserva a leitura detalhada da compilação
+- `/linhagem` usa o mesmo explorador com introdução histórica; `/arvore_naves.html` preserva a leitura detalhada da compilação
 - Sem build, instalação de pacotes ou serviços externos em tempo de execução
 
 ### Mapa de Migração (`/mapa`)
