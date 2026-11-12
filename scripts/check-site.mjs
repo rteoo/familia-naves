@@ -18,7 +18,7 @@ const server=createServer(async(req,res)=>{
 });
 await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const origin=`http://127.0.0.1:${server.address().port}`;
-let browser,ws;
+let browser,ws,closeBrowser;
 const errors=[];
 try {
   browser=spawn(process.env.CHROME_PATH??'C:/Program Files/Google/Chrome/Application/chrome.exe',['--headless=new',`--user-data-dir=${profile}`,'--remote-debugging-port=0','--no-first-run','--no-default-browser-check','about:blank'],{stdio:'ignore',windowsHide:true});
@@ -31,6 +31,7 @@ try {
   let id=0;const pending=new Map();
   ws.onmessage=event=>{const data=JSON.parse(event.data);if(data.id){const item=pending.get(data.id);pending.delete(data.id);data.error?item.reject(new Error(JSON.stringify(data.error))):item.resolve(data.result);}else if(data.method==='Runtime.exceptionThrown')errors.push(data.params.exceptionDetails.text);};
   const call=(method,params={})=>new Promise((resolve,reject)=>{const key=++id;const timer=setTimeout(()=>{pending.delete(key);reject(new Error(`CDP timeout: ${method}`));},8000);pending.set(key,{resolve:value=>{clearTimeout(timer);resolve(value);},reject:error=>{clearTimeout(timer);reject(error);}});ws.send(JSON.stringify({id:key,method,params}));});
+  closeBrowser=()=>call('Browser.close');
   await call('Runtime.enable');await call('Page.enable');
   const evaluate=async expression=>{const result=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});assert.ok(!result.exceptionDetails,JSON.stringify(result.exceptionDetails));return result.result.value;};
   async function navigate(path){
@@ -147,12 +148,20 @@ try {
   await navigate('/arvore_naves.html');assert.equal(await evaluate(`document.querySelectorAll('.gen-section').length`),11);await evaluate(`document.querySelector('a[href="#g8"]').click()`);assert.equal(await evaluate(`location.hash`),'#g8');
   await navigate('/mapa');await evaluate(`document.querySelectorAll('.tl-item')[7].click()`);assert.ok(await evaluate(`document.querySelectorAll('.tl-item')[7].classList.contains('active')`));
   assert.deepEqual(errors,[],'Uncaught browser errors');
-  console.log('PASS: responsive ten-generation lineage, expandable families, search, links, kinship, themes and routes.');
-  await call('Browser.close');
 } finally {
+  if(closeBrowser){try{await closeBrowser();}catch(error){console.warn('Browser shutdown request failed:',error.message);}}
   ws?.close();
-  if(browser && browser.exitCode===null){browser.kill();await new Promise(done=>{browser.once('exit',done);setTimeout(done,3000);});}
+  if(browser?.pid && browser.exitCode===null && browser.signalCode===null){
+    await new Promise(done=>{
+      let forceTimer;
+      const finish=()=>{clearTimeout(timer);clearTimeout(forceTimer);browser.removeListener('exit',finish);done();};
+      const timer=setTimeout(()=>{browser.kill();forceTimer=setTimeout(finish,5000);},5000);
+      browser.once('exit',finish);
+      if(browser.exitCode!==null || browser.signalCode!==null)finish();
+    });
+  }
   server.closeAllConnections();
   await new Promise(done=>server.close(done));
-  await rm(profile,{recursive:true,force:true,maxRetries:5,retryDelay:200});
+  await rm(profile,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 }
+console.log('PASS: responsive ten-generation lineage, expandable families, search, links, kinship, themes and routes.');
