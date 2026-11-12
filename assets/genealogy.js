@@ -116,7 +116,6 @@
     const details=el('details','pedigree-person '+kind);details.dataset.personKey=person.key;
     const summary=el('summary','pedigree-summary');
     summary.append(el('strong','pedigree-name',label(person)),el('span','pedigree-action','Ver família e detalhes'));details.append(summary);
-    if(person.uncertain)summary.append(el('span','pedigree-uncertain','Dado em investigação'));
     let built=false;
     details.addEventListener('toggle',()=>{
       if(!details.open||built)return;built=true;
@@ -187,7 +186,6 @@
   function personButton(person,subtitle){
     const button=el('button','family-card');button.type='button';button.dataset.personKey=person.key;
     button.append(el('strong','family-card-name',label(person)),el('span','family-card-meta',subtitle||person.generation+'ª geração'));
-    if(person.uncertain)button.append(el('span','family-card-uncertain','Vínculo ou dado em investigação'));
     button.addEventListener('click',()=>select(person));return button;
   }
   function group(title,description){
@@ -207,7 +205,6 @@
     const title=el('h2','family-focus-name',label(person));title.tabIndex=-1;focal.append(title);
     if(person.birth)focal.append(el('p','family-fact','Nascimento / local: '+person.birth));
     if(person.death)focal.append(el('p','family-fact','Falecimento: '+person.death));
-    if(person.uncertain)focal.append(el('p','family-warning','Vínculo ou dado em investigação'));
     const details=el('details','family-details');details.append(el('summary','','Fontes e observações'));
     if(person.note)details.append(el('p','',person.note));details.append(el('p','',person.source));focal.append(details);root.append(focal);
     const own=[...families.values()].filter(unit=>unit.parents.includes(person));
@@ -235,7 +232,7 @@
   function applyLocation(){
     const hash=decodeURIComponent(location.hash.slice(1));
     if(hash.startsWith('person=')){const person=byKey.get(hash.slice(7));if(person){select(person,false);return;}}
-    if(hash==='overview'){generation.value='';listPeople(all,'Todas as gerações');return;}
+    if(hash==='overview'){generation.value='';root.replaceChildren();status.textContent='10 gerações na linha central · abra os nomes para explorar outros ramos';return;}
     const gm=hash.match(/^generation-(\d+)$/);if(gm){const number=Number(gm[1]);generation.value=String(number);if(number<=10){root.replaceChildren();document.getElementById('generation-'+number)?.scrollIntoView();}else listPeople(all.filter(p=>p.generation===number),number+'ª geração');return;}
     if(branchRoots.has(hash)){root.replaceChildren();const card=spine.querySelector('[data-person-key="'+CSS.escape(branchRoots.get(hash).key)+'"]');if(card){card.open=true;card.scrollIntoView();}return;}
     if(!hash){root.replaceChildren();status.textContent='10 gerações na linha central · abra os nomes para explorar outros ramos';}
