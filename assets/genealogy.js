@@ -102,7 +102,7 @@
     document.title='Linhagem histórica — Família Naves';
     document.querySelector('h1').textContent='A linhagem histórica.';
     document.querySelector('.page-intro .eyeline').textContent='02 / LINHAGEM HISTÓRICA · COMPILAÇÃO FAMILIAR';
-    document.querySelector('.page-intro .dek').textContent='Explore a família pessoa por pessoa: pais, relacionamentos e filhos aparecem em grupos legíveis. Selecione um nome para seguir a linhagem.';
+    document.querySelector('.page-intro .dek').textContent='Acompanhe a linhagem central ao longo de dez gerações e abra os ramos da família para conhecer seus descendentes.';
     document.querySelector('.page-intro .source-line').textContent='Dados da compilação da Editora Naves, com correções familiares identificadas. Datas e vínculos antigos não equivalem a certidões autenticadas.';
     document.querySelectorAll('.masthead nav a').forEach(link=>{if(link.getAttribute('href')==='/linhagem')link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
   }
@@ -110,6 +110,72 @@
   const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;};
   const relation=(person,type)=>relationships.filter(edge=>type==='parents'?edge.type==='parent'&&edge.to===person.id:type==='children'?edge.type==='parent'&&edge.from===person.id:edge.type==='partner'&&(edge.from===person.id||edge.to===person.id)).map(edge=>people.get(type==='parents'?edge.from:type==='children'?edge.to:edge.from===person.id?edge.to:edge.from));
   const label=person=>person.name+(person.deceased||person.death?' †':'');
+  // The spine stays in document flow: names remain legible and browser zoom is native.
+  const spine=el('div','pedigree-spine');spine.setAttribute('aria-label','Linhagem central e parentes próximos');root.after(spine);
+  function expandablePerson(person,kind=''){
+    const details=el('details','pedigree-person '+kind);details.dataset.personKey=person.key;
+    const summary=el('summary','pedigree-summary');
+    summary.append(el('strong','pedigree-name',label(person)),el('span','pedigree-action','Ver família e detalhes'));details.append(summary);
+    if(person.uncertain)summary.append(el('span','pedigree-uncertain','Dado em investigação'));
+    let built=false;
+    details.addEventListener('toggle',()=>{
+      if(!details.open||built)return;built=true;
+      const content=el('div','pedigree-expanded');
+      if(person.birth)content.append(el('p','pedigree-fact','Nascimento / local: '+person.birth));
+      if(person.death)content.append(el('p','pedigree-fact','Falecimento: '+person.death));
+      if(person.note)content.append(el('p','pedigree-fact',person.note));
+      content.append(el('p','pedigree-source',person.source));
+      const own=[...families.values()].filter(unit=>unit.parents.includes(person));
+      const shown=new Set();
+      own.forEach(unit=>{
+        const other=unit.parents.filter(parent=>parent!==person);other.forEach(parent=>shown.add(parent.id));
+        const group=el('section','pedigree-unit');
+        group.append(el('h4','',other.length?'Filhos com '+other.map(parent=>parent.name).join(' e '):'Filhos de '+person.name));
+        if(!other.length)group.append(el('p','pedigree-fact','Outro genitor não informado nesta atualização.'));
+        if(unit.uncertain)group.append(el('p','pedigree-uncertain','Filiação em investigação'));
+        const children=el('div','pedigree-children');unit.children.forEach(child=>children.append(expandablePerson(child)));group.append(children);content.append(group);
+      });
+      const otherPartners=relation(person,'partners').filter(partner=>!shown.has(partner.id));
+      if(otherPartners.length)content.append(el('p','pedigree-fact','Relacionamento registrado: '+otherPartners.map(p=>p.name).join(', ')+'. Filiação não atribuída a este vínculo.'));
+      if(!own.length)content.append(el('p','pedigree-fact','Nenhum descendente informado nesta pesquisa.'));
+      details.append(content);
+    });
+    return details;
+  }
+  function makeSpine(){
+    const introduction=el('div','pedigree-intro');introduction.append(el('p','pedigree-kicker','UMA LINHAGEM · DEZ GERAÇÕES'),el('h2','','Da primeira geração aos filhos de Anésia'),el('p','','Siga a linha central. Os irmãos e outros parentes próximos aparecem ao lado; toque em um nome para abrir sua família.'));spine.append(introduction);
+    for(let index=0;index<9;index++){
+      const record=window.NAVES_LINEAGE[index],number=index+1;
+      const first=historyPerson(record.p1.name,number),second=historyPerson(record.p2.name,number);
+      const principal=[first,second];if(record.p1b)principal.push(historyPerson(record.p1b.name,number),historyPerson(record.p2b.name,number));
+      const ancestors=number===6?[first,second]:number===5?[principal[0],principal[2]]:[first];
+      const parentIds=new Set(ancestors.flatMap(person=>relation(person,'parents').map(parent=>parent.id)));
+      let siblings=all.filter(person=>person.generation===number&&!principal.includes(person)&&relation(person,'parents').some(parent=>parentIds.has(parent.id)));
+      if(number===6)siblings=siblings.concat(all.filter(person=>person.generation===6&&person.uncertain&&!principal.includes(person)&&!relation(person,'parents').length));
+      const section=el('section','pedigree-generation');section.id='generation-'+number;
+      const heading=el('div','pedigree-heading');heading.append(el('span','pedigree-number',String(number).padStart(2,'0')),el('div','',number+'ª geração'));section.append(heading);
+      const layout=el('div','pedigree-layout'),left=el('aside','pedigree-side'),center=el('div','pedigree-center'),right=el('aside','pedigree-side');
+      if(siblings.length){
+        const leftItems=siblings.filter((_,i)=>i%2===0),rightItems=siblings.filter((_,i)=>i%2===1);
+        [left,right].forEach((side,i)=>{const items=i?rightItems:leftItems;if(items.length){side.append(el('h3','pedigree-side-title',number===6?'Outros descendentes · filiação em investigação':number===9?'Irmãos e meios-irmãos':'Irmãos e irmãs'));items.forEach(person=>side.append(expandablePerson(person,'pedigree-collateral')));}});
+      }
+      const couples=el('div','pedigree-couples');
+      for(let i=0;i<principal.length;i+=2){const couple=el('div','pedigree-couple');couple.append(expandablePerson(principal[i],'pedigree-main'),el('span','pedigree-union','e'),expandablePerson(principal[i+1],'pedigree-main'));couples.append(couple);}
+      if(number===5)center.append(el('p','pedigree-context','Dois irmãos e suas famílias seguem nesta linhagem.'));
+      if(number===6)center.append(el('p','pedigree-context','Francisco e Umbelina são primos; os vínculos antigos seguem em investigação.'));
+      center.append(couples);
+      if(record.place)center.append(el('p','pedigree-place',record.place));
+      if(number===8)center.append(el('p','pedigree-context','Messias também foi casado com Purcina Maria de Jesus; os filhos desse casamento aparecem na geração seguinte.'));
+      if(number<9)center.append(el('p','pedigree-next','Segue para a '+(number+1)+'ª geração ↓'));
+      else center.append(el('p','pedigree-next','Seus seis filhos ↓'));
+      layout.append(left,center,right);section.append(layout);spine.append(section);
+    }
+    const last=el('section','pedigree-generation pedigree-generation-last');last.id='generation-10';
+    const heading=el('div','pedigree-heading');heading.append(el('span','pedigree-number','10'),el('div','','10ª geração'));last.append(heading);
+    const family=el('div','pedigree-final');family.append(el('h3','','Filhos de Anésia e Antônio'),el('p','','Abra um nome para conhecer seus filhos e as gerações seguintes.'));
+    const children=el('div','pedigree-final-children');['gilmar','gilberto','neuza','nilda','neyde','nilza'].forEach(key=>children.append(expandablePerson(branchRoots.get(key),'pedigree-main')));family.append(children);last.append(family);spine.append(last);
+  }
+  makeSpine();
   let current;
   function select(person,push=true){
     if(!person)return;
@@ -170,11 +236,11 @@
     const hash=decodeURIComponent(location.hash.slice(1));
     if(hash.startsWith('person=')){const person=byKey.get(hash.slice(7));if(person){select(person,false);return;}}
     if(hash==='overview'){generation.value='';listPeople(all,'Todas as gerações');return;}
-    const gm=hash.match(/^generation-(\d+)$/);if(gm){const number=Number(gm[1]);generation.value=String(number);listPeople(all.filter(p=>p.generation===number),number+'ª geração');return;}
-    if(branchRoots.has(hash)){select(branchRoots.get(hash),false);return;}
-    if(!hash||!current)select(all.find(p=>p.generation===1),false);
+    const gm=hash.match(/^generation-(\d+)$/);if(gm){const number=Number(gm[1]);generation.value=String(number);if(number<=10){root.replaceChildren();document.getElementById('generation-'+number)?.scrollIntoView();}else listPeople(all.filter(p=>p.generation===number),number+'ª geração');return;}
+    if(branchRoots.has(hash)){root.replaceChildren();const card=spine.querySelector('[data-person-key="'+CSS.escape(branchRoots.get(hash).key)+'"]');if(card){card.open=true;card.scrollIntoView();}return;}
+    if(!hash){root.replaceChildren();status.textContent='10 gerações na linha central · abra os nomes para explorar outros ramos';}
   }
-  generation.addEventListener('change',()=>{const n=Number(generation.value);if(!n)return;history.pushState(null,'','#generation-'+n);listPeople(all.filter(p=>p.generation===n),n+'ª geração');root.scrollIntoView({block:'start',behavior:'instant'});root.querySelector('h2')?.focus({preventScroll:true});});
+  generation.addEventListener('change',()=>{const n=Number(generation.value);if(!n)return;search.value='';results.replaceChildren();results.hidden=true;history.pushState(null,'','#generation-'+n);applyLocation();if(n>10){root.scrollIntoView({block:'start',behavior:'instant'});root.querySelector('h2')?.focus({preventScroll:true});}});
   search.addEventListener('input',()=>{
     const query=normalize(search.value);results.replaceChildren();results.hidden=!query;
     if(!query)return;
@@ -184,7 +250,7 @@
   });
   document.getElementById('family-search-form').addEventListener('submit',event=>event.preventDefault());
   document.getElementById('family-back').addEventListener('click',()=>history.back());
-  document.getElementById('family-origins').addEventListener('click',()=>select(all.find(person=>person.generation===1)));
+  document.getElementById('family-origins').addEventListener('click',()=>{history.pushState(null,'','#generation-1');applyLocation();});
   window.addEventListener('popstate',applyLocation);window.addEventListener('hashchange',applyLocation);applyLocation();
   window.NAVES_CHART={people:all,relationships,families:[...families.values()].map(unit=>({parents:unit.parents.map(p=>p.id),children:unit.children.map(p=>p.id)}))};
 })();

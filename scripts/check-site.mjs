@@ -51,15 +51,29 @@ try {
   for(let n=0;n<40;n++){if(await evaluate(`location.pathname==='/arvore' && location.hash==='#generation-11' && document.readyState==='complete'`))break;await new Promise(done=>setTimeout(done,50));}
   assert.ok(await evaluate(`location.pathname==='/arvore' && location.hash==='#generation-11'`),'Generation keyboard navigation');
   await navigate('/linhagem#generation-4');assert.equal(await evaluate(`document.querySelector('#generation-select').value`),'4');
-  assert.ok(await evaluate(`document.querySelector('#family-explorer').textContent.includes('Vínculo ou dado em investigação')`),'Uncertain dates do not claim uncertain relationships');
+  assert.ok(await evaluate(`document.querySelector('#generation-7').textContent.includes('Dado em investigação')`),'Uncertain records are identified');
   await navigate('/arvore#overview');assert.equal(await evaluate(`document.querySelectorAll('#family-explorer .family-card').length`),await evaluate(`window.NAVES_CHART.people.length`),'Full overview lists each person');
   await navigate('/arvore');
   assert.equal(await evaluate('window.NAVES_CHART.people.filter(p=>p.generation===1).length'),2);
   assert.ok(await evaluate('window.NAVES_CHART.people.length>100'));
   assert.deepEqual(await evaluate(`window.NAVES_FAMILY.reduce((totals,branch)=>{const visit=(p,depth)=>{totals[depth]++;p.children.forEach(c=>visit(c,depth+1))};branch.children.forEach(p=>visit(p,0));return totals},[0,0,0])`),[15,30,4]);
   assert.ok(await evaluate(`(()=>{const {people,families}=window.NAVES_CHART;const names=ids=>ids.map(id=>people.find(p=>p.id===id).name).sort().join('|');const family=(parents,children)=>families.find(f=>names(f.parents)===parents.slice().sort().join('|')&&names(f.children)===children.slice().sort().join('|'));return !!family(['Carla Bianca','Itanel'],['Gustavo','Rafaela'])&&!!family(['Fábio','Nachima'],['João Pedro'])&&!!family(['Fábio','Paloma'],['Theo','Lara'])})()`));
-  assert.ok(await evaluate(`document.querySelector('.family-focus-name').textContent.includes('João de Almeida Naves')`));
-  assert.ok(await evaluate(`![...document.querySelectorAll('.family-group')].some(group=>group.textContent.includes('Família com Maria da Silva Leite')&&group.textContent.includes('Vínculo em investigação'))`),'A disputed birthplace must not make the couple’s parentage uncertain');
+  assert.equal(await evaluate(`document.querySelectorAll('.pedigree-generation').length`),10,'The central lineage has ten generations');
+  assert.ok(await evaluate(`document.querySelector('#generation-1 .pedigree-center').textContent.includes('João de Almeida Naves')&&document.querySelector('#generation-1 .pedigree-center').textContent.includes('Maria da Silva Leite')`));
+  assert.deepEqual(await evaluate(`[...document.querySelectorAll('#generation-10 .pedigree-final-children > details > summary strong')].map(n=>n.textContent.replace(' †',''))`),['Gilmar','Gilberto','Neuza','Nilda','Neyde','Nilza']);
+  assert.ok(await evaluate(`document.querySelector('#generation-2 .pedigree-side').textContent.includes('Baltasar Naves')`),'First-degree relatives appear beside the line');
+  assert.ok(await evaluate(`document.querySelectorAll('#generation-5 .pedigree-couple').length===2`),'The two ancestral couples remain distinct');
+  assert.equal(await evaluate(`document.querySelectorAll('#generation-10 .pedigree-final-children > details[open]').length`),0,'Descendants start collapsed');
+  await evaluate(`document.querySelector('#generation-10 [data-person-key="10:gilmar:gilmar"]').open=true;new Promise(r=>setTimeout(r,0))`);
+  await evaluate(`[...document.querySelectorAll('#generation-10 details')].find(d=>d.dataset.personKey?.endsWith('/Fábio')).open=true;new Promise(r=>setTimeout(r,0))`);
+  const expandedGroups=await evaluate(`[...document.querySelectorAll('#generation-10 [data-person-key$="/Fábio"] > .pedigree-expanded > .pedigree-unit')].map(n=>n.textContent)`);
+  assert.ok(expandedGroups.some(s=>s.includes('Nachima')&&s.includes('João Pedro')&&!s.includes('Theo')),'Previous relationship has the correct child');
+  assert.ok(expandedGroups.some(s=>s.includes('Paloma')&&s.includes('Theo')&&s.includes('Lara')&&!s.includes('João Pedro')),'Current relationship has the correct children');
+  await evaluate(`document.querySelector('#generation-10 [data-person-key="10:neuza:neuza"]').open=true;new Promise(r=>setTimeout(r,0))`);
+  await evaluate(`[...document.querySelectorAll('#generation-10 details')].find(d=>d.dataset.personKey?.endsWith('/Carla Bianca')).open=true;new Promise(r=>setTimeout(r,0))`);
+  assert.ok(await evaluate(`[...document.querySelectorAll('#generation-10 [data-person-key$="/Carla Bianca"] > .pedigree-expanded > .pedigree-unit')].some(n=>n.textContent.includes('Itanel')&&n.textContent.includes('Gustavo')&&n.textContent.includes('Rafaela'))`),'Carla and Itanel share their children in the expanded tree');
+  await evaluate(`document.querySelector('#generation-1 .pedigree-main').open=true;new Promise(r=>setTimeout(r,0))`);
+  assert.ok(await evaluate(`document.querySelector('#generation-1 .pedigree-unit').textContent.includes('Maria da Silva Leite')&&!document.querySelector('#generation-1 .pedigree-unit .pedigree-uncertain')`),'A disputed birthplace must not make the couple’s parentage uncertain');
   assert.equal(await evaluate(`document.querySelector('#tree-viewport')`),null);
   await setInput('Carla Bianca');assert.ok(await evaluate(`!document.querySelector('#family-results').hidden`));
   await evaluate(`[...document.querySelectorAll('#family-results button')].find(b=>b.textContent.includes('Carla Bianca')).click()`);
@@ -76,8 +90,8 @@ try {
   assert.ok(await evaluate(`document.querySelector('.family-focus-name').textContent.includes('Fábio')`),'Forward restores the selected family');
   await setInput('not-a-family-name');assert.ok(await evaluate(`document.querySelector('#family-results').textContent.includes('Nenhum nome encontrado')`));
   await navigate('/arvore#generation-13');assert.equal(await evaluate(`document.querySelector('#generation-select').value`),'13');assert.ok(await evaluate(`document.querySelector('#family-explorer').textContent.includes('Bento')`));
-  await navigate('/arvore#gilmar');assert.ok(await evaluate(`document.querySelector('.family-focus-name').textContent.includes('Gilmar')`));
-  await evaluate(`new Promise(resolve=>{addEventListener('hashchange',resolve,{once:true});location.hash='#conteudo'})`);assert.ok(await evaluate(`document.querySelector('.family-focus-name').textContent.includes('Gilmar')`),'Page anchors preserve the focused person');
+  await navigate('/arvore#gilmar');assert.ok(await evaluate(`document.querySelector('#generation-10 [data-person-key="10:gilmar:gilmar"]').open`),'Branch link opens its family');
+  await evaluate(`new Promise(resolve=>{addEventListener('hashchange',resolve,{once:true});location.hash='#conteudo'})`);assert.ok(await evaluate(`document.querySelector('#generation-10 [data-person-key="10:gilmar:gilmar"]').open`),'Page anchors preserve the open branch');
   await setInput('Pedro');await evaluate(`document.querySelector('#generation-select').value='13';document.querySelector('#generation-select').dispatchEvent(new Event('change'))`);assert.equal(await evaluate(`document.querySelector('#family-results').hidden`),true,'Generation navigation dismisses search results');
   await evaluate(`document.querySelector('[data-theme-toggle]').click()`);const theme=await evaluate(`document.documentElement.dataset.theme`);
   await navigate('/');assert.equal(await evaluate(`document.documentElement.dataset.theme`),theme);
@@ -92,6 +106,8 @@ try {
         if(path==='/arvore'||path==='/linhagem') {
           assert.ok(await evaluate(`[...document.querySelectorAll('.family-card-name')].every(n=>parseFloat(getComputedStyle(n).fontSize)>=16)`),'Readable names');
           assert.ok(await evaluate(`[...document.querySelectorAll('.family-card')].every(n=>n.getBoundingClientRect().width>=44&&n.getBoundingClientRect().height>=44)`),'Usable targets');
+          assert.ok(await evaluate(`[...document.querySelectorAll('.pedigree-name')].every(n=>parseFloat(getComputedStyle(n).fontSize)>=16)`),'Readable lineage names');
+          assert.ok(await evaluate(`[...document.querySelectorAll('.pedigree-summary')].every(n=>n.getBoundingClientRect().width>=44&&n.getBoundingClientRect().height>=44)`),'Usable lineage targets');
           assert.ok(await evaluate(`!document.querySelector('meta[name=viewport]').content.includes('user-scalable=no')`),'Native page zoom enabled');
           if(width<=390)assert.ok(await evaluate(`document.scrollingElement.scrollHeight>innerHeight`),'The page itself can scroll vertically');
         }
@@ -118,11 +134,20 @@ try {
   }
   await call('Emulation.setTouchEmulationEnabled',{enabled:false});
   await call('Emulation.setDeviceMetricsOverride',{width:1280,height:900,deviceScaleFactor:1,mobile:false});
+  if(process.env.NAVES_SCREENSHOT_DIR){
+    for(const [width,height,name] of [[1280,900,'central-lineage-desktop.png'],[390,844,'central-lineage-mobile.png']]){
+      await call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});await navigate('/arvore');
+      await evaluate(`document.querySelector('#generation-2').scrollIntoView()`);
+      const shot=await call('Page.captureScreenshot',{format:'png'});
+      await writeFile(join(process.env.NAVES_SCREENSHOT_DIR,name),Buffer.from(shot.data,'base64'),{flag:'wx'});
+    }
+    await call('Emulation.setDeviceMetricsOverride',{width:1280,height:900,deviceScaleFactor:1,mobile:false});
+  }
   await navigate('/linhagem');assert.ok(await evaluate(`document.querySelector('h1').textContent.includes('linhagem histórica')`));assert.ok(await evaluate(`window.NAVES_CHART.people.some(p=>p.name==='Maria José Pereira'&&p.death.includes('1944'))`));
   await navigate('/arvore_naves.html');assert.equal(await evaluate(`document.querySelectorAll('.gen-section').length`),11);await evaluate(`document.querySelector('a[href="#g8"]').click()`);assert.equal(await evaluate(`location.hash`),'#g8');
   await navigate('/mapa');await evaluate(`document.querySelectorAll('.tl-item')[7].click()`);assert.ok(await evaluate(`document.querySelectorAll('.tl-item')[7].classList.contains('active')`));
   assert.deepEqual(errors,[],'Uncaught browser errors');
-  console.log('PASS: responsive person-centered genealogy, 13 generations, search, stable links, family relationships, names and target sizes, native zoom settings, themes and routes.');
+  console.log('PASS: responsive ten-generation lineage, expandable families, search, links, kinship, themes and routes.');
   await call('Browser.close');
 } finally {
   ws?.close();
