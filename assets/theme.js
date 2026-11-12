@@ -1,12 +1,12 @@
-/* Teô v2.7.1 theme contract, localized for Família Naves. Runs before paint. */
+/* Atlas appearance preference. Applies before first paint. */
 (() => {
   const root = document.documentElement;
-  const key = 'teo-personal-theme';
-  let theme = 'dark';
+  const key = 'naves-atlas-theme';
+  let theme = 'light';
   try {
     const saved = localStorage.getItem(key);
     if (saved === 'light' || saved === 'dark') theme = saved;
-  } catch (_) { /* Dark remains usable when storage is unavailable. */ }
+  } catch (_) { /* The paper appearance remains usable when storage is unavailable. */ }
   root.dataset.theme = theme;
 
   function sync() {

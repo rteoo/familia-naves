@@ -1,16 +1,22 @@
-# Família Naves design
+# Família Naves — genealogical atlas
 
-This personal genealogy site adopts [Teô Design System v2.7.1](https://github.com/rteoo/teo-design-system/releases/tag/v2.7.1), release commit `ae9756c3411acda96171181ae83b334c9c149c01`.
+A site-specific identity, independent of the existing Teô, Strateo and Gilenge systems. No shared-system CSS, font assets or components are loaded. Preserved legacy assets are unused reference files.
 
-`assets/teo/tokens.css` and `assets/teo/components.css` are copied from that release. The only change to the upstream layers is replacing the remote font import in `tokens.css` with `../fonts/fonts.css`. They own the Ink & Copper palette, semantic theme roles, typography, focus, and control sizing. Load them in that order. `assets/site.css` contains site-specific presentation; `assets/theme.js` implements the reference theme behavior with Portuguese labels and local preference persistence. Dark is the default; both appearances are supported. Fonts are self-hosted WOFF2 with their SIL OFL licenses and provenance under `assets/fonts/`; runtime requests remain local.
+## Direction
 
-The existing landing page, genealogy reading layout, SVG geography, routes, and historical records remain. This content site does not need the design system's application rail or dashboard shell, so `layouts.css` and the unrelated reference JavaScript are not shipped.
+An exploratory atlas of people, time and place: oversized grotesque headings, serif asides, cobalt relationship lines, warm off-white paper and a vermilion meeting date. Home introduces the full available lineage, from the research's initial generation to the latest descendants recorded in Anésia's line. A thirteen-generation navigation spine and four historical chapters replace the six-child home diagram. The scope describes this research, not an exhaustive registry of all Naves families.
 
-Project extensions:
+## Reading and interaction
 
-- Long genealogy sections retain the vertical lineage and generation navigation. Use display typography for names, body typography for records, and neutral surfaces; copper signals navigation and the current map stage.
-- Map regions use the canonical secondary, neutral, and primary chart roles. State abbreviations and names accompany color; the full textual timeline provides the map's equivalent historical data and full-size native buttons. Spatial SVG markers remain compact to preserve geographic positions; every stage is also operable through the 44px-or-larger timeline buttons. Markers support Enter/Space and visible keyboard focus.
-- The migration map is a geographic illustration rather than a numeric chart; its labeled timeline is the accessible data equivalent.
-- No automatic map playback, pulse rings, glow, grain, decorative gradients, or glass effects. Reduced-motion preferences suppress transitions and entry animations.
+- Home: full-lineage introduction and generation navigation → four historical chapters → migrations → gathering. No standalone research section or gathering verification note. Provenance remains in record details and the compilation reading page.
+- Family: a ten-generation central lineage in the page's normal flow, from João and Maria to the six children of Anésia and Antônio. Siblings and close relatives appear beside it; opening a name reveals their immediate family and sources. Each additional generation opens on demand. Previous and current relationships remain distinct; a spouse is not assumed to be a parent. Uncertain parentage is labeled.
+- All 13 generations remain reachable via generation navigation and explicit search results; selecting a relative changes the focused person. Person URLs use generation, name and family path and support reload and browser history; they can change if those identity fields are corrected. Both family routes start at the first generation unless a deep link selects another person or generation.
+- `assets/lineage.js` is shared by the explorer and historical reading page. `assets/family.js` holds the supplied family roster; `assets/genealogy.js` models and renders relationships; `assets/genealogy.css` styles the explorer. `assets/home-generations.css` owns the lineage-wide entrance.
+- `/linhagem` uses the same explorer with a historical introduction; `/arvore_naves.html` preserves the detailed compilation reading view. The SVG migration map retains its data and controls.
+- There is no embedded tree canvas or custom pinch handler. Native page scrolling and browser zoom remain available. At mobile widths the family groups use one column.
+- Paper is the default appearance; a dark appearance is optional. Preference uses `naves-atlas-theme`.
+- `assets/atlas.css` owns all presentation. System Arial and Georgia require no downloads. Historical inline layouts use semantic variable aliases defined locally in this stylesheet; no upstream tokens are imported.
+- Touch targets ≥44px, visible focus, keyboard navigation, reduced-motion support and reflow at 320px.
+- Names and provenance take priority over decoration. Research uncertainty stays explicit.
 
-Validate both themes, theme persistence across routes, tree generation navigation, map timeline/marker selection, keyboard focus, 320px reflow, and 200% zoom. The site remains static and needs no build or package installation.
+Run `node scripts/check-site.mjs` for interaction, route, theme, kinship and responsive checks. No build or dependency installation is required.

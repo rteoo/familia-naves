@@ -1,6 +1,6 @@
 # 🌳 Família Naves — Genealogia Brasileira
 
-Site interativo com a árvore genealógica e o mapa de migração da Família Naves no Brasil — **11 gerações documentadas, de 1624 até hoje**.
+Atlas genealógico da Família Naves: da geração inicial da pesquisa às treze gerações disponíveis, incluindo os descendentes atuais na linhagem de Anésia. Reúne a árvore por núcleos familiares, a compilação histórica em revisão e o mapa ilustrativo das migrações.
 
 🔗 **[familia-naves.vercel.app](https://familia-naves.vercel.app)** 
 
@@ -9,13 +9,16 @@ Site interativo com a árvore genealógica e o mapa de migração da Família Na
 ## O que tem aqui
 
 ### Árvore Genealógica (`/arvore`)
-- 10 gerações navegáveis com filtro por época
-- Clique em qualquer pessoa para ver detalhes (nascimento, falecimento, local)
-- Estética de pergaminho envelhecido
-- Funciona offline — HTML puro, sem dependências
+- Genealogia centrada em uma pessoa, com pais, relacionamentos e filhos agrupados por filiação
+- As 13 gerações disponíveis são acessíveis por busca e por geração; buscas ignoram acentos
+- Navegação com links individuais e histórico do navegador; a página usa rolagem e zoom nativos
+- Parentescos, cônjuges, relacionamentos anteriores e falecidos identificados
+- Fontes familiares separadas das alegações históricas
+- `/linhagem` usa o mesmo explorador com introdução histórica; `/arvore_naves.html` preserva a leitura detalhada da compilação
+- Sem build, instalação de pacotes ou serviços externos em tempo de execução
 
 ### Mapa de Migração (`/mapa`)
-- Rota animada: **Portugal → São Paulo → Minas Gerais → Goiás**
+- Rota ilustrativa: **Portugal → São Paulo → Minas Gerais → Goiás**
 - Linha do tempo interativa com contexto histórico por geração
 - Clique nos locais do mapa ou nos itens da timeline para ativar cada etapa
 
@@ -25,9 +28,10 @@ Site interativo com a árvore genealógica e o mapa de migração da Família Na
 
 ```
 familia-naves/
-├── index.html        # Página inicial com links para as duas visualizações
-├── arvore.html       # Árvore genealógica interativa
-├── mapa.html         # Mapa de migração com timeline
+├── index.html        # Página inicial, ramos, encontro e fontes
+├── familia.html      # /arvore: seis ramos de Anésia
+├── arvore_naves.html # /linhagem: compilação histórica em revisão
+├── mapa_migracao_naves.html # /mapa: mapa e linha do tempo
 ├── vercel.json       # Configuração de rotas do Vercel
 └── README.md
 ```
@@ -44,21 +48,24 @@ sem instalação de pacotes ou build. Use `--port 8001` para escolher outra port
 
 ---
 
-## Linha de descendência principal
+## Linha de descendência na compilação histórica
+
+Esta tabela resume a compilação e não autentica seus vínculos. As divergências
+de identidade, datas e localidades aparecem na página `/linhagem`.
 
 | Geração | Nome | Período | Local |
 |---------|------|---------|-------|
 | 1ª | João de Almeida Naves + Maria da Silva Leite | c. 1653 | São Paulo, SP |
 | 2ª | Florência da Silva Naves + Domingos Lopes da Silva | c. 1676 | Santana de Parnaíba, SP |
-| 3ª | Luzia Moreira da Fonseca + José Vieira da Cunha | c. 1715 | Lavras, MG |
+| 3ª | João de Almeida Naves (neto) + Luzia Moreira da Fonseca | c. 1715 | Lavras, MG |
 | 4ª | João Naves Damasceno + Anna Vittoria de São Thomé | c. 1760 | Lavras, MG |
 | 5ª | Manoel Antônio Naves + Anna Rosa Sampaio | c. 1805 | Bom Sucesso, MG |
 | 6ª | Umbelina Rosa Naves + Francisco de Paula Naves | c. 1831 | Bom Sucesso, MG |
 | 7ª | Américo Brasiliense Naves | c. 1868 | Uberlândia, MG |
 | 8ª | Messias Brasiliense Naves | c. 1883 | Uberlândia → Morrinhos, GO |
-| 9ª | Anésia Naves + Antônio Alves da Silva | c. 1925 | Morrinhos → Quirinópolis, GO |
+| 9ª | Anésia Naves + Antônio Alves da Silva | 1932 / 1926 | Morrinhos → Quirinópolis, GO |
 | 10ª | Gilmar Alves da Silva | 1958 | Quirinópolis, GO |
-| 11ª | Fábio, Bruno e Rodrigo | 1985–1990 | Goiânia/Quirinópolis, GO |
+| 11ª | Fábio, Brunno e Rodrigo | 1985–1990 | Goiânia/Quirinópolis, GO |
 
 ---
 
@@ -67,7 +74,8 @@ sem instalação de pacotes ou build. Use `--port 8001` para escolher outra port
 - Boletim **"Notícias de Naves"** — Goiânia, GO (edições 142, 251, 257)
 - Cartório de Órfãos de Parnaíba — inventário nº 473 (João de Almeida Naves)
 - Lênio Luiz Richa — *"Almeida Naves"*, Genealogia Brasileira, *Os Títulos Perdidos*
-- [familiaresnaves.blogspot.com.br](http://familiaresnaves.blogspot.com.br)
+- [Blog do Jales / Editora Naves](https://editoranaves.com.br/)
+- Confirmações familiares recebidas em 11.11.2026; notas locais em `sources/` (pasta ignorada pelo Git). O site apresenta os vínculos fornecidos sem considerar a lista comprovadamente exaustiva.
 
 ---
 
@@ -77,9 +85,15 @@ sem instalação de pacotes ou build. Use `--port 8001` para escolher outra port
 **Criação original:** Jales Naves  
 **Editora Naves, 2025**
 
-## Design system
+## Interface
 
-The site uses **Teô Design System v2.7.1**, vendored under `assets/teo/`.
-See [DESIGN.md](DESIGN.md) for the release source and project-specific extensions.
-All pages support dark and light themes through the “Tema claro / Tema escuro”
-button, with the choice retained across pages. No build or package installation is required.
+The site has its own genealogical atlas identity: cobalt diagrams, warm paper,
+large typography and numbered family chapters. It loads no shared design system.
+Presentation lives in `assets/atlas.css`; typography uses local system fonts.
+Paper is the default, with an optional dark appearance retained across routes.
+
+Browser checks: `node scripts/check-site.mjs` uses an existing Chrome installation
+and Node 22+; no npm packages are needed. Set `CHROME_PATH` if Chrome is elsewhere.
+The check starts an isolated local server and browser profile and cleans both up.
+It exercises family relationships, search, filters, route navigation, themes,
+historical generation navigation, map selection and responsive overflow.

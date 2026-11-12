@@ -1,0 +1,33 @@
+# Validation status and remaining source conflicts
+
+Collected and updated 2026-11-11. Family confirmations resolve the consolidated account without rewriting the original published claims. Documentary verification is a separate status. Unknown answers remain open. The interactive site has not been edited.
+
+| Topic | Dated editorial evidence / other input | Disposition |
+| --- | --- | --- |
+| Maria José Pereira's death | Jales's [2025 report](catalogue/2025.md#post-13639): 1941; Elma's correction and Rodrigo's direct confirmation: 1944. | Resolved for the consolidated account: 1944, family-confirmed on 2026-11-11. Remove the three-year interval; civil record not inspected. |
+| Anésia's age in January 1938 | The same article reports birth 1932-03-25 and age six at her father's death. | Arithmetic gives five. This conclusion depends on the stated birth date and month/year of death. |
+| Messias's exact death date | Supplied genealogy PDF pp. 9–11 repeatedly give 17.01.1938, adding precision to Jales's article. | PDF-supported date: 1938-01-17. Civil record not authenticated. See [PDF review](pdf-review.md). |
+| Anésia's death day and age | Supplied PDF pp. 11–12 give 25.04.2013 in Goiânia; birth is 25.03.1932. | April 25 and age 81 are supported by the supplied compilation, not an authenticated death certificate. Record the conflicting secondary April 26 variant separately. |
+| Family gathering | Rodrigo confirmed 2026-12-19, I Encontro dos Primos Naves, in Goiânia. | Date, title and city resolved by family confirmation. Specific address, host and time remain open. Keep this event distinct from Jales's 2025 New Year report. |
+| Descendant counts | Supplied draft: 14/19/1; Jales December 2025: 15/30/5. Rodrigo's subsequently supplied [named roster](../familia-anesia.md) contains 15/30/4, including deceased descendants. | All supplied relationship ambiguities are resolved. Arithmetic is checked for the named roster; completeness remains unconfirmed. Identify the fifth great-great-grandchild reported in 2025 or correct that historical total before adopting a complete current count. |
+| Names | Rodrigo confirmed Anésia, Neuza and Brunno on 2026-11-11. | Resolved for the consolidated account. Preserve Anezia, Neusa and Bruno only as original source variants. |
+| Gilmar's sons | [2024 biography](catalogue/2024.md#post-12135) gives Quirinópolis as birthplace. Rodrigo directly confirmed both his and Brunno's birthplace as Goiânia, GO. | Both birthplaces resolved by family confirmation; preserve the conflicting article claim separately. |
+| Gilmar's office dates | Rodrigo's confirmation and supplied local biography agree: 2005–2008, 2009–2012, 2017–2020. | Resolved for the consolidated account. The third election was in 2016; the mandate began in 2017. Full original electoral records not rechecked. |
+| Antônio's origin | Conflicting Jales articles; Rodrigo confirmed Quirinópolis on 2026-11-11. | Resolved for the consolidated account: Quirinópolis, GO, family-confirmed. |
+| Neuza's children and Ossualdo's birth | Rodrigo confirmed Ossualdo Júnior, Leandro and Carla Bianca as Neuza's children, and Gustavo and Rafaela as Carla Bianca's children; see [family roster](../familia-anesia.md). | Names and relationships resolved by family confirmation, including Rafaela rather than the older draft's Rafael. Ossualdo's birth year remains open. |
+| Neyde's union presidency | Supplied biography, [Chamber](https://www.camara.leg.br/deputados/74369/biografia) and [CNTE/Sintego](https://cnte.org.br/noticias/go-sintego-quer-audiencia-com-novos-secretarios-da-educacao-9cb4) agree on 1993–2001. | Period validated; three-mandate count remains open. Use the documented period in publication. |
+| Damasceno's death | Jales's articles conflict; supplied PDF p. 4 gives May 30, 1831, and p. 5 gives May 27. | Still open: even the PDF contradicts itself. Retrieve original inventory and death/burial record. |
+| Baltasar's baptism | [2018 update](catalogue/2018.md#post-7410) and supplied PDF p. 2: May 6, 1654; 2026 article: April 6. | May 6 has additional compiled support; inspect parish scan before calling it independently verified. |
+| Pioneer's children | 2017 overview: seven; 2017 inventory account: eight; 2018 update: ten. PDF pp. 2–3 also report ten. | Record research evolution; later compiled lists agree on ten, but the PDF is not a complete civil-record audit. |
+| Damasceno's children | Condensed inventory lists eleven heirs; PDF p. 5 lists twelve children. | Twelve has additional genealogical support. Distinguish heirs from offspring; reconciliation remains open. |
+| Américo's spouse / Messias's mother | PDF p. 9: Maria Cândida de Mello; pp. 10–11: Maria Januária Naves. Screenshot: Maria Januária de Melo. | Still open: supplied trees add evidence but do not resolve the internal contradiction or identity/marriages. |
+| Portuguese origin | Conflicting Jales articles and two different place formulations on PDF p. 1. | Still open: confirm parish jurisdiction; do not conflate Algodres/Figueira de Castelo Rodrigo with Fornos de Algodres. |
+| Typographical years | Corpus/chart/PDF p. 2 support Maria 1669 and José 1675. PDF pp. 6/8 and screenshot support Francisco's birth in 1833. | Use 1669, 1675 and 1833 as compiled-source corroboration, not authenticated birth dates. Original 1969/1973/1975/1933 variants remain in source evidence. |
+| Francisco's death and chart identity | PDF p. 6: 10.01.1909; p. 8: blank. Screenshot: 1864; PDF assigns later-born children to him. | Open: resolve the person and parent-child links before adopting a death date. |
+| Américo's death | PDF pp. 8–9: 19.03.1955; screenshot lifespan ends in 1919. | Open: obtain underlying records. |
+| Screenshot name identities | Maria José de Jesus versus Pereira; Abadia Maria de Jesus versus Pereira; Secundino's surname order differs. | Do not automatically merge profiles. See [PDF and screenshot review](pdf-review.md). |
+| Haroldo's terms and award | Municipal history: three mayoral terms. Alego: fourth FGM mandate in 2023. Senate: 2002 award base year, recorded in 2003, Centro-Oeste winner. | Core distinctions validated; national-champion wording and uninterrupted FGM tenure are unsupported. See [primary sources and limits](family-history.md#haroldo-naves--institutional-cross-check). |
+
+## Source health
+
+One API record has no title: [13659](catalogue/2025.md#post-13659). Similar content exists in [13666](catalogue/2025.md#post-13666). They remain separate records. Automated name/date lists can contain headings and organizations and are not person registries or event claims.
